@@ -18,7 +18,7 @@ Tekton Challenge using .NET 7 Web API. This also serves the purpose of learning 
 - [x] Supports MySQL, MSSQL, Oracle & PostgreSQL!
 
 <details>
-  <summary>Click to See More!</summary>
+  <summary>Click to See More Features</summary>
 
 - [x] Uses Entity Framework Core as DB Abstraction
 - [x] Flexible Repository Pattern
@@ -56,4 +56,4 @@ Before creating your first fullstackhero solution, you should ensure that your l
 
 ## Changelogs
 
-[View Complete Changelogs.](https://github.com/angelbus/tekton-api/blob/main/Changelogs.md)
+[View Complete Changelogs.](https://github.com/angelbus/tekton-api/blob/main/CHANGELOG.md)
