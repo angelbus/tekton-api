@@ -1,4 +1,4 @@
-[![dotnet-cicd](https://github.com/angelbus/tekton-api/actions/workflows/dotnet.yml/badge.svg?branch=main)](https://github.com/fullstackhero/tekton-webapi/actions/workflows/dotnet.yml)
+[![dotnet-cicd](https://github.com/angelbus/tekton-api/actions/workflows/dotnet.yml/badge.svg?branch=main)](https://github.com/angelbus/tekton-webapi/actions/workflows/dotnet.yml)
 
 ## Goals
 
