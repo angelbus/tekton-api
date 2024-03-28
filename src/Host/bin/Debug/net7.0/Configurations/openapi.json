@@ -1,0 +1,14 @@
+{
+  "SwaggerSettings": {
+    "Enable": true,
+    "Title": "Angel Bustamante - Clean Architecture",
+    "Version": "1.0.0",
+    "Description": "Clean Architecture .NET 7 WebApi for Tekton.",
+    "ContactName": "Angel Bustamante",
+    "ContactEmail": "angel.bus@gmail.com",
+    "ContactUrl": "https://linkedin.com",
+    "License": true,
+    "LicenseName": "MIT License",
+    "LicenseUrl": "https://github.com/angelbus/tekton-api/blob/main/LICENSE"
+  }
+}

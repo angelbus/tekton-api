@@ -1,0 +1,4 @@
+/workspaces/tekton-api/Tekton.API/src/Core/Shared/bin/Release/net7.0/publish/Tekton.API.Shared.dll
+/workspaces/tekton-api/Tekton.API/src/Core/Shared/bin/Release/net7.0/publish/Tekton.API.Shared.pdb
+/workspaces/tekton-api/Tekton.API/src/Core/Shared/bin/Release/net7.0/publish/Tekton.API.Shared.xml
+/workspaces/tekton-api/Tekton.API/src/Core/Shared/bin/Release/net7.0/publish/Tekton.API.Shared.deps.json

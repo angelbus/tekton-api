@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/Tekton.API.Host.props" />
+</Project>

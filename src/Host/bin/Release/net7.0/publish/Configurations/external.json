@@ -1,0 +1,6 @@
+{
+    "ExternalAPISettings": {
+      "AppName": "Tekton.API",
+      "ExternalUrl": "http://localhost:9200/"
+    }
+}

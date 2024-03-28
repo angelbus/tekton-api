@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "akAMY6jbbBi34DIy6wCOPk3EVtMZ7XxRufdhyhVBq9bOH1+a0l1nx2QiCgFrxzTS98dJDHDd4+DAQAWfiejnfw==",
+  "success": true,
+  "projectFilePath": "/workspaces/tekton-api/src/Core/Shared/Shared.csproj",
+  "expectedPackageFiles": [
+    "/home/vscode/.nuget/packages/roslynator.analyzers/4.2.0/roslynator.analyzers.4.2.0.nupkg.sha512",
+    "/home/vscode/.nuget/packages/stylecop.analyzers/1.2.0-beta.435/stylecop.analyzers.1.2.0-beta.435.nupkg.sha512",
+    "/home/vscode/.nuget/packages/stylecop.analyzers.unstable/1.2.0.435/stylecop.analyzers.unstable.1.2.0.435.nupkg.sha512"
+  ],
+  "logs": []
+}
