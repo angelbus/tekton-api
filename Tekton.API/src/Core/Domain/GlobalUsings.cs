@@ -1,0 +1,1 @@
+﻿global using Tekton.API.Domain.Common.Contracts;

@@ -1,0 +1,17 @@
+global using Ardalis.Specification;
+global using FluentValidation;
+global using Tekton.API.Application.Common.Events;
+global using Tekton.API.Application.Common.Exceptions;
+global using Tekton.API.Application.Common.FileStorage;
+global using Tekton.API.Application.Common.Interfaces;
+global using Tekton.API.Application.Common.Models;
+global using Tekton.API.Application.Common.Persistence;
+global using Tekton.API.Application.Common.Specification;
+global using Tekton.API.Application.Common.Validation;
+global using Tekton.API.Domain.Catalog;
+global using Tekton.API.Domain.Common;
+global using Tekton.API.Domain.Common.Contracts;
+global using Tekton.API.Shared.Notifications;
+global using MediatR;
+global using Microsoft.Extensions.Localization;
+global using Microsoft.Extensions.Logging;

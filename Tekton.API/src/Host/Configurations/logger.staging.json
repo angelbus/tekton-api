@@ -1,0 +1,7 @@
+{
+  "LoggerSettings": {
+    "AppName": "Tekton.API",
+    "WriteToFile": true,
+    "StructuredConsoleLogging": true
+  }
+}
