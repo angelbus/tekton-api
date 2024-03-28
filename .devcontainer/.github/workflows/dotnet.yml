@@ -35,7 +35,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
   docker:
-    name: Docker
+    name: Publish
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -52,3 +52,18 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/tekton-webapi:1.0.0 -f Dockerfile .
 	      docker push ${{ secrets.DOCKER_USERNAME }}/tekton-webapi:1.0.0
+  deploy:
+    name: Deploy
+    # These permissions are needed to interact with GitHub's OIDC Token endpoint.
+    permissions:
+        id-token: write
+        contents: read
+    steps:
+      - name: Configure AWS credentials from Test account
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_SECRET_REGION }}
+          AWS_DEFAULT_OUTPUT: json
+      - run: aws ecs update-service --force-new-deployment --service tekton-webapi --cluster ${{ secrets.AWS_ECS_CLUSTER }}

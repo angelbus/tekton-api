@@ -27,9 +27,9 @@ public class DiscountsService : IDiscountsService
         }
 
         if (string.IsNullOrEmpty(_remoteServiceBaseUrl))
-            _logger.LogInformation("The URL ExternalDiscountsUrl does not exist. Discounts will not be applied", "DiscountsService");
+            _logger.LogInformation("The URL ExternalDiscountsUrl does not exist. Discounts will not be applied");
         else
-            _logger.LogInformation("The ExternalDiscountsUrl has been set: " + _remoteServiceBaseUrl, "DiscountsService");
+            _logger.LogInformation("The ExternalDiscountsUrl has been set: " + _remoteServiceBaseUrl);
 
         _client.BaseAddress = new Uri(_remoteServiceBaseUrl);
     }
