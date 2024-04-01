@@ -22,13 +22,13 @@ internal class TokenService : ITokenService
     private readonly IStringLocalizer _t;
     private readonly SecuritySettings _securitySettings;
     private readonly JwtSettings _jwtSettings;
-    private readonly FSHTenantInfo? _currentTenant;
+    private readonly TektonTenantInfo? _currentTenant;
 
     public TokenService(
         UserManager<ApplicationUser> userManager,
         IOptions<JwtSettings> jwtSettings,
         IStringLocalizer<TokenService> localizer,
-        FSHTenantInfo? currentTenant,
+        TektonTenantInfo? currentTenant,
         IOptions<SecuritySettings> securitySettings)
     {
         _userManager = userManager;
@@ -52,10 +52,12 @@ internal class TokenService : ITokenService
             throw new UnauthorizedException(_t["User Not Active. Please contact the administrator."]);
         }
 
+/*
         if (_securitySettings.RequireConfirmedAccount && !user.EmailConfirmed)
         {
             throw new UnauthorizedException(_t["E-Mail not confirmed."]);
         }
+*/
 
         if (_currentTenant.Id != MultitenancyConstants.Root.Id)
         {

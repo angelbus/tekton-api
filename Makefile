@@ -7,10 +7,13 @@ nuget:
 publish:
 	dotnet publish -c Release
 publish-image:
-	docker build -t angelbus/tekton-webapi:1.0.0 -f Dockerfile . && 	\
-	sudo docker push angelbus/tekton-webapi:1.0.0
+	docker build -t angelbus/tekton-webapi:1.0.0 -f Dockerfile .
+	docker push angelbus/tekton-webapi:1.0.0
 publish-to-hub:
 	dotnet publish -c Release -p:ContainerRegistry=docker.io -p:ContainerImageName=angelbus/tekton-webapi
+create-version:
+	export IMAGER_VERSION=$(cat "VERSION.txt")
+	echo "App version is ${IMAGER_VERSION}"
 ti: # terraform init
 	cd terraform/environments/staging && terraform init
 tp: # terraform plan

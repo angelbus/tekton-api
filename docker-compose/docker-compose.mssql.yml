@@ -17,6 +17,7 @@ services:
       - HangfireSettings__Storage__StorageProvider=mysql
       - ElasticSearchUrl=http://localhost:9200/
       - ExternalDiscountsUrl=https://6603b4cb2393662c31cf74e8.mockapi.io/
+      - DiscountsRequestUrl=products/
       - CacheExpirationMinutes=5
     volumes:
       - ~/.aspnet/https:/https:ro

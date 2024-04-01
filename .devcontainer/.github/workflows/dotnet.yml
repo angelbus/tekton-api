@@ -1,4 +1,4 @@
-name: dotnet-cicd
+name: tekton-cicd
 on:
   push:
     branches: [ main ]

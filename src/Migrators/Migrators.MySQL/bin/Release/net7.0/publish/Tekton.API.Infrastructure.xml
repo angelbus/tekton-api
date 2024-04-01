@@ -40,17 +40,17 @@
             Provides PO files for FSH Localization.
             </summary>
         </member>
-        <member name="P:Tekton.API.Infrastructure.Multitenancy.FSHTenantInfo.Id">
+        <member name="P:Tekton.API.Infrastructure.Multitenancy.TektonTenantInfo.Id">
             <summary>
             The actual TenantId, which is also used in the TenantId shadow property on the multitenant entities.
             </summary>
         </member>
-        <member name="P:Tekton.API.Infrastructure.Multitenancy.FSHTenantInfo.Identifier">
+        <member name="P:Tekton.API.Infrastructure.Multitenancy.TektonTenantInfo.Identifier">
             <summary>
             The identifier that is used in headers/routes/querystrings. This is set to the same as Id to avoid confusion.
             </summary>
         </member>
-        <member name="P:Tekton.API.Infrastructure.Multitenancy.FSHTenantInfo.Issuer">
+        <member name="P:Tekton.API.Infrastructure.Multitenancy.TektonTenantInfo.Issuer">
             <summary>
             Used by AzureAd Authorization to store the AzureAd Tenant Issuer to map against.
             </summary>

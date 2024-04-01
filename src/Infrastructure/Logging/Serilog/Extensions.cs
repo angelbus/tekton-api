@@ -75,8 +75,7 @@ public static class Extensions
         {
             serilogConfig.WriteTo.File(
              new CompactJsonFormatter(),
-             /*AppDomain.CurrentDomain.BaseDirectory + "TektonLogs/logs.json",*/
-             "Logs/logs.json",
+             "Logs/logs.txt",
              restrictedToMinimumLevel: LogEventLevel.Information,
              rollingInterval: RollingInterval.Day,
              retainedFileCountLimit: 5);

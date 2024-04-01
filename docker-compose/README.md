@@ -32,7 +32,7 @@ There are some prerequisites for using the included docker-compose.yml files:
 
 ## Docker-Compose Commands
 
-Fullstackhero .NET WebAPI Boilerplate includes 3 Docker-Compose Files!
+Tekton .NET WebAPI includes 3 Docker-Compose Files!
 - WebAPI + PostgreSQL (default)
 - WebAPI + MSSQL
 - WebAPI + MYSQL
@@ -70,9 +70,10 @@ Let's first examine the Environment Variables passed into the tekton-webapi cont
 - HangfireSettings__Storage__StorageProvider : This will the database engine.
 - ElasticSearchUrl : Example http://localhost:9200/
 - ExternalDiscountsUrl : Example https://mockapi.io/projects/6603b4cb2393662c31cf74e9/
+- DiscountsRequestUrl : This is the trailing uri of the External Discount Service URL (Example: products/)
 - CacheExpirationMinutes : Minutes in Cache for the product status. Defaulted to 5.
 
-## VOLUMES: Getting the Lof Files
+## VOLUMES: Getting the Log Files
 
 In order to get the Log Files on the Host file system, so they can be analyzed, the right volumes must be set:
 ```
@@ -80,14 +81,42 @@ volumes:
       - ~/.aspnet/https:/https:ro
       - ./Logs:/App/Logs
 ```
-- ~/.aspnet/https : This is the path of the Certificate generated in the Step 2.
-- ./Logs: This is the path of an exixting 'Logs' folder on the Host machine. All the generated logs will be stored there.
+- ~/.aspnet/https : This is the path of the Certificate generated in Step 2.
+- ./Logs: This is the path of an existing 'Logs' folder on the Host machine. All the generated logs will be stored there.
 
 
-## OBSERVABILITY: Getting the Lof Files
+## OBSERVABILITY: Getting the Log Files
 
 By setting the Environment Variable "ElasticSearchUrl" as outlined in the Specification Section, logging data will be aggregated using the Elastic Stack, allowing for visualization through Kibana when utilizing docker compose.
 
 Each of the docker-compose will have the same exact variables with values suited to the context.
 
 Note that the default Docker Image that will be pulled is `angelbus/tekton-webapi:latest`. This is my public Image Repository.
+
+## DEVELOPMENT: Quick Start Guide
+
+So, for a better developer experience, I have added Makefile into the solution. Now that our solution is generated, let's navigate to the root folder of the solution and open up a command terminal.
+To build the solution,
+```
+make build
+```
+
+By default, the solution is configured to work with postgresql databases (mainly because of the OS licensing). So, you will have to make sure that the postgresql database instance is up and running on your machine. You can modify the connection string to include your username and password. Connections strings can be found at src/Host/Configurations/database.json and src/Host/Configurations/hangfire.json. Once that's done, let's start up the API server.
+
+```
+make start
+```
+
+
+That's it, the application would connect to the defined postgresql database and start creating tables, and seed required data.
+For testing this API, we have 2 options.
+Swagger @ localhost:5001/swagger
+Postman collections are available ./postman
+
+```
+Default Credentials & Tokens
+{
+    "email":"admin@root.com",
+    "password":"123Pa$$word!"
+}
+```

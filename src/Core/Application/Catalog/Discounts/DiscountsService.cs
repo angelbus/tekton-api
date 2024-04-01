@@ -11,27 +11,24 @@ namespace Tekton.API.Core.Application.Catalog.Discounts;
 public class DiscountsService : IDiscountsService
 {
     private readonly HttpClient _client;
-    private readonly string _remoteServiceBaseUrl;
     private readonly ILogger<DiscountsService> _logger;
+    private string? _remoteServiceBaseUrl;
+    private string? _remoteServiceRequestUrl;
 
     public DiscountsService(HttpClient client, ILogger<DiscountsService> logger)
     {
         _client = client;
         _logger = logger;
 
-        _remoteServiceBaseUrl = Environment.GetEnvironmentVariable("ExternalDiscountsUrl") ?? string.Empty;
-        if (string.IsNullOrEmpty(_remoteServiceBaseUrl))
-        {
-            var myConfig = new ConfigurationBuilder().AddJsonFile("Configurations/external.json").Build();
-            _remoteServiceBaseUrl = myConfig.GetValue<string>("DiscountsSettings:DiscountsUrl") ?? string.Empty;
-        }
+        var tektonConfig = new ConfigurationBuilder().AddJsonFile("Configurations/external.json").Build();
 
-        if (string.IsNullOrEmpty(_remoteServiceBaseUrl))
-            _logger.LogInformation("The URL ExternalDiscountsUrl does not exist. Discounts will not be applied");
-        else
-            _logger.LogInformation("The ExternalDiscountsUrl has been set: " + _remoteServiceBaseUrl);
+        // Get the external service uri
+        GetExternalURL(ref tektonConfig);
 
-        _client.BaseAddress = new Uri(_remoteServiceBaseUrl);
+        // Get the trailing's external service param uri
+        GetExternalTrailingURL(ref tektonConfig);
+
+        _client.BaseAddress = new Uri(_remoteServiceBaseUrl ?? string.Empty);
     }
 
     public async Task<int> GetDiscountAsync(string id)
@@ -39,10 +36,43 @@ public class DiscountsService : IDiscountsService
         var returnVal = 0;
         if (!string.IsNullOrEmpty(_remoteServiceBaseUrl))
         {
-            ProductDiscountDto? discount = await _client.GetFromJsonAsync<ProductDiscountDto>($"products/{id}");
-            returnVal = discount != null ? discount!.Discount : 0;
+            try
+            {
+                ProductDiscountDto? discount = await _client.GetFromJsonAsync<ProductDiscountDto>($"{_remoteServiceRequestUrl}{id}");
+                returnVal = discount != null ? discount!.Discount : 0;
+            }
+            catch (HttpRequestException e)
+            {
+                _logger.LogInformation("The ExternalDiscountsUrl service returned ERROR: " + e.Message);
+            }
         }
 
         return returnVal;
+    }
+
+    private void GetExternalURL(ref IConfigurationRoot tektonConfig)
+    {
+        // Get the external service uri
+        _remoteServiceBaseUrl = Environment.GetEnvironmentVariable("ExternalDiscountsUrl")
+            ?? tektonConfig.GetValue<string>("DiscountsSettings:DiscountsUrl") ?? string.Empty;
+
+        var loggerMsg = string.IsNullOrEmpty(_remoteServiceBaseUrl)
+            ? "The URL ExternalDiscountsUrl does not exist. Discounts will not be applied"
+            : "The ExternalDiscountsUrl has been set: " + _remoteServiceBaseUrl;
+
+        _logger.LogInformation(loggerMsg);
+    }
+
+    private void GetExternalTrailingURL(ref IConfigurationRoot tektonConfig)
+    {
+        // Get the trailing's external service param uri
+        _remoteServiceRequestUrl = Environment.GetEnvironmentVariable("DiscountsRequestUrl")
+            ?? tektonConfig.GetValue<string>("DiscountsSettings:DiscountsRequestUrl");
+
+        var loggerMsg = string.IsNullOrEmpty(_remoteServiceRequestUrl)
+            ? "The URL ExternalDiscountsUrl does not exist. Discounts will not be applied"
+            : "The ExternalDiscountsUrl has been set: " + _remoteServiceRequestUrl;
+
+        _logger.LogInformation(loggerMsg);
     }
 }

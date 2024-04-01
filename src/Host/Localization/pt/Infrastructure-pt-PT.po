@@ -326,7 +326,7 @@ msgctxt "Tekton.API.Infrastructure.Multitenancy.TenantService"
 msgid "Tenant is already Deactivated."
 msgstr "O inquilino já está desativado."
 
-#. ?? throw new NotFoundException(_t["{0} {1} Not Found.", typeof(FSHTenantInfo).Name, id]);
+#. ?? throw new NotFoundException(_t["{0} {1} Not Found.", typeof(TektonTenantInfo).Name, id]);
 #: Infrastructure\Multitenancy\TenantService.cs:119
 msgctxt "Tekton.API.Infrastructure.Multitenancy.TenantService"
 msgid "{0} {1} Not Found."

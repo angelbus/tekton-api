@@ -19,7 +19,7 @@ namespace Migrators.MySQL.Migrations.Tenant
                 .HasAnnotation("ProductVersion", "6.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Tekton.API.Infrastructure.Multitenancy.FSHTenantInfo", b =>
+            modelBuilder.Entity("Tekton.API.Infrastructure.Multitenancy.TektonTenantInfo", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(64)

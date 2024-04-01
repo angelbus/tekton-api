@@ -13,7 +13,7 @@ public class ProductsController : VersionedApiController
 
     [HttpPost("search")]
     [MustHavePermission(TektonAction.Search, TektonResource.Products)]
-    [OpenApiOperation("Search products using available filters.", "")]
+    [OpenApiOperation("Search products using available filters.", "This is an asynchronous method that returns only the stored Product data. It DOES NOT RETURN the cacehd data (Status) nor the external data (Discounts); for those cases, use the GET method.")]
     public Task<PaginationResponse<ProductDto>> SearchAsync(SearchProductsRequest request)
     {
         StartLocalTimer();
@@ -24,7 +24,7 @@ public class ProductsController : VersionedApiController
 
     [HttpGet("{id:guid}")]
     [MustHavePermission(TektonAction.View, TektonResource.Products)]
-    [OpenApiOperation("Get product details.", "")]
+    [OpenApiOperation("Get product details.", "As requested, this method returns the interanl Product data, plus the cached 'Satus Name' and the Final Price with its external Dicount.")]
     public Task<ProductDetailsDto> GetAsync(Guid id)
     {
         StartLocalTimer();
@@ -35,7 +35,7 @@ public class ProductsController : VersionedApiController
 
     [HttpPost]
     [MustHavePermission(TektonAction.Create, TektonResource.Products)]
-    [OpenApiOperation("Create a new product.", "")]
+    [OpenApiOperation("Create a new product.", "This method created a new prodcut and returns the ID, which can be used by the client as the correlation ID.")]
     public Task<Guid> CreateAsync(CreateProductRequest request)
     {
         StartLocalTimer();
@@ -46,7 +46,7 @@ public class ProductsController : VersionedApiController
 
     [HttpPut("{id:guid}")]
     [MustHavePermission(TektonAction.Update, TektonResource.Products)]
-    [OpenApiOperation("Update a product.", "")]
+    [OpenApiOperation("Update a product.", "PUT method to update a profuct. NOTE: The omitted filds will be overwritten with their defaults.")]
     public async Task<ActionResult<Guid>> UpdateAsync(UpdateProductRequest request, Guid id)
     {
         StartLocalTimer();
@@ -59,7 +59,7 @@ public class ProductsController : VersionedApiController
 
     [HttpDelete("{id:guid}")]
     [MustHavePermission(TektonAction.Delete, TektonResource.Products)]
-    [OpenApiOperation("Delete a product.", "")]
+    [OpenApiOperation("Delete a product.", "This method deletes de product data. It's not a temporary operation.")]
     public Task<Guid> DeleteAsync(Guid id)
     {
         StartLocalTimer();

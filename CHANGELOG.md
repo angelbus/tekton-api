@@ -15,8 +15,8 @@
 
 Released on `2024-03-27`
 
-- AD Authentication Support
-- Oracle DB Provider for EFCore support
+- Added Authentication Support
+- Oracle DB Provider for EFCore Support
 - Code Refactors
 - Added ElasticSearch + Kibana for Logging
 - Added Docker Compose for ElasticSearch + Kibana Container
@@ -38,3 +38,6 @@ Released on `2024-03-27`
 ## 1.0.0
 
 Released on `2024-03-28`
+
+- Added External Discount Service Support
+- Added GitHub context events for Publising and Deployment
