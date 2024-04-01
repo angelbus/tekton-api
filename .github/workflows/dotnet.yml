@@ -50,5 +50,7 @@ jobs:
         name: Build FSH .NET Web API Image
         working-directory: ./
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/tekton-webapi:1.0.0 -f Dockerfile .
-          docker push ${{ secrets.DOCKER_USERNAME }}/tekton-webapi:1.0.0
+          export IMAGER_VERSION=$(cat "VERSION.txt")
+          echo "App version is ${IMAGER_VERSION}"
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/tekton-webapi:${IMAGER_VERSION} -f Dockerfile .
+          docker push ${{ secrets.DOCKER_USERNAME }}/tekton-webapi:${IMAGER_VERSION}
