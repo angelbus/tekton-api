@@ -33,7 +33,6 @@ jobs:
       run: dotnet build --no-restore
   test:
     name: Test
-    needs: publish
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -69,6 +68,7 @@ jobs:
   
   deploy:
     name: Deployment
+    needs: publish
     runs-on: ubuntu-latest
     if: github.event.inputs.deploy_to_cloud == 'true'
     steps:
