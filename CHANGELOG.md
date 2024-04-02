@@ -40,4 +40,4 @@ Released on `2024-03-27`
 Released on `2024-03-28`
 
 - Added External Discount Service Support
-- Added GitHub context events for Publising and Deployment
+- Added GitHub context events for Publishing and Deployment

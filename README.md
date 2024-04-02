@@ -125,7 +125,7 @@ This project utilizes AWS Fargate to manage and run the containerized applicatio
 
 ### Infrastructure Overview
 <p align="center">
-  <img src="https://github.com/angelbus/tekton-api/blob/main/Infrastructure-Diagram.png?raw=true" alt="Infrastructure Overview"/>
+  <img src="https://github.com/angelbus/tekton-api/blob/main/docs/Infrastructure-Diagram.png?raw=true" alt="Infrastructure Overview"/>
 </p>
 
 ## Observability and Monitoring
@@ -146,7 +146,7 @@ Tekton WebApi does not instrument the application code. That's an Anti-Pattern.
 
 ### Architecture Overview
 <p align="center">
-  <img src="https://github.com/angelbus/tekton-api/blob/main/Architecture-Diagram.jpeg?raw=true" alt="Architecture Overview"/>
+  <img src="https://github.com/angelbus/tekton-api/blob/main/docs/Architecture-Diagram.jpeg?raw=true" alt="Architecture Overview"/>
 </p>
 
 ### External Interfaces:
