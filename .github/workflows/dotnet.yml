@@ -33,6 +33,7 @@ jobs:
       run: dotnet build --no-restore
   test:
     name: Test
+    needs: publish
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
