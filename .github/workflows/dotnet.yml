@@ -61,7 +61,7 @@ jobs:
           
           IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/tekton-webapi
           docker build -t ${IMAGE_NAME} -f Dockerfile .
-          docker tag ${IMAGE_NAME} ${IMAGE_NAME}:${IMAGER_VERSION}
+          docker tag ${IMAGE_NAME} ${IMAGE_NAME}:${IMAGE_VERSION}
           docker tag ${IMAGE_NAME} ${IMAGE_NAME}:latest
           docker push ${IMAGE_NAME}
   
