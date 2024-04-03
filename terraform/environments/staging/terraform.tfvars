@@ -17,7 +17,7 @@ ecs_cluster_name = "angelbus"
 
 api_container_cpu    = 512
 api_container_memory = 1024
-api_image_name       = "angelbus/tekton-webapi:1.0.0"
+api_image_name       = "angelbus/tekton-webapi:latest"
 api_service_name     = "tekton-webapi"
 
 enable_health_check = true

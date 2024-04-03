@@ -1,4 +1,4 @@
-using Tekton.API.Application.Common.Caching;
+using Tekton.API.Core.Domain.Catalog;
 using Tekton.API.Domain.Common.Events;
 
 namespace Tekton.API.Application.Catalog.Products;
@@ -18,10 +18,10 @@ public class CreateProductRequestHandler : IRequestHandler<CreateProductRequest,
 {
     private readonly IRepository<Product> _repository;
     private readonly IFileStorageService _file;
-    private readonly ICacheService _cacheService;
+    private readonly IStatusService _statusService;
 
-    public CreateProductRequestHandler(IRepository<Product> repository, IFileStorageService file, ICacheService cacheService) =>
-        (_repository, _file, _cacheService) = (repository, file, cacheService);
+    public CreateProductRequestHandler(IRepository<Product> repository, IFileStorageService file, IStatusService statusService) =>
+        (_repository, _file, _statusService) = (repository, file, statusService);
 
     public async Task<Guid> Handle(CreateProductRequest request, CancellationToken cancellationToken)
     {
@@ -34,11 +34,7 @@ public class CreateProductRequestHandler : IRequestHandler<CreateProductRequest,
 
         await _repository.AddAsync(product, cancellationToken);
 
-        await _cacheService.SetAsync<ProductStatusDto>(product.Id.ToString(), new ProductStatusDto
-        {
-            Status = product.Status,
-            StatusName = product.Status == 0 ? "Inactive" : "Active"
-        });
+        await _statusService.UpdateStatusNameAsync(product.Id.ToString(), product.Status);
 
         return product.Id;
     }

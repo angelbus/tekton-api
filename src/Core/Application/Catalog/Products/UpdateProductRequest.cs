@@ -1,4 +1,4 @@
-using Tekton.API.Application.Common.Caching;
+using Tekton.API.Core.Domain.Catalog;
 using Tekton.API.Domain.Common.Events;
 
 namespace Tekton.API.Application.Catalog.Products;
@@ -21,10 +21,10 @@ public class UpdateProductRequestHandler : IRequestHandler<UpdateProductRequest,
     private readonly IRepository<Product> _repository;
     private readonly IStringLocalizer _t;
     private readonly IFileStorageService _file;
-    private readonly ICacheService _cacheService;
+    private readonly IStatusService _statusService;
 
-    public UpdateProductRequestHandler(IRepository<Product> repository, IStringLocalizer<UpdateProductRequestHandler> localizer, IFileStorageService file, ICacheService cacheService) =>
-        (_repository, _t, _file, _cacheService) = (repository, localizer, file, cacheService);
+    public UpdateProductRequestHandler(IRepository<Product> repository, IStringLocalizer<UpdateProductRequestHandler> localizer, IFileStorageService file, IStatusService statusService) =>
+        (_repository, _t, _file, _statusService) = (repository, localizer, file, statusService);
 
     public async Task<Guid> Handle(UpdateProductRequest request, CancellationToken cancellationToken)
     {
@@ -56,11 +56,7 @@ public class UpdateProductRequestHandler : IRequestHandler<UpdateProductRequest,
 
         await _repository.UpdateAsync(updatedProduct, cancellationToken);
 
-        await _cacheService.SetAsync<ProductStatusDto>(updatedProduct.Id.ToString(), new ProductStatusDto
-        {
-            Status = updatedProduct.Status,
-            StatusName = updatedProduct.Status == 0 ? "Inactive" : "Active"
-        });
+        await _statusService.UpdateStatusNameAsync(updatedProduct.Id.ToString(), updatedProduct.Status);
 
         return request.Id;
     }

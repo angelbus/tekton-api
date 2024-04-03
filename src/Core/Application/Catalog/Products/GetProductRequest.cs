@@ -1,5 +1,4 @@
-﻿using Tekton.API.Application.Common.Caching;
-using Tekton.API.Core.Domain.Catalog;
+﻿using Tekton.API.Core.Domain.Catalog;
 
 namespace Tekton.API.Application.Catalog.Products;
 
@@ -14,11 +13,11 @@ public class GetProductRequestHandler : IRequestHandler<GetProductRequest, Produ
 {
     private readonly IRepository<Product> _repository;
     private readonly IStringLocalizer _t;
-    private readonly ICacheService _cacheService;
+    private readonly IStatusService _statusService;
     private readonly IDiscountsService _discountsService;
 
-    public GetProductRequestHandler(IRepository<Product> repository, IStringLocalizer<GetProductRequestHandler> localizer, ICacheService cacheService, IDiscountsService discountsService) =>
-        (_repository, _t, _cacheService, _discountsService) = (repository, localizer, cacheService, discountsService);
+    public GetProductRequestHandler(IRepository<Product> repository, IStringLocalizer<GetProductRequestHandler> localizer, IStatusService statusService, IDiscountsService discountsService) =>
+        (_repository, _t, _statusService, _discountsService) = (repository, localizer, statusService, discountsService);
 
     public async Task<ProductDetailsDto> Handle(GetProductRequest request, CancellationToken cancellationToken)
     {
@@ -26,8 +25,7 @@ public class GetProductRequestHandler : IRequestHandler<GetProductRequest, Produ
             (ISpecification<Product, ProductDetailsDto>)new ProductByIdWithBrandSpec(request.Id), cancellationToken)
         ?? throw new NotFoundException(_t["Product {0} Not Found.", request.Id]);
 
-        var itemInCache = await _cacheService.GetAsync<ProductStatusDto>(productDetails.Id.ToString());
-        productDetails.StatusName = (itemInCache == null || string.IsNullOrEmpty(itemInCache.StatusName)) ? "Inactive" : itemInCache.StatusName;
+        productDetails.StatusName = await AssignProductStatus(productDetails);
 
         productDetails.Discount = await _discountsService.GetDiscountAsync(productDetails.Id.ToString());
         AssignProductDiscount(ref productDetails);
@@ -40,5 +38,10 @@ public class GetProductRequestHandler : IRequestHandler<GetProductRequest, Produ
         Console.WriteLine("Product Discount: " + product.Discount);
         product.FinalPrice = product.Price * (100 - product.Discount) / 100;
         Console.WriteLine("Product FinalPrice: " + product.FinalPrice);
+    }
+
+    private async Task<string> AssignProductStatus(ProductDetailsDto product)
+    {
+        return await _statusService.GetStatusNameAsync(product.Id.ToString(), product.Status);
     }
 }

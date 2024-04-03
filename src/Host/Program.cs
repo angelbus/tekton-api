@@ -5,11 +5,10 @@ using Tekton.API.Infrastructure;
 using Tekton.API.Infrastructure.Common;
 using Tekton.API.Infrastructure.Logging.Serilog;
 using Tekton.API.Core.Application.Catalog.Discounts;
+using Tekton.API.Core.Application.Catalog.Status;
 using Tekton.API.Core.Domain.Catalog;
 using Serilog;
 using Serilog.Formatting.Compact;
-
-using Tekton.API.Infrastructure.Catalog.Discounts;
 
 [assembly: ApiConventionType(typeof(TektonApiConventions))]
 
@@ -47,6 +46,7 @@ try
     })
     .SetHandlerLifetime(Timeout.InfiniteTimeSpan);
     builder.Services.AddSingleton<IDiscountsService, DiscountsService>();
+    builder.Services.AddSingleton<IStatusService, StatusService>();
 
     var app = builder.Build();
 

@@ -492,3 +492,5 @@ terraform.rc
 ## Visual Studio Code
 ##
 .mono/*
+**/obj/*
+**/bin/*

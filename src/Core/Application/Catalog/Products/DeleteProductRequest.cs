@@ -1,4 +1,4 @@
-﻿using Tekton.API.Application.Common.Caching;
+﻿using Tekton.API.Core.Domain.Catalog;
 using Tekton.API.Domain.Common.Events;
 
 namespace Tekton.API.Application.Catalog.Products;
@@ -14,10 +14,10 @@ public class DeleteProductRequestHandler : IRequestHandler<DeleteProductRequest,
 {
     private readonly IRepository<Product> _repository;
     private readonly IStringLocalizer _t;
-    private readonly ICacheService _cacheService;
+    private readonly IStatusService _statusService;
 
-    public DeleteProductRequestHandler(IRepository<Product> repository, IStringLocalizer<DeleteProductRequestHandler> localizer, ICacheService cacheService) =>
-        (_repository, _t, _cacheService) = (repository, localizer, cacheService);
+    public DeleteProductRequestHandler(IRepository<Product> repository, IStringLocalizer<DeleteProductRequestHandler> localizer, IStatusService statusService) =>
+        (_repository, _t, _statusService) = (repository, localizer, statusService);
 
     public async Task<Guid> Handle(DeleteProductRequest request, CancellationToken cancellationToken)
     {
@@ -30,7 +30,7 @@ public class DeleteProductRequestHandler : IRequestHandler<DeleteProductRequest,
         await _repository.DeleteAsync(product, cancellationToken);
 
         // The items are cached up to 5', by default. No need to await for this task...
-        await _cacheService.RemoveAsync(request.Id.ToString());
+        await _statusService.DeleteStatusNameAsync(request.Id.ToString());
 
         return request.Id;
     }

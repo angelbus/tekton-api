@@ -1,7 +1,7 @@
 
 services:
   tekton-webapi:
-    image: angelbus/tekton-webapi:1.0.0
+    image: angelbus/tekton-webapi:latest
     container_name: tekton-webapi
     networks:
       - angelbustamante

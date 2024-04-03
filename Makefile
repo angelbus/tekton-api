@@ -7,13 +7,15 @@ nuget:
 publish:
 	dotnet publish -c Release
 publish-image:
-	docker build -t angelbus/tekton-webapi:1.0.0 -f Dockerfile .
-	docker push angelbus/tekton-webapi:1.0.0
+	docker build -t angelbus/tekton-webapi -f Dockerfile .
+	docker tag angelbus/tekton-webapi angelbus/tekton-webapi:$(file < ./VERSION.txt)
+	docker tag angelbus/tekton-webapi angelbus/tekton-webapi:latest
+	docker push angelbus/tekton-webapi
 publish-to-hub:
 	dotnet publish -c Release -p:ContainerRegistry=docker.io -p:ContainerImageName=angelbus/tekton-webapi
 create-version:
-	export IMAGER_VERSION=$(cat "VERSION.txt")
-	echo "App version is ${IMAGER_VERSION}"
+	VERSION=$(file < ./VERSION.txt)
+	export VERSION
 ti: # terraform init
 	cd terraform/environments/staging && terraform init
 tp: # terraform plan
@@ -31,4 +33,4 @@ fds: # force rededeploy aws ecs service
 gw: # git docker workflow to push docker image to the repository based on the main branch
 	@echo triggering github workflow to push docker image to container
 	@echo ensure that you have the gh-cli installed and authenticated.
-	gh workflow run dotnet-cicd -f push_to_docker=true
+	gh workflow run dotnet-cicd -f push_to_docker=true dotnet-cicd -f push_to_docker=true

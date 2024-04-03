@@ -10,6 +10,7 @@ public class ProductDetailsDto : IDto
     public decimal Price { get; set; }
     public string? ImagePath { get; set; }
     public string Brand { get; set; } = default!;
+    public int Status { get; set; }
     public string StatusName { get; set; } = default!;
     public int Stock { get; set; }
     public int Discount { get; set; }
