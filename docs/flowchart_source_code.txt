@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Workload Placement Decision Tree - Flowchart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1a4d7c;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 1rem;
+            color: #44546A;
+            font-weight: 600;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background: white;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .legend-box {
+            width: 30px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* SVG Styles */
+        .decision-node {
+            fill: #FFD966;
+            stroke: #BF8F00;
+            stroke-width: 2.5;
+        }
+
+        .outcome-critical {
+            fill: #C00000;
+            stroke: #8B0000;
+            stroke-width: 2;
+        }
+
+        .outcome-high {
+            fill: #FFC000;
+            stroke: #BF8F00;
+            stroke-width: 2;
+        }
+
+        .outcome-moderate {
+            fill: #FFFF00;
+            stroke: #CCCC00;
+            stroke-width: 2;
+        }
+
+        .outcome-low {
+            fill: #70AD47;
+            stroke: #4F7A2F;
+            stroke-width: 2;
+        }
+
+        .outcome-neutral {
+            fill: #E7E6E6;
+            stroke: #666666;
+            stroke-width: 2;
+        }
+
+        .evaluation-node {
+            fill: #FFE6CC;
+            stroke: #CC8800;
+            stroke-width: 2;
+        }
+
+        .final-outcome {
+            fill: #70AD47;
+            stroke: #4F7A2F;
+            stroke-width: 3;
+        }
+
+        .arrow {
+            stroke: #44546A;
+            stroke-width: 2;
+            fill: none;
+            marker-end: url(#arrowhead);
+        }
+
+        .arrow-label {
+            font-size: 12px;
+            font-weight: 700;
+            fill: #44546A;
+        }
+
+        .node-text {
+            font-size: 13px;
+            font-weight: 700;
+            fill: #000000;
+            text-anchor: middle;
+        }
+
+        .node-text-white {
+            font-size: 13px;
+            font-weight: 700;
+            fill: #FFFFFF;
+            text-anchor: middle;
+        }
+
+        .node-subtext {
+            font-size: 11px;
+            font-weight: 600;
+            fill: #333333;
+            text-anchor: middle;
+        }
+
+        .step-label {
+            font-size: 14px;
+            font-weight: 800;
+            fill: #1a4d7c;
+            text-anchor: middle;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 20px;
+            }
+            .container {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Cloud Workload Placement Decision Tree</h1>
+            <p>Multi-Region Deployment Strategy | Version 1.0 | December 2025</p>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-box" style="background: #FFD966; border: 2px solid #BF8F00;"></div>
+                <span>Decision Point</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #C00000;"></div>
+                <span>Critical/High Risk</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #FFC000;"></div>
+                <span>High/Moderate</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #FFFF00;"></div>
+                <span>Moderate</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #70AD47;"></div>
+                <span>Low Risk/Approved</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #FFE6CC; border: 2px solid #CC8800;"></div>
+                <span>Evaluation</span>
+            </div>
+        </div>
+
+        <svg viewBox="0 0 1100 3400" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                    <polygon points="0 0, 10 3, 0 6" fill="#44546A" />
+                </marker>
+            </defs>
+
+            <!-- START -->
+            <ellipse cx="550" cy="40" rx="80" ry="30" fill="#2E75B6" stroke="#1a4d7c" stroke-width="2"/>
+            <text x="550" y="48" class="node-text-white">START</text>
+            
+            <line x1="550" y1="70" x2="550" y2="120" class="arrow"/>
+
+            <!-- STEP 1: Data Sovereignty -->
+            <text x="550" y="140" class="step-label">STEP 1: Data Sovereignty</text>
+            
+            <path d="M 550 160 L 700 230 L 550 300 L 400 230 Z" class="decision-node"/>
+            <text x="550" y="220" class="node-text">Does workload process</text>
+            <text x="550" y="238" class="node-text">EU citizen data</text>
+            <text x="550" y="256" class="node-text">(GDPR)?</text>
+
+            <!-- YES path -->
+            <line x1="400" y1="230" x2="280" y2="230" class="arrow"/>
+            <text x="330" y="220" class="arrow-label">YES</text>
+            
+            <rect x="180" y="200" width="180" height="60" rx="10" class="outcome-critical"/>
+            <text x="270" y="225" class="node-text-white">EU Regions</text>
+            <text x="270" y="242" class="node-text-white">Required</text>
+
+            <!-- NO path -->
+            <line x1="700" y1="230" x2="820" y2="230" class="arrow"/>
+            <text x="770" y="220" class="arrow-label">NO</text>
+            
+            <rect x="730" y="200" width="180" height="60" rx="10" class="outcome-low"/>
+            <text x="820" y="225" class="node-text-white">Global Deployment</text>
+            <text x="820" y="242" class="node-text-white">Possible</text>
+
+            <!-- Converge paths -->
+            <line x1="270" y1="260" x2="270" y2="350" class="arrow"/>
+            <line x1="820" y1="260" x2="820" y2="350" class="arrow"/>
+            <line x1="270" y1="350" x2="490" y2="350" class="arrow"/>
+            <line x1="820" y1="350" x2="610" y2="350" class="arrow"/>
+            <line x1="550" y1="350" x2="550" y2="420" class="arrow"/>
+
+            <!-- STEP 2: Business Criticality -->
+            <text x="550" y="440" class="step-label">STEP 2: Business Criticality</text>
+            
+            <path d="M 550 460 L 700 530 L 550 600 L 400 530 Z" class="decision-node"/>
+            <text x="550" y="520" class="node-text">Business Impact</text>
+            <text x="550" y="538" class="node-text">Classification</text>
+            <text x="550" y="556" class="node-text">(RTO/RPO)?</text>
+
+            <!-- TIER 1 -->
+            <line x1="400" y1="530" x2="220" y2="530" class="arrow"/>
+            <text x="300" y="520" class="arrow-label">TIER 1</text>
+            
+            <rect x="100" y="500" width="200" height="80" rx="10" class="outcome-critical"/>
+            <text x="200" y="525" class="node-text-white">TIER 1 (Critical)</text>
+            <text x="200" y="543" class="node-text-white">RTO &lt; 4h, RPO &lt; 15min</text>
+            <text x="200" y="561" class="node-text-white">Multi-region required</text>
+
+            <!-- TIER 2 -->
+            <line x1="550" y1="600" x2="550" y2="650" class="arrow"/>
+            <text x="570" y="630" class="arrow-label">TIER 2</text>
+            
+            <rect x="450" y="660" width="200" height="80" rx="10" class="outcome-high"/>
+            <text x="550" y="685" class="node-text">TIER 2 (High)</text>
+            <text x="550" y="703" class="node-text">RTO &lt; 24h, RPO &lt; 1h</text>
+            <text x="550" y="721" class="node-text">Primary + DR</text>
+
+            <!-- TIER 3 -->
+            <line x1="700" y1="530" x2="880" y2="530" class="arrow"/>
+            <text x="800" y="520" class="arrow-label">TIER 3</text>
+            
+            <rect x="800" y="500" width="200" height="80" rx="10" class="outcome-low"/>
+            <text x="900" y="525" class="node-text-white">TIER 3 (Standard)</text>
+            <text x="900" y="543" class="node-text-white">RTO &lt; 72h, RPO &lt; 24h</text>
+            <text x="900" y="561" class="node-text-white">Single region OK</text>
+
+            <!-- Converge paths -->
+            <line x1="200" y1="580" x2="200" y2="800" class="arrow"/>
+            <line x1="550" y1="740" x2="550" y2="800" class="arrow"/>
+            <line x1="900" y1="580" x2="900" y2="800" class="arrow"/>
+            <line x1="200" y1="800" x2="490" y2="800" class="arrow"/>
+            <line x1="900" y1="800" x2="610" y2="800" class="arrow"/>
+            <line x1="550" y1="800" x2="550" y2="870" class="arrow"/>
+
+            <!-- STEP 3: Latency Requirements -->
+            <text x="550" y="890" class="step-label">STEP 3: Latency Requirements</text>
+            
+            <path d="M 550 910 L 700 980 L 550 1050 L 400 980 Z" class="decision-node"/>
+            <text x="550" y="970" class="node-text">User Location &</text>
+            <text x="550" y="988" class="node-text">Latency Tolerance?</text>
+
+            <!-- <50ms -->
+            <line x1="400" y1="980" x2="220" y2="980" class="arrow"/>
+            <text x="300" y="970" class="arrow-label">&lt;50ms</text>
+            
+            <rect x="100" y="950" width="200" height="70" rx="10" class="outcome-critical"/>
+            <text x="200" y="975" class="node-text-white">Deploy in</text>
+            <text x="200" y="993" class="node-text-white">Closest Region</text>
+
+            <!-- 50-100ms -->
+            <line x1="550" y1="1050" x2="550" y2="1100" class="arrow"/>
+            <text x="575" y="1080" class="arrow-label">50-100ms</text>
+            
+            <rect x="450" y="1110" width="200" height="70" rx="10" class="outcome-moderate"/>
+            <text x="550" y="1135" class="node-text">Balance Cost</text>
+            <text x="550" y="1153" class="node-text">& Resilience</text>
+
+            <!-- >100ms -->
+            <line x1="700" y1="980" x2="880" y2="980" class="arrow"/>
+            <text x="800" y="970" class="arrow-label">&gt;100ms</text>
+            
+            <rect x="800" y="950" width="200" height="70" rx="10" class="outcome-low"/>
+            <text x="900" y="975" class="node-text-white">Prioritize Cost</text>
+            <text x="900" y="993" class="node-text-white">over Proximity</text>
+
+            <!-- Converge paths -->
+            <line x1="200" y1="1020" x2="200" y2="1250" class="arrow"/>
+            <line x1="550" y1="1180" x2="550" y2="1250" class="arrow"/>
+            <line x1="900" y1="1020" x2="900" y2="1250" class="arrow"/>
+            <line x1="200" y1="1250" x2="490" y2="1250" class="arrow"/>
+            <line x1="900" y1="1250" x2="610" y2="1250" class="arrow"/>
+            <line x1="550" y1="1250" x2="550" y2="1320" class="arrow"/>
+
+            <!-- STEP 4: Concentration Risk -->
+            <text x="550" y="1340" class="step-label">STEP 4: Workload Concentration Risk</text>
+            
+            <path d="M 550 1360 L 700 1430 L 550 1500 L 400 1430 Z" class="decision-node"/>
+            <text x="550" y="1420" class="node-text">Current Workload %</text>
+            <text x="550" y="1438" class="node-text">in Candidate Region?</text>
+
+            <!-- >60% -->
+            <line x1="400" y1="1430" x2="220" y2="1430" class="arrow"/>
+            <text x="300" y="1420" class="arrow-label">&gt;60%</text>
+            
+            <rect x="100" y="1400" width="200" height="70" rx="10" class="outcome-critical"/>
+            <text x="200" y="1425" class="node-text-white">HIGH RISK</text>
+            <text x="200" y="1443" class="node-text-white">Prefer Alternative</text>
+
+            <!-- 40-60% -->
+            <line x1="550" y1="1500" x2="550" y2="1550" class="arrow"/>
+            <text x="580" y="1530" class="arrow-label">40-60%</text>
+            
+            <rect x="450" y="1560" width="200" height="70" rx="10" class="outcome-high"/>
+            <text x="550" y="1585" class="node-text">MODERATE RISK</text>
+            <text x="550" y="1603" class="node-text">DR Plan Required</text>
+
+            <!-- <40% -->
+            <line x1="700" y1="1430" x2="880" y2="1430" class="arrow"/>
+            <text x="800" y="1420" class="arrow-label">&lt;40%</text>
+            
+            <rect x="800" y="1400" width="200" height="70" rx="10" class="outcome-low"/>
+            <text x="900" y="1425" class="node-text-white">LOW RISK</text>
+            <text x="900" y="1443" class="node-text-white">Proceed</text>
+
+            <!-- Converge paths -->
+            <line x1="200" y1="1470" x2="200" y2="1700" class="arrow"/>
+            <line x1="550" y1="1630" x2="550" y2="1700" class="arrow"/>
+            <line x1="900" y1="1470" x2="900" y2="1700" class="arrow"/>
+            <line x1="200" y1="1700" x2="490" y2="1700" class="arrow"/>
+            <line x1="900" y1="1700" x2="610" y2="1700" class="arrow"/>
+            <line x1="550" y1="1700" x2="550" y2="1770" class="arrow"/>
+
+            <!-- STEP 5: Technical Dependencies -->
+            <text x="550" y="1790" class="step-label">STEP 5: Technical Dependencies</text>
+            
+            <rect x="400" y="1810" width="300" height="140" rx="10" class="evaluation-node"/>
+            <text x="550" y="1835" class="node-text">Evaluate Service Availability</text>
+            <text x="550" y="1855" class="node-subtext">✓ Required services available</text>
+            <text x="550" y="1875" class="node-subtext">✓ System integrations verified</text>
+            <text x="550" y="1895" class="node-subtext">✓ Network connectivity OK</text>
+            <text x="550" y="1915" class="node-subtext">✓ Third-party SaaS accessible</text>
+
+            <line x1="400" y1="1880" x2="320" y2="1880" class="arrow"/>
+            <text x="340" y="1870" class="arrow-label">Issues</text>
+            
+            <rect x="150" y="1850" width="150" height="60" rx="10" class="outcome-critical"/>
+            <text x="225" y="1875" class="node-text-white">Re-evaluate</text>
+            <text x="225" y="1893" class="node-text-white">Region</text>
+
+            <line x1="700" y1="1880" x2="780" y2="1880" class="arrow"/>
+            <text x="750" y="1870" class="arrow-label">All OK</text>
+            
+            <rect x="800" y="1850" width="150" height="60" rx="10" class="outcome-low"/>
+            <text x="875" y="1875" class="node-text-white">Requirements</text>
+            <text x="875" y="1893" class="node-text-white">Met</text>
+
+            <!-- Continue path -->
+            <line x1="550" y1="1950" x2="550" y2="2020" class="arrow"/>
+
+            <!-- STEP 6: Cost Analysis -->
+            <text x="550" y="2040" class="step-label">STEP 6: Cost Analysis</text>
+            
+            <path d="M 550 2060 L 700 2130 L 550 2200 L 400 2130 Z" class="decision-node"/>
+            <text x="550" y="2120" class="node-text">Compare TCO</text>
+            <text x="550" y="2138" class="node-text">Across Regions</text>
+
+            <line x1="400" y1="2130" x2="250" y2="2130" class="arrow"/>
+            <text x="315" y="2120" class="arrow-label">&gt;20% diff</text>
+            
+            <rect x="100" y="2100" width="230" height="70" rx="10" class="evaluation-node"/>
+            <text x="215" y="2125" class="node-text">COST JUSTIFICATION</text>
+            <text x="215" y="2143" class="node-text">REQUIRED</text>
+
+            <line x1="700" y1="2130" x2="850" y2="2130" class="arrow"/>
+            <text x="785" y="2120" class="arrow-label">&lt;20% diff</text>
+            
+            <rect x="770" y="2100" width="180" height="70" rx="10" class="outcome-low"/>
+            <text x="860" y="2125" class="node-text-white">Cost</text>
+            <text x="860" y="2143" class="node-text-white">Acceptable</text>
+
+            <!-- Converge to final evaluation -->
+            <line x1="215" y1="2170" x2="215" y2="2300" class="arrow"/>
+            <line x1="860" y1="2170" x2="860" y2="2300" class="arrow"/>
+            <line x1="215" y1="2300" x2="490" y2="2300" class="arrow"/>
+            <line x1="860" y1="2300" x2="610" y2="2300" class="arrow"/>
+            <line x1="550" y1="2300" x2="550" y2="2370" class="arrow"/>
+
+            <!-- Final Decision Node -->
+            <path d="M 550 2390 L 700 2460 L 550 2530 L 400 2460 Z" class="decision-node"/>
+            <text x="550" y="2450" class="node-text">All Criteria</text>
+            <text x="550" y="2468" class="node-text">Satisfied?</text>
+
+            <line x1="400" y1="2460" x2="250" y2="2460" class="arrow"/>
+            <text x="315" y="2450" class="arrow-label">NO</text>
+            
+            <rect x="100" y="2430" width="230" height="70" rx="10" class="outcome-critical"/>
+            <text x="215" y="2455" class="node-text-white">RE-EVALUATE or</text>
+            <text x="215" y="2473" class="node-text-white">SELECT ALTERNATIVE</text>
+
+            <line x1="700" y1="2460" x2="850" y2="2460" class="arrow"/>
+            <text x="785" y="2450" class="arrow-label">YES</text>
+            
+            <line x1="850" y1="2460" x2="850" y2="2600" class="arrow"/>
+            <line x1="850" y1="2600" x2="610" y2="2600" class="arrow"/>
+
+            <!-- Governance & Approval -->
+            <text x="550" y="2640" class="step-label">GOVERNANCE & APPROVAL</text>
+            
+            <rect x="380" y="2660" width="340" height="100" rx="10" class="evaluation-node"/>
+            <text x="550" y="2690" class="node-text">Submit for Approval</text>
+            <text x="550" y="2710" class="node-subtext">TIER 1: CTO/VP Infrastructure</text>
+            <text x="550" y="2730" class="node-subtext">TIER 2: Director Cloud Operations</text>
+            <text x="550" y="2750" class="node-subtext">TIER 3: Senior Cloud Architect</text>
+
+            <line x1="550" y1="2760" x2="550" y2="2840" class="arrow"/>
+
+            <path d="M 550 2860 L 650 2910 L 550 2960 L 450 2910 Z" class="decision-node"/>
+            <text x="550" y="2905" class="node-text">Approved?</text>
+
+            <line x1="450" y1="2910" x2="330" y2="2910" class="arrow"/>
+            <text x="380" y="2900" class="arrow-label">NO</text>
+            
+            <rect x="200" y="2880" width="210" height="60" rx="10" class="outcome-critical"/>
+            <text x="305" y="2905" class="node-text-white">REJECTED</text>
+            <text x="305" y="2923" class="node-text-white">Revise Plan</text>
+
+            <line x1="650" y1="2910" x2="770" y2="2910" class="arrow"/>
+            <text x="720" y="2900" class="arrow-label">YES</text>
+            
+            <line x1="770" y1="2910" x2="770" y2="3050" class="arrow"/>
+            <line x1="770" y1="3050" x2="610" y2="3050" class="arrow"/>
+
+            <!-- FINAL OUTCOME -->
+            <rect x="380" y="3080" width="340" height="80" rx="10" class="final-outcome"/>
+            <text x="550" y="3115" class="node-text-white" style="font-size: 16px;">DEPLOYMENT APPROVED</text>
+            <text x="550" y="3138" class="node-text-white">Proceed with Implementation</text>
+
+            <line x1="550" y1="3160" x2="550" y2="3230" class="arrow"/>
+
+            <!-- END -->
+            <ellipse cx="550" cy="3270" rx="100" ry="40" fill="#2E75B6" stroke="#1a4d7c" stroke-width="3"/>
+            <text x="550" y="3270" class="node-text-white" style="font-size: 15px;">DOCUMENT IN</text>
+            <text x="550" y="3288" class="node-text-white" style="font-size: 15px;">REGISTRY</text>
+
+        </svg>
+    </div>
+</body>
+</html>
