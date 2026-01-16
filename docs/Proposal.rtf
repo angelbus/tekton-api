@@ -1,305 +1,120 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2639
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\froman\fcharset0 Times-Bold;\f2\fmodern\fcharset0 Courier;
-\f3\ftech\fcharset77 Symbol;\f4\fnil\fcharset0 Menlo-Regular;}
-{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
-{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
-{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
-{\list\listtemplateid2\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}}{\leveltext\leveltemplateid101\'01\'00;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid2}
-{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid201\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid3}
-{\list\listtemplateid4\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid301\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid4}
-{\list\listtemplateid5\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid401\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid5}
-{\list\listtemplateid6\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid501\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid6}}
-{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}{\listoverride\listid5\listoverridecount0\ls5}{\listoverride\listid6\listoverridecount0\ls6}}
-\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
-\deftab720
-\pard\pardeftab720\sa240\partightenfactor0
+Subject: Decisión de Arquitectura — Consumo de Resultados GRID (MVP2)
 
-\f0\fs24 \cf0 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 Subject: Decisi\'f3n de Arquitectura \'97 Consumo de Resultados GRID (MVP2)\
-Estimado equipo,\
-Les escribo para plantear una 
-\f1\b decisi\'f3n de Arquitectura
-\f0\b0  sobre c\'f3mo consumir los resultados del 
-\f1\b GRID
-\f0\b0  en 
-\f1\b MVP2
-\f0\b0 , con impacto directo en 
-\f1\b latencia
-\f0\b0 , 
-\f1\b reliability
-\f0\b0  y cumplimiento del modelo 
-\f1\b event-driven / near real-time
-\f0\b0 .\
-Estoy trabajando en un 
-\f1\b Proposal Document
-\f0\b0  m\'e1s extenso, pero antes de avanzar necesito 
-\f1\b validar el criterio arquitect\'f3nico
-\f0\b0  y la 
-\f1\b viabilidad
-\f0\b0  de un cambio menor en el mecanismo actual de entrega de resultados de GRID.\uc0\u8232 A continuaci\'f3n presento un 
-\f1\b resumen ejecutivo
-\f0\b0 , seguido de un 
-\f1\b anexo t\'e9cnico
-\f0\b0  para quien desee profundizar.\
-\pard\pardeftab720\partightenfactor0
-\cf0 \strokec2 \
-\pard\pardeftab720\sa321\partightenfactor0
+Estimado equipo,
 
-\f1\b\fs48 \cf0 \strokec2 Contexto Resumido\
-\pard\pardeftab720\sa240\partightenfactor0
+Les escribo para plantear una **decisión de Arquitectura** sobre cómo consumir los resultados del **GRID** en **MVP2**, con impacto directo en **latencia**, **reliability** y cumplimiento del modelo **event-driven / near real-time**.
 
-\f0\b0\fs24 \cf0 Hoy XENA depende de m\'faltiples componentes upstream:\
-\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
-\ls1\ilvl0
-\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 GRID
-\f0\b0  (procesamiento)\
-\ls1\ilvl0
-\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 CoE BigData Tools (OCA/DaaS)
-\f0\b0  (ingestas y tooling)\
-\pard\pardeftab720\sa240\partightenfactor0
-\cf0 Estos componentes 
-\f1\b definen los l\'edmites arquitect\'f3nicos (NFR/Quality Attributes)
-\f0\b0  que XENA puede alcanzar.\uc0\u8232 Esto no es un defecto de dise\'f1o, es 
-\f1\b propiedad transitiva de los sistemas distribuidos
-\f0\b0 .\
-\pard\pardeftab720\partightenfactor0
-\cf0 \strokec2 \
-\pard\pardeftab720\sa321\partightenfactor0
+Estoy trabajando en un **Proposal Document** más extenso, pero antes de avanzar necesito **validar el criterio arquitectónico** y la **viabilidad** de un cambio menor en el mecanismo actual de entrega de resultados de GRID.
+A continuación presento un **resumen ejecutivo**, seguido de un **anexo técnico** para quien desee profundizar.
 
-\f1\b\fs48 \cf0 \strokec2 Tesis Arquitect\'f3nica\
-\pard\pardeftab720\sa240\partightenfactor0
+---
 
-\f0\b0\fs24 \cf0 En sistemas distribuidos se aplican dos principios relevantes:\
-\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
-\ls2\ilvl0
-\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	1	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 \'93No podemos construir un sistema m\'e1s confiable, m\'e1s r\'e1pido o m\'e1s escalable que nuestras dependencias menos confiables.\'94
-\f0\b0 \
-\ls2\ilvl0
-\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	2	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 \'93Las propiedades arquitect\'f3nicas (NFR/Quality Attributes) son transitivas.\'94
-\f0\b0 \
-\pard\pardeftab720\sa240\partightenfactor0
-\cf0 Ejemplo real: si el tooling de ingestas no soporta 
-\f1\b streaming
-\f0\b0 , por transitividad XENA tampoco puede ser 
-\f1\b streaming end-to-end
-\f0\b0  hasta que ese frente evolucione (algo que ya estamos trabajando con el equipo de Luis Morales).\
-De forma an\'e1loga, 
-\f1\b GRID
-\f0\b0  cumple muy bien su funci\'f3n de 
-\f1\b High Throughput Computing
-\f0\b0 , pero el mecanismo actual de entrega de resultados (Redis 
-\f2\fs26 RPUSH
-\f0\fs24  por clave/request) introduce 
-\f1\b limitaciones de reliability y latencia predecible
-\f0\b0  para un consumidor real-time.\
-\pard\pardeftab720\partightenfactor0
-\cf0 \strokec2 \
-\pard\pardeftab720\sa321\partightenfactor0
+# **Contexto Resumido**
 
-\f1\b\fs48 \cf0 \strokec2 Problema a Resolver (MVP2)\
-\pard\pardeftab720\sa240\partightenfactor0
+Hoy XENA depende de múltiples componentes upstream:
 
-\f0\b0\fs24 \cf0 Para que XENA cumpla su modelo 
-\f1\b event-driven / near real-time
-\f0\b0  necesitamos que la entrega de resultados:\
-\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
-\ls3\ilvl0\cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 tenga 
-\f1\b garant\'edas m\'ednimas de entrega
-\f0\b0 \
-\ls3\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 permita 
-\f1\b escalado horizontal stateless
-\f0\b0 \
-\ls3\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 mantenga 
-\f1\b latencia predecible
-\f0\b0 \
-\ls3\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 sea 
-\f1\b observable (lag/throughput/errors)
-\f0\b0 \
-\pard\pardeftab720\sa240\partightenfactor0
-\cf0 Con el mecanismo actual, ante fallos o desconexiones se pierden resultados y no existe posibilidad de 
-\f1\b replay
-\f0\b0  ni de 
-\f1\b backpressure
-\f0\b0 , lo cual contradice los NFR del MVP2.\
-\pard\pardeftab720\partightenfactor0
-\cf0 \strokec2 \
-\pard\pardeftab720\sa321\partightenfactor0
+* **GRID** (procesamiento)
+* **CoE BigData Tools (OCA/DaaS)** (ingestas y tooling)
 
-\f1\b\fs48 \cf0 \strokec2 Propuesta\
-\pard\pardeftab720\sa240\partightenfactor0
+Estos componentes **definen los límites arquitectónicos (NFR/Quality Attributes)** que XENA puede alcanzar.
+Esto no es un defecto de diseño, es **propiedad transitiva de los sistemas distribuidos**.
 
-\f0\b0\fs24 \cf0 Evaluar la adopci\'f3n de 
-\f1\b Redis Streams
-\f0\b0  en GRID como mecanismo de entrega de resultados, ya que habilita:\
-\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
-\ls4\ilvl0
-\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 Consumer Groups
-\f0\b0 \
-\ls4\ilvl0
-\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 Garant\'edas at-least-once
-\f0\b0 \
-\ls4\ilvl0
-\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 Replay
-\f0\b0 \
-\ls4\ilvl0
-\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 Backpressure
-\f0\b0 \
-\ls4\ilvl0
-\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 Latencia P95 <100ms
-\f0\b0 \
-\ls4\ilvl0
-\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 Monitoreo de lag & throughput
-\f0\b0 \
-\ls4\ilvl0
-\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 Escalabilidad stateless
-\f0\b0 \
-\pard\pardeftab720\sa240\partightenfactor0
-\cf0 Los detalles est\'e1n en el Proposal Document; este email busca \'fanicamente 
-\f1\b validar la direcci\'f3n arquitect\'f3nica
-\f0\b0 .\
-\pard\pardeftab720\partightenfactor0
-\cf0 \strokec2 \
-\pard\pardeftab720\sa321\partightenfactor0
+---
 
-\f1\b\fs48 \cf0 \strokec2 ANEXO T\'c9CNICO\
-\pard\pardeftab720\sa298\partightenfactor0
+# **Tesis Arquitectónica**
 
-\fs36 \cf0 1. Situaci\'f3n actual\
-\pard\pardeftab720\sa240\partightenfactor0
+En sistemas distribuidos se aplican dos principios relevantes:
 
-\f0\b0\fs24 \cf0 GRID publica resultados en Redis con 
-\f2\fs26 RPUSH
-\f0\fs24  sobre claves individuales (
-\f2\fs26 grid:response:\{request_id\}
-\f0\fs24 ).\
-\pard\pardeftab720\sa298\partightenfactor0
+1. **“No podemos construir un sistema más confiable, más rápido o más escalable que nuestras dependencias menos confiables.”**
+2. **“Las propiedades arquitectónicas (NFR/Quality Attributes) son transitivas.”**
 
-\f1\b\fs36 \cf0 2. Opci\'f3n evaluada: \'93BLPOP Response Listeners\'94\
-\pard\pardeftab720\sa240\partightenfactor0
+Ejemplo real: si el tooling de ingestas no soporta **streaming**, por transitividad XENA tampoco puede ser **streaming end-to-end** hasta que ese frente evolucione (algo que ya estamos trabajando con el equipo de Luis Morales).
 
-\f0\b0\fs24 \cf0 Componente con m\'faltiples PODs ejecutando 
-\f2\fs26 BLPOP
-\f0\fs24  sobre las claves.\
+De forma análoga, **GRID** cumple muy bien su función de **High Throughput Computing**, pero el mecanismo actual de entrega de resultados (Redis `RPUSH` por clave/request) introduce **limitaciones de reliability y latencia predecible** para un consumidor real-time.
 
-\f1\b Limitaciones t\'e9cnicas:
-\f0\b0 \
-\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
-\ls5\ilvl0
-\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 Latencia impredecible
-\f0\b0  (descubrimiento + timeouts)\
-\ls5\ilvl0
-\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 Introduce estado interno
-\f0\b0  en XENA (pasa de stateless 
-\f3 \uc0\u8594 
-\f0  stateful)\
-\ls5\ilvl0
-\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 Coordinaci\'f3n distribuida
-\f0\b0  para asignar claves\
-\ls5\ilvl0
-\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 Sin garant\'edas de entrega
-\f0\b0 \
-\ls5\ilvl0
-\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 Sin replay
-\f0\b0 \
-\ls5\ilvl0
-\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 Sin backpressure
-\f0\b0 \
-\ls5\ilvl0
-\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 Dif\'edcil de monitorear
-\f0\b0 \
-\pard\pardeftab720\sa298\partightenfactor0
+---
 
-\f1\b\fs36 \cf0 3. Alternativa: Redis Streams\
-\pard\pardeftab720\sa240\partightenfactor0
+# **Problema a Resolver (MVP2)**
 
-\f0\b0\fs24 \cf0 Permite cumplir NFR de MVP2:\
-\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
-\ls6\ilvl0\cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 Consumer Groups 
-\f3 \uc0\u8594 
-\f0  
-\f1\b horizontal scaling real
-\f0\b0 \
-\ls6\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 Offsets 
-\f3 \uc0\u8594 
-\f0  
-\f1\b replay / resiliencia
-\f0\b0 \
-\ls6\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 XREADGROUP 
-\f3 \uc0\u8594 
-\f0  
-\f1\b backpressure
-\f0\b0 \
-\ls6\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 Pipelining 
-\f3 \uc0\u8594 
-\f0  
-\f1\b latencia estable
-\f0\b0 \
-\ls6\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 M\'e9tricas 
-\f3 \uc0\u8594 
-\f0  
-\f1\b lag/throughput observables
-\f0\b0 \
-\pard\pardeftab720\sa298\partightenfactor0
+Para que XENA cumpla su modelo **event-driven / near real-time** necesitamos que la entrega de resultados:
 
-\f1\b\fs36 \cf0 4. Transitivdad aplicada\
-\pard\pardeftab720\partightenfactor0
+* tenga **garantías mínimas de entrega**
+* permita **escalado horizontal stateless**
+* mantenga **latencia predecible**
+* sea **observable (lag/throughput/errors)**
 
-\f2\b0\fs26 \cf0 GRID (RPUSH + claves por request)\
-   
-\f4 \uc0\u9492 \u9472 
-\f2  Obliga a XENA a stateful\
-        
-\f4 \uc0\u9492 \u9472 
-\f2  Obliga a coordinaci\'f3n distribuida\
-             
-\f4 \uc0\u9492 \u9472 
-\f2  Impone latencia impredecible\
-                  
-\f4 \uc0\u9492 \u9472 
-\f2  No real-time bajo carga\
-GRID (Redis Streams)\
-   
-\f4 \uc0\u9492 \u9472 
-\f2  Consumer Groups\
-        
-\f4 \uc0\u9492 \u9472 
-\f2  Stateless en XENA\
-             
-\f4 \uc0\u9492 \u9472 
-\f2  Latencia <100ms\
-                  
-\f4 \uc0\u9492 \u9472 
-\f2  Real-time + resiliencia\
-\pard\pardeftab720\partightenfactor0
+Con el mecanismo actual, ante fallos o desconexiones se pierden resultados y no existe posibilidad de **replay** ni de **backpressure**, lo cual contradice los NFR del MVP2.
 
-\f0\fs24 \cf0 \strokec2 \
-\pard\pardeftab720\sa240\partightenfactor0
-\cf0 \strokec2 Quedo a disposici\'f3n para discutir esta direcci\'f3n y avanzar con el Proposal.\
-}
+---
+
+# **Propuesta**
+
+Evaluar la adopción de **Redis Streams** en GRID como mecanismo de entrega de resultados, ya que habilita:
+
+* **Consumer Groups**
+* **Garantías at-least-once**
+* **Replay**
+* **Backpressure**
+* **Latencia P95 <100ms**
+* **Monitoreo de lag & throughput**
+* **Escalabilidad stateless**
+
+Los detalles están en el Proposal Document; este email busca únicamente **validar la dirección arquitectónica**.
+
+---
+
+# **ANEXO TÉCNICO**
+
+## 1. Situación actual
+
+GRID publica resultados en Redis con `RPUSH` sobre claves individuales (`grid:response:{request_id}`).
+
+## 2. Opción evaluada: “BLPOP Response Listeners”
+
+Componente con múltiples PODs ejecutando `BLPOP` sobre las claves.
+
+**Limitaciones técnicas:**
+
+* **Latencia impredecible** (descubrimiento + timeouts)
+* **Introduce estado interno** en XENA (pasa de stateless → stateful)
+* **Coordinación distribuida** para asignar claves
+* **Sin garantías de entrega**
+* **Sin replay**
+* **Sin backpressure**
+* **Difícil de monitorear**
+
+## 3. Alternativa: Redis Streams
+
+Permite cumplir NFR de MVP2:
+
+* Consumer Groups → **horizontal scaling real**
+* Offsets → **replay / resiliencia**
+* XREADGROUP → **backpressure**
+* Pipelining → **latencia estable**
+* Métricas → **lag/throughput observables**
+
+## 4. Transitivdad aplicada
+
+```
+GRID (RPUSH + claves por request)
+   └─ Obliga a XENA a stateful
+        └─ Obliga a coordinación distribuida
+             └─ Impone latencia impredecible
+                  └─ No real-time bajo carga
+```
+
+```
+GRID (Redis Streams)
+   └─ Consumer Groups
+        └─ Stateless en XENA
+             └─ Latencia <100ms
+                  └─ Real-time + resiliencia
+```
+
+---
+
+Quedo a disposición para discutir esta dirección y avanzar con el Proposal.
+
+Saludos cordiales,
+[Tu nombre]
+[Tu cargo]
