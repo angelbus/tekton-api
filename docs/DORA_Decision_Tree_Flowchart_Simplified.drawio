@@ -1,0 +1,365 @@
+<mxfile host="app.diagrams.net" modified="2025-01-19T00:00:00.000Z" agent="Claude" version="24.0.0" etag="DORA-Decision-Tree-v2" type="device">
+  <diagram name="DORA Cloud Workload Decision Tree - Simplified" id="dora-decision-tree-simplified">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1654" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Title -->
+        <mxCell id="title" value="Cloud Workload Placement Decision Tree" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1;fontColor=#1A4D7C;" vertex="1" parent="1">
+          <mxGeometry x="284.5" y="20" width="600" height="35" as="geometry" />
+        </mxCell>
+        
+        <!-- Subtitle -->
+        <mxCell id="subtitle" value="DORA-Compliant Deployment Framework | Version 1.0 | December 2025" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#44546A;" vertex="1" parent="1">
+          <mxGeometry x="284.5" y="55" width="600" height="25" as="geometry" />
+        </mxCell>
+        
+        <!-- DORA Badge -->
+        <mxCell id="dora-badge" value="Simplified Implementation Guide" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E75B6;strokeColor=#1A4D7C;fontColor=#FFFFFF;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="434.5" y="85" width="300" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- START -->
+        <mxCell id="start" value="START" style="ellipse;whiteSpace=wrap;html=1;fillColor=#2E75B6;strokeColor=#1A4D7C;fontColor=#FFFFFF;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="509.5" y="140" width="150" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrow from START to Step 1 -->
+        <mxCell id="arrow-start-step1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;" edge="1" parent="1" source="start" target="step1-decision">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- STEP 1: Data Sovereignty (REORDERED) -->
+        <mxCell id="step1-label" value="STEP 1: Data Sovereignty &amp; Regulatory Compliance" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fontColor=#1A4D7C;" vertex="1" parent="1">
+          <mxGeometry x="359.5" y="230" width="450" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="step1-decision" value="Does workload process&lt;br&gt;EU citizen data (GDPR)&lt;br&gt;or regulated data?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFD966;strokeColor=#BF8F00;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="434.5" y="265" width="300" height="150" as="geometry" />
+        </mxCell>
+        
+        <!-- Step 1 Outcomes -->
+        <mxCell id="step1-outcome-eu" value="YES - EU Data&lt;br&gt;EU Regions Only&lt;br&gt;(Frankfurt/Ireland/Madrid)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C00000;strokeColor=#8B0000;fontColor=#FFFFFF;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="149.5" y="295" width="180" height="90" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="step1-outcome-other" value="YES - Other Regs&lt;br&gt;Filter by&lt;br&gt;Jurisdiction" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFC000;strokeColor=#BF8F00;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="494.5" y="455" width="180" height="90" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="step1-outcome-no" value="NO Restrictions&lt;br&gt;Global Deployment&lt;br&gt;Possible" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#70AD47;strokeColor=#4F7A2F;fontColor=#FFFFFF;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="839.5" y="295" width="180" height="90" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrows from Step 1 -->
+        <mxCell id="arrow-step1-eu" value="YES-EU" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;fontSize=14;fontStyle=1;" edge="1" parent="1" source="step1-decision" target="step1-outcome-eu">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-step1-other" value="YES-Other" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;fontSize=14;fontStyle=1;" edge="1" parent="1" source="step1-decision" target="step1-outcome-other">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-step1-no" value="NO" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;fontSize=14;fontStyle=1;" edge="1" parent="1" source="step1-decision" target="step1-outcome-no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Converge to Step 2 -->
+        <mxCell id="step2-converge" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#44546A;strokeColor=#44546A;" vertex="1" parent="1">
+          <mxGeometry x="574.5" y="590" width="20" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-eu-converge" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;" edge="1" parent="1" source="step1-outcome-eu" target="step2-converge">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-other-converge" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;" edge="1" parent="1" source="step1-outcome-other" target="step2-converge">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-no-converge" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;" edge="1" parent="1" source="step1-outcome-no" target="step2-converge">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- STEP 2: Latency & Performance -->
+        <mxCell id="step2-label" value="STEP 2: Latency &amp; Performance Requirements" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fontColor=#1A4D7C;" vertex="1" parent="1">
+          <mxGeometry x="359.5" y="640" width="450" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="step2-evaluation" value="Evaluate:&lt;br&gt;• Latency requirements&lt;br&gt;• Critical resources&lt;br&gt;• Target user locations" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#CC8800;fontSize=14;align=left;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="419.5" y="675" width="330" height="110" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-converge-step2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;" edge="1" parent="1" source="step2-converge" target="step2-evaluation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Step 2 Outcomes -->
+        <mxCell id="step2-outcome-low" value="&lt;50ms Required&lt;br&gt;Deploy Closest&lt;br&gt;Region" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B0BEC5;strokeColor=#78909C;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="189.5" y="695" width="160" height="70" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="step2-outcome-balance" value="50-100ms&lt;br&gt;Balance Cost &amp;&lt;br&gt;Performance" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEB3B;strokeColor=#F9A825;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="504.5" y="820" width="160" height="70" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="step2-outcome-high" value="&gt;100ms OK&lt;br&gt;Prioritize Cost&lt;br&gt;Over Proximity" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#70AD47;strokeColor=#4F7A2F;fontColor=#FFFFFF;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="819.5" y="695" width="160" height="70" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-step2-low" value="&lt;50ms" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;fontSize=14;fontStyle=1;" edge="1" parent="1" source="step2-evaluation" target="step2-outcome-low">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-step2-balance" value="50-100ms" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;fontSize=14;fontStyle=1;" edge="1" parent="1" source="step2-evaluation" target="step2-outcome-balance">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-step2-high" value="&gt;100ms" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;fontSize=14;fontStyle=1;" edge="1" parent="1" source="step2-evaluation" target="step2-outcome-high">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Converge to Step 3 -->
+        <mxCell id="step3-converge" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#44546A;strokeColor=#44546A;" vertex="1" parent="1">
+          <mxGeometry x="574.5" y="930" width="20" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-low-step3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;" edge="1" parent="1" source="step2-outcome-low" target="step3-converge">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-balance-step3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;" edge="1" parent="1" source="step2-outcome-balance" target="step3-converge">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-high-step3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;" edge="1" parent="1" source="step2-outcome-high" target="step3-converge">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- STEP 3: Technical Dependencies -->
+        <mxCell id="step3-label" value="STEP 3: Technical Dependencies &amp; Services" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fontColor=#1A4D7C;" vertex="1" parent="1">
+          <mxGeometry x="359.5" y="980" width="450" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="step3-evaluation" value="Check Services &amp; Components:&lt;br&gt;✓ Required cloud services available&lt;br&gt;✓ Application integrations feasible&lt;br&gt;✓ Provider SLA meets requirements&lt;br&gt;✓ Network connectivity acceptable" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#CC8800;fontSize=14;align=left;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="399.5" y="1015" width="370" height="120" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-converge-step3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;" edge="1" parent="1" source="step3-converge" target="step3-evaluation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Step 3 Outcomes -->
+        <mxCell id="step3-outcome-issues" value="Issues Found&lt;br&gt;Re-evaluate&lt;br&gt;Region" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C00000;strokeColor=#8B0000;fontColor=#FFFFFF;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="219.5" y="1040" width="140" height="70" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="step3-outcome-ok" value="All OK&lt;br&gt;Proceed" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#70AD47;strokeColor=#4F7A2F;fontColor=#FFFFFF;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="809.5" y="1040" width="140" height="70" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-step3-issues" value="Issues" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;fontSize=14;fontStyle=1;" edge="1" parent="1" source="step3-evaluation" target="step3-outcome-issues">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-step3-ok" value="All OK" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;fontSize=14;fontStyle=1;" edge="1" parent="1" source="step3-evaluation" target="step3-outcome-ok">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Converge to Step 4 -->
+        <mxCell id="step4-converge" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#44546A;strokeColor=#44546A;" vertex="1" parent="1">
+          <mxGeometry x="574.5" y="1180" width="20" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-step3eval-step4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;" edge="1" parent="1" source="step3-evaluation" target="step4-converge">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- STEP 4: Current Regions -->
+        <mxCell id="step4-label" value="STEP 4: Current Approved Regions Inventory" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fontColor=#1A4D7C;" vertex="1" parent="1">
+          <mxGeometry x="359.5" y="1230" width="450" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="step4-regions" value="Available Regions:&lt;br&gt;• Azure: Amsterdam (West Europe)&lt;br&gt;• AWS: Ireland (eu-west-1), London (eu-west-2)&lt;br&gt;• AWS: Frankfurt (eu-central-1)&lt;br&gt;• AWS: Virginia (us-east-1)&lt;br&gt;• AWS: Madrid (eu-south-2)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E7E6E6;strokeColor=#666666;fontSize=14;align=left;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="389.5" y="1265" width="390" height="140" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-converge-step4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;" edge="1" parent="1" source="step4-converge" target="step4-regions">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrow to Step 5 -->
+        <mxCell id="arrow-step4-step5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;" edge="1" parent="1" source="step4-regions" target="step5-label">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="584.5" y="1450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- STEP 5: Concentration Risk (DORA CRITICAL) -->
+        <mxCell id="step5-label" value="STEP 5: ICT Concentration Risk Assessment" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fontColor=#1A4D7C;" vertex="1" parent="1">
+          <mxGeometry x="359.5" y="1450" width="450" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="step5-dora" value="🔴 DORA MANDATORY (Article 28)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=3;fontColor=#C00000;" vertex="1" parent="1">
+          <mxGeometry x="384.5" y="1475" width="400" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="step5-decision" value="Current workload %&lt;br&gt;in candidate&lt;br&gt;provider/region?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#D5E8F0;strokeColor=#2E75B6;fontSize=14;fontStyle=1;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="434.5" y="1505" width="300" height="150" as="geometry" />
+        </mxCell>
+        
+        <!-- Step 5 Outcomes -->
+        <mxCell id="step5-outcome-critical" value="&gt;60%&lt;br&gt;CRITICAL RISK&lt;br&gt;Must Diversify&lt;br&gt;🔴 MANDATORY" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C00000;strokeColor=#8B0000;fontColor=#FFFFFF;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="149.5" y="1535" width="180" height="90" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="step5-outcome-high" value="40-60%&lt;br&gt;HIGH RISK&lt;br&gt;Exit Strategy Required&lt;br&gt;🔴 MANDATORY" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFC000;strokeColor=#BF8F00;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="494.5" y="1695" width="180" height="100" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="step5-outcome-low" value="&lt;40%&lt;br&gt;ACCEPTABLE&lt;br&gt;Well Distributed&lt;br&gt;✓ Compliant" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#70AD47;strokeColor=#4F7A2F;fontColor=#FFFFFF;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="839.5" y="1535" width="180" height="90" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-step5-critical" value="&gt;60%" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;fontSize=14;fontStyle=1;" edge="1" parent="1" source="step5-decision" target="step5-outcome-critical">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-step5-high" value="40-60%" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;fontSize=14;fontStyle=1;" edge="1" parent="1" source="step5-decision" target="step5-outcome-high">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-step5-low" value="&lt;40%" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;fontSize=14;fontStyle=1;" edge="1" parent="1" source="step5-decision" target="step5-outcome-low">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Converge to Step 6 -->
+        <mxCell id="step6-converge" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#44546A;strokeColor=#44546A;" vertex="1" parent="1">
+          <mxGeometry x="574.5" y="1840" width="20" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-critical-step6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;" edge="1" parent="1" source="step5-outcome-critical" target="step6-converge">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-high-step6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;" edge="1" parent="1" source="step5-outcome-high" target="step6-converge">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-low-step6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;" edge="1" parent="1" source="step5-outcome-low" target="step6-converge">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- STEP 6: Availability Zones -->
+        <mxCell id="step6-label" value="STEP 6: Availability Zones &amp; Multi-Region Configuration" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fontColor=#1A4D7C;" vertex="1" parent="1">
+          <mxGeometry x="334.5" y="1890" width="500" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="step6-evaluation" value="Deployment Configuration:&lt;br&gt;• Number of Availability Zones&lt;br&gt;• Number of Regions for DR" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#CC8800;fontSize=14;align=left;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="429.5" y="1925" width="310" height="90" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-converge-step6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;" edge="1" parent="1" source="step6-converge" target="step6-evaluation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Step 6 Outcomes -->
+        <mxCell id="step6-outcome-tier1" value="TIER 1 (Critical)&lt;br&gt;Multi-AZ + Multi-Region&lt;br&gt;(Active-Active)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C00000;strokeColor=#8B0000;fontColor=#FFFFFF;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="149.5" y="1945" width="180" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="step6-outcome-tier2" value="TIER 2 (High)&lt;br&gt;Multi-AZ + DR Region" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFC000;strokeColor=#BF8F00;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="494.5" y="2055" width="180" height="70" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="step6-outcome-tier3" value="TIER 3 (Standard)&lt;br&gt;Single Region Multi-AZ&lt;br&gt;Acceptable" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#70AD47;strokeColor=#4F7A2F;fontColor=#FFFFFF;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="839.5" y="1945" width="180" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-step6-tier1" value="TIER 1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;fontSize=14;fontStyle=1;" edge="1" parent="1" source="step6-evaluation" target="step6-outcome-tier1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-step6-tier2" value="TIER 2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;fontSize=14;fontStyle=1;" edge="1" parent="1" source="step6-evaluation" target="step6-outcome-tier2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-step6-tier3" value="TIER 3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;fontSize=14;fontStyle=1;" edge="1" parent="1" source="step6-evaluation" target="step6-outcome-tier3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Converge to Documentation -->
+        <mxCell id="doc-converge" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#44546A;strokeColor=#44546A;" vertex="1" parent="1">
+          <mxGeometry x="574.5" y="2170" width="20" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-tier1-doc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;" edge="1" parent="1" source="step6-outcome-tier1" target="doc-converge">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-tier2-doc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;" edge="1" parent="1" source="step6-outcome-tier2" target="doc-converge">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-tier3-doc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;" edge="1" parent="1" source="step6-outcome-tier3" target="doc-converge">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Documentation & Exit Strategy -->
+        <mxCell id="doc-label" value="DORA MANDATORY Documentation" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#C00000;" vertex="1" parent="1">
+          <mxGeometry x="334.5" y="2220" width="500" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="doc-box" value="🔴 ICT Risk Register Entry (DORA Art. 6)&lt;br&gt;🔴 Exit Strategy Documentation (DORA Art. 28)&lt;br&gt;🔴 Concentration Risk Calculation (DORA Art. 28)&lt;br&gt;🟠 Obtain Approval (Best Practice)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1976D2;fontSize=14;align=left;spacingLeft=15;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="384.5" y="2260" width="400" height="110" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-converge-doc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;" edge="1" parent="1" source="doc-converge" target="doc-box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Testing Schedule -->
+        <mxCell id="testing-box" value="🔴 Schedule DORA Testing (MANDATORY - Art. 24-25)&lt;br&gt;Tier 1: Quarterly | All: Annual Exit Strategy Test" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1976D2;fontSize=14;align=center;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="384.5" y="2410" width="400" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-doc-testing" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;" edge="1" parent="1" source="doc-box" target="testing-box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- DEPLOYMENT APPROVED -->
+        <mxCell id="approved-box" value="✓ DEPLOYMENT APPROVED" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#70AD47;strokeColor=#4F7A2F;fontColor=#FFFFFF;fontSize=18;fontStyle=1;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="414.5" y="2530" width="340" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-testing-approved" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;" edge="1" parent="1" source="testing-box" target="approved-box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- END -->
+        <mxCell id="end" value="IMPLEMENTATION &amp;&lt;br&gt;MONITORING" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1976D2;strokeColor=#0D47A1;fontColor=#FFFFFF;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="464.5" y="2630" width="240" height="70" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-approved-end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#44546A;strokeWidth=2.5;" edge="1" parent="1" source="approved-box" target="end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Legend -->
+        <mxCell id="legend-title" value="Legend:" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fontColor=#1A4D7C;" vertex="1" parent="1">
+          <mxGeometry x="50" y="140" width="100" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend-mandatory" value="🔴 = DORA MANDATORY (Legal requirement)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#C00000;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="170" width="320" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend-practice" value="🟠 = BEST PRACTICE (Recommended governance)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#FF8C00;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="195" width="350" height="20" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
