@@ -1,0 +1,365 @@
+<mxfile host="app.diagrams.net" modified="2026-02-04T00:00:00.000Z" agent="Claude" version="24.0.0" etag="Multi-Cloud-C4-Diagrams" type="device">
+  <diagram name="1. Anti-Pattern - Distributed Without Coordination" id="anti-pattern">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Title -->
+        <mxCell id="title-anti" value="Anti-Pattern: Distributed Deployment WITHOUT Coordination" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1;fontColor=#C00000;" vertex="1" parent="1">
+          <mxGeometry x="200" y="20" width="1000" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="subtitle-anti" value="Result: Extended Downtime (30+ minutes), Data Loss, Manual Intervention Required" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=2;fontColor=#C00000;" vertex="1" parent="1">
+          <mxGeometry x="250" y="60" width="900" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- Users -->
+        <mxCell id="users-anti" value="Users" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="680" y="120" width="40" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Static DNS -->
+        <mxCell id="dns-anti" value="Static DNS Record&lt;br&gt;app.santander.com&lt;br&gt;&lt;br&gt;→ Points to Frankfurt IP&lt;br&gt;&lt;br&gt;❌ No health checking&lt;br&gt;❌ Manual update required&lt;br&gt;❌ 15-30 min propagation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;verticalAlign=top;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="575" y="260" width="250" height="140" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-users-dns" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;strokeWidth=2;dashed=1;" edge="1" parent="1" source="users-anti" target="dns-anti">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Frankfurt Region -->
+        <mxCell id="frankfurt-region-anti" value="AWS Frankfurt (eu-central-1)" style="swimlane;startSize=30;fontSize=16;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="200" y="480" width="350" height="340" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="frankfurt-alb-anti" value="Application Load Balancer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="frankfurt-region-anti">
+          <mxGeometry x="75" y="50" width="200" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="frankfurt-app-anti" value="Application Instances&lt;br&gt;&lt;br&gt;Internal health: ✓ 200 OK&lt;br&gt;(But network is DOWN!)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;verticalAlign=top;" vertex="1" parent="frankfurt-region-anti">
+          <mxGeometry x="75" y="120" width="200" height="90" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="frankfurt-db-anti" value="Database&lt;br&gt;&lt;br&gt;❌ No replication&lt;br&gt;❌ Single region only" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="frankfurt-region-anti">
+          <mxGeometry x="100" y="235" width="150" height="85" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="frankfurt-failure" value="⚠️ REGION OUTAGE" style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=16;fontStyle=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="250" y="840" width="250" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- Ireland Region -->
+        <mxCell id="ireland-region-anti" value="AWS Ireland (eu-west-1)" style="swimlane;startSize=30;fontSize=16;fontStyle=1;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;dashed=1;dashPattern=8 8;" vertex="1" parent="1">
+          <mxGeometry x="700" y="480" width="350" height="340" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="ireland-alb-anti" value="Application Load Balancer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="ireland-region-anti">
+          <mxGeometry x="75" y="50" width="200" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="ireland-app-anti" value="Application Instances&lt;br&gt;&lt;br&gt;✓ Healthy&lt;br&gt;❌ Receiving NO traffic" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;verticalAlign=top;" vertex="1" parent="ireland-region-anti">
+          <mxGeometry x="75" y="120" width="200" height="90" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="ireland-db-anti" value="Database&lt;br&gt;&lt;br&gt;❌ Stale data&lt;br&gt;❌ No sync with Frankfurt" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="ireland-region-anti">
+          <mxGeometry x="100" y="235" width="150" height="85" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="ireland-unused" value="✓ Region healthy but IDLE" style="text;html=1;strokeColor=#9673a6;fillColor=#e1d5e7;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=16;fontStyle=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="750" y="840" width="250" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- Traffic arrows -->
+        <mxCell id="arrow-dns-frankfurt" value="100% traffic" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#C00000;strokeWidth=4;fontSize=14;fontStyle=1;" edge="1" parent="1" source="dns-anti" target="frankfurt-alb-anti">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="no-arrow-ireland" value="0% traffic ❌" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#999999;strokeWidth=2;dashed=1;dashPattern=8 8;fontSize=14;fontStyle=1;" edge="1" parent="1" source="dns-anti" target="ireland-alb-anti">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Problems box -->
+        <mxCell id="problems-anti" value="❌ CRITICAL PROBLEMS:&lt;br&gt;&lt;br&gt;• No automatic failure detection&lt;br&gt;• Manual DNS update (wake SysAdmin at 3am!)&lt;br&gt;• 15-30 minute downtime minimum&lt;br&gt;• Ireland database is stale → DATA LOSS&lt;br&gt;• Users lose sessions, must re-login&lt;br&gt;• No guarantee Ireland has same config/version" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;align=left;verticalAlign=top;strokeWidth=3;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="480" width="280" height="220" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+  
+  <diagram name="2. Correct Pattern - Multi-Region with Coordination" id="correct-pattern">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1050" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Title -->
+        <mxCell id="title-correct" value="Correct Pattern: Multi-Region WITH Full External Coordination" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1;fontColor=#70AD47;" vertex="1" parent="1">
+          <mxGeometry x="150" y="20" width="1100" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="subtitle-correct" value="Result: ~3 Minute RTO, Zero Data Loss, Automatic Failover, Session Continuity" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=2;fontColor=#70AD47;" vertex="1" parent="1">
+          <mxGeometry x="250" y="60" width="900" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- Users -->
+        <mxCell id="users-correct" value="Users" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="680" y="120" width="40" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- External Coordination Layer -->
+        <mxCell id="coord-layer-correct" value="EXTERNAL COORDINATION LAYER (Independent from Application)" style="swimlane;startSize=40;fontSize=16;fontStyle=1;fillColor=#fff4e6;strokeColor=#d79b00;strokeWidth=4;" vertex="1" parent="1">
+          <mxGeometry x="80" y="100" width="1240" height="180" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="health-checks-correct" value="Health Checks&lt;br&gt;&lt;br&gt;✓ Route 53 from 3+ global locations&lt;br&gt;✓ Synthetic user transactions&lt;br&gt;✓ Performance thresholds (&lt;500ms)&lt;br&gt;✓ Complete journey validation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;verticalAlign=top;fontStyle=1;" vertex="1" parent="coord-layer-correct">
+          <mxGeometry x="20" y="55" width="230" height="110" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="route53-correct" value="Route 53 Failover&lt;br&gt;&lt;br&gt;✓ Health-based routing&lt;br&gt;✓ TTL: 60 seconds&lt;br&gt;✓ Primary: Frankfurt&lt;br&gt;✓ Failover: Ireland" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;verticalAlign=top;fontStyle=1;strokeWidth=2;" vertex="1" parent="coord-layer-correct">
+          <mxGeometry x="280" y="55" width="200" height="110" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="monitoring-correct" value="Monitoring&lt;br&gt;&lt;br&gt;✓ CloudWatch metrics&lt;br&gt;✓ Datadog dashboards&lt;br&gt;✓ Real-time alerts" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;verticalAlign=top;" vertex="1" parent="coord-layer-correct">
+          <mxGeometry x="510" y="55" width="180" height="110" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="alerting-correct" value="Alerting&lt;br&gt;&lt;br&gt;✓ SNS notifications&lt;br&gt;✓ PagerDuty&lt;br&gt;✓ Auto-escalation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;verticalAlign=top;" vertex="1" parent="coord-layer-correct">
+          <mxGeometry x="720" y="55" width="160" height="110" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="orchestration-correct" value="Orchestration&lt;br&gt;&lt;br&gt;✓ Lambda functions&lt;br&gt;✓ Step Functions&lt;br&gt;✓ Automated runbooks" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;verticalAlign=top;" vertex="1" parent="coord-layer-correct">
+          <mxGeometry x="910" y="55" width="160" height="110" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="config-correct" value="Config Sync&lt;br&gt;&lt;br&gt;✓ Secrets Manager&lt;br&gt;✓ Parameter Store&lt;br&gt;✓ Cross-region sync" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;verticalAlign=top;" vertex="1" parent="coord-layer-correct">
+          <mxGeometry x="1100" y="55" width="120" height="110" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-users-route53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#d79b00;strokeWidth=3;" edge="1" parent="1" source="users-correct" target="route53-correct">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Frankfurt Region (Primary) -->
+        <mxCell id="frankfurt-region-correct" value="AWS Frankfurt (eu-central-1) - PRIMARY" style="swimlane;startSize=35;fontSize=16;fontStyle=1;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="100" y="350" width="500" height="390" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="frankfurt-alb-correct" value="ALB - Multi-AZ" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=1;" vertex="1" parent="frankfurt-region-correct">
+          <mxGeometry x="150" y="50" width="200" height="45" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="frankfurt-app-correct" value="Application Instances&lt;br&gt;(ECS/EKS - Auto Scaling)&lt;br&gt;&lt;br&gt;✓ Multi-AZ deployment&lt;br&gt;✓ External health checks pass&lt;br&gt;✓ Receiving 100% traffic" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;verticalAlign=top;" vertex="1" parent="frankfurt-region-correct">
+          <mxGeometry x="150" y="115" width="200" height="100" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="frankfurt-aurora-correct" value="Aurora Global DB&lt;br&gt;PRIMARY&lt;br&gt;&lt;br&gt;✓ Read/Write&lt;br&gt;✓ Multi-AZ&lt;br&gt;✓ Auto-replicates&lt;br&gt;to Ireland" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;fontStyle=1;" vertex="1" parent="frankfurt-region-correct">
+          <mxGeometry x="50" y="245" width="140" height="120" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="frankfurt-redis-correct" value="Redis Global&lt;br&gt;PRIMARY&lt;br&gt;&lt;br&gt;✓ Session state&lt;br&gt;✓ Auto-sync" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="frankfurt-region-correct">
+          <mxGeometry x="220" y="245" width="110" height="90" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="frankfurt-s3-correct" value="S3&lt;br&gt;&lt;br&gt;✓ CRR to&lt;br&gt;Ireland" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="frankfurt-region-correct">
+          <mxGeometry x="360" y="245" width="100" height="90" as="geometry" />
+        </mxCell>
+        
+        <!-- Ireland Region (Secondary) -->
+        <mxCell id="ireland-region-correct" value="AWS Ireland (eu-west-1) - SECONDARY/STANDBY" style="swimlane;startSize=35;fontSize=16;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="780" y="350" width="500" height="390" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="ireland-alb-correct" value="ALB - Multi-AZ" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=1;" vertex="1" parent="ireland-region-correct">
+          <mxGeometry x="150" y="50" width="200" height="45" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="ireland-app-correct" value="Application Instances&lt;br&gt;(ECS/EKS - Auto Scaling)&lt;br&gt;&lt;br&gt;✓ Multi-AZ deployment&lt;br&gt;✓ Warm standby/Active-Active&lt;br&gt;✓ Ready for traffic" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;verticalAlign=top;" vertex="1" parent="ireland-region-correct">
+          <mxGeometry x="150" y="115" width="200" height="100" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="ireland-aurora-correct" value="Aurora Global DB&lt;br&gt;SECONDARY&lt;br&gt;&lt;br&gt;✓ Read-only&lt;br&gt;✓ Multi-AZ&lt;br&gt;✓ &lt;1s lag&lt;br&gt;✓ Can promote" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;fontStyle=1;" vertex="1" parent="ireland-region-correct">
+          <mxGeometry x="50" y="245" width="140" height="120" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="ireland-redis-correct" value="Redis Global&lt;br&gt;REPLICA&lt;br&gt;&lt;br&gt;✓ Session state&lt;br&gt;✓ Synced" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="ireland-region-correct">
+          <mxGeometry x="220" y="245" width="110" height="90" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="ireland-s3-correct" value="S3&lt;br&gt;&lt;br&gt;✓ CRR from&lt;br&gt;Frankfurt" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="ireland-region-correct">
+          <mxGeometry x="360" y="245" width="100" height="90" as="geometry" />
+        </mxCell>
+        
+        <!-- Replication arrows -->
+        <mxCell id="db-repl-correct" value="Continuous DB Replication&lt;br&gt;(&lt;1 second lag)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9673a6;strokeWidth=3;fontSize=12;fontStyle=1;startArrow=classic;startFill=1;dashed=1;dashPattern=4 4;" edge="1" parent="1" source="frankfurt-aurora-correct" target="ireland-aurora-correct">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="redis-repl-correct" value="Session sync" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#6c8ebf;strokeWidth=2;fontSize=11;dashed=1;dashPattern=4 4;startArrow=classic;startFill=1;" edge="1" parent="1" source="frankfurt-redis-correct" target="ireland-redis-correct">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="s3-repl-correct" value="CRR" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#d6b656;strokeWidth=2;fontSize=11;dashed=1;dashPattern=4 4;" edge="1" parent="1" source="frankfurt-s3-correct" target="ireland-s3-correct">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Traffic routing -->
+        <mxCell id="arrow-route53-frankfurt" value="Primary traffic&lt;br&gt;(when healthy)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#82b366;strokeWidth=4;fontSize=14;fontStyle=1;" edge="1" parent="1" source="route53-correct" target="frankfurt-alb-correct">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-route53-ireland" value="Automatic failover&lt;br&gt;(if Frankfurt fails)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#6c8ebf;strokeWidth=4;dashed=1;dashPattern=8 8;fontSize=14;fontStyle=1;" edge="1" parent="1" source="route53-correct" target="ireland-alb-correct">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Benefits box -->
+        <mxCell id="benefits-correct" value="✓ SUCCESS OUTCOMES:&lt;br&gt;&lt;br&gt;• Automatic failure detection: 30 seconds&lt;br&gt;• Automatic DNS failover: ~3 minutes RTO&lt;br&gt;• Zero data loss (continuous replication)&lt;br&gt;• Session continuity (Redis Global)&lt;br&gt;• Seamless user experience&lt;br&gt;• No manual intervention required&lt;br&gt;• Automated alerting to ops team" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;align=left;verticalAlign=top;strokeWidth=3;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="350" width="280" height="240" as="geometry" />
+        </mxCell>
+        
+        <!-- State sync label -->
+        <mxCell id="state-sync-label" value="STATE SYNCHRONIZATION (Continuous)" style="text;html=1;strokeColor=#9673a6;fillColor=#e1d5e7;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=16;fontStyle=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="540" y="800" width="320" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- Failover sequence -->
+        <mxCell id="failover-sequence" value="FAILOVER SEQUENCE (Automated):&lt;br&gt;1. Health checks detect Frankfurt failure (30s)&lt;br&gt;2. Route 53 marks Frankfurt unhealthy&lt;br&gt;3. DNS automatically updates to Ireland&lt;br&gt;4. Ireland starts receiving traffic (60s TTL)&lt;br&gt;5. Aurora replica promoted if needed (2 min)&lt;br&gt;6. Ops team notified via PagerDuty&lt;br&gt;7. Total RTO: ~3 minutes, RPO: 0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff4e6;strokeColor=#d79b00;fontSize=13;align=left;verticalAlign=top;strokeWidth=2;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="100" y="780" width="380" height="180" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+  
+  <diagram name="3. C4 Context - System Overview" id="c4-context">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Title -->
+        <mxCell id="title-c4" value="C4 Context Diagram: Multi-Region System with External Coordination" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1;fontColor=#1A4D7C;" vertex="1" parent="1">
+          <mxGeometry x="200" y="20" width="1000" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="subtitle-c4" value="System Context showing Three Essential External Coordination Components" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=2;fontColor=#44546A;" vertex="1" parent="1">
+          <mxGeometry x="300" y="60" width="800" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- Person -->
+        <mxCell id="person-c4" value="[Person]&lt;br&gt;&lt;br&gt;&lt;b&gt;End User&lt;/b&gt;&lt;br&gt;&lt;br&gt;Accesses Santander&lt;br&gt;services expecting&lt;br&gt;high availability" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427b;strokeColor=#ffffff;fontColor=#ffffff;fontSize=14;verticalAlign=top;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="600" y="120" width="200" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- External System 1: Observation -->
+        <mxCell id="ext-observation-c4" value="[External System]&lt;br&gt;&lt;br&gt;&lt;b&gt;External Observation Layer&lt;/b&gt;&lt;br&gt;&lt;br&gt;Route 53 Health Checks,&lt;br&gt;Synthetic Monitoring,&lt;br&gt;Datadog&lt;br&gt;&lt;br&gt;Monitors application health&lt;br&gt;from OUTSIDE the infrastructure" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#ffffff;fontColor=#ffffff;fontSize=14;verticalAlign=top;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="50" y="120" width="320" height="200" as="geometry" />
+        </mxCell>
+        
+        <!-- Central System -->
+        <mxCell id="system-app-c4" value="[Software System]&lt;br&gt;&lt;br&gt;&lt;b&gt;Multi-Region Application&lt;/b&gt;&lt;br&gt;&lt;br&gt;Deployed in Frankfurt (primary)&lt;br&gt;and Ireland (secondary)&lt;br&gt;&lt;br&gt;Requires external coordination&lt;br&gt;for true HA/DR capability" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168bd;strokeColor=#ffffff;fontColor=#ffffff;fontSize=16;verticalAlign=top;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="500" y="380" width="400" height="180" as="geometry" />
+        </mxCell>
+        
+        <!-- External System 2: Traffic Coordination -->
+        <mxCell id="ext-traffic-c4" value="[External System]&lt;br&gt;&lt;br&gt;&lt;b&gt;Traffic Coordination Layer&lt;/b&gt;&lt;br&gt;&lt;br&gt;Route 53 Failover Policy,&lt;br&gt;Azure Traffic Manager,&lt;br&gt;or Cloudflare&lt;br&gt;&lt;br&gt;Routes user traffic based on&lt;br&gt;health check data" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#ffffff;fontColor=#ffffff;fontSize=14;verticalAlign=top;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="120" width="320" height="200" as="geometry" />
+        </mxCell>
+        
+        <!-- External System 3: State Sync -->
+        <mxCell id="ext-state-c4" value="[External System]&lt;br&gt;&lt;br&gt;&lt;b&gt;State Synchronization Layer&lt;/b&gt;&lt;br&gt;&lt;br&gt;Aurora Global Database,&lt;br&gt;Redis Global Datastore,&lt;br&gt;S3 Cross-Region Replication&lt;br&gt;&lt;br&gt;Ensures data consistency&lt;br&gt;across regions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#ffffff;fontColor=#ffffff;fontSize=14;verticalAlign=top;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="50" y="640" width="320" height="200" as="geometry" />
+        </mxCell>
+        
+        <!-- Supporting System: Monitoring -->
+        <mxCell id="support-monitoring-c4" value="[Supporting System]&lt;br&gt;&lt;br&gt;&lt;b&gt;Unified Monitoring&lt;/b&gt;&lt;br&gt;&lt;br&gt;CloudWatch, Datadog&lt;br&gt;&lt;br&gt;Metrics, logs, traces&lt;br&gt;across all regions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#ffffff;fontColor=#ffffff;fontSize=14;verticalAlign=top;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="500" y="640" width="250" height="140" as="geometry" />
+        </mxCell>
+        
+        <!-- Supporting System: Alerting -->
+        <mxCell id="support-alerting-c4" value="[Supporting System]&lt;br&gt;&lt;br&gt;&lt;b&gt;Incident Response&lt;/b&gt;&lt;br&gt;&lt;br&gt;PagerDuty, SNS&lt;br&gt;&lt;br&gt;Automated alerting" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#ffffff;fontColor=#ffffff;fontSize=14;verticalAlign=top;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="800" y="640" width="250" height="140" as="geometry" />
+        </mxCell>
+        
+        <!-- Person: Ops Team -->
+        <mxCell id="ops-team-c4" value="[Person]&lt;br&gt;&lt;br&gt;&lt;b&gt;Operations Team&lt;/b&gt;&lt;br&gt;&lt;br&gt;Monitors system,&lt;br&gt;responds to incidents" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427b;strokeColor=#ffffff;fontColor=#ffffff;fontSize=14;verticalAlign=top;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="640" width="200" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Relationships -->
+        
+        <mxCell id="rel-user-app" value="Uses application" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#707070;strokeWidth=2;fontSize=14;dashed=1;dashPattern=4 4;" edge="1" parent="1" source="person-c4" target="system-app-c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="rel-user-traffic" value="DNS query" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#707070;strokeWidth=2;fontSize=14;dashed=1;dashPattern=4 4;" edge="1" parent="1" source="person-c4" target="ext-traffic-c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="rel-obs-app" value="Monitors health,&lt;br&gt;synthetic tests" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#707070;strokeWidth=2;fontSize=13;dashed=1;dashPattern=4 4;" edge="1" parent="1" source="ext-observation-c4" target="system-app-c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="rel-obs-traffic" value="Provides&lt;br&gt;health status" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#707070;strokeWidth=2;fontSize=13;fontStyle=1;" edge="1" parent="1" source="ext-observation-c4" target="ext-traffic-c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="rel-traffic-app" value="Routes user traffic&lt;br&gt;based on health" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#707070;strokeWidth=3;fontSize=13;fontStyle=1;" edge="1" parent="1" source="ext-traffic-c4" target="system-app-c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="rel-state-app" value="Replicates state,&lt;br&gt;synchronizes data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#707070;strokeWidth=3;fontSize=13;fontStyle=1;" edge="1" parent="1" source="ext-state-c4" target="system-app-c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="rel-mon-app" value="Collects metrics" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#707070;strokeWidth=2;fontSize=12;dashed=1;dashPattern=4 4;" edge="1" parent="1" source="support-monitoring-c4" target="system-app-c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="rel-alert-ops" value="Sends alerts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#707070;strokeWidth=2;fontSize=13;fontStyle=1;" edge="1" parent="1" source="support-alerting-c4" target="ops-team-c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="rel-mon-alert" value="Triggers" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#707070;strokeWidth=2;fontSize=12;dashed=1;dashPattern=4 4;" edge="1" parent="1" source="support-monitoring-c4" target="support-alerting-c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Key insight box -->
+        <mxCell id="insight-c4" value="KEY INSIGHT:&lt;br&gt;&lt;br&gt;All three coordination systems (Observation, Traffic Coordination, State Sync)&lt;br&gt;are EXTERNAL to the application infrastructure.&lt;br&gt;&lt;br&gt;They must be independent from regional infrastructure to detect and respond&lt;br&gt;to regional failures.&lt;br&gt;&lt;br&gt;❌ Without these → Distributed deployment (not multi-region)&lt;br&gt;✓ With these → True multi-region resilience" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff4e6;strokeColor=#d79b00;fontSize=14;align=left;verticalAlign=top;strokeWidth=3;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="430" y="810" width="540" height="200" as="geometry" />
+        </mxCell>
+        
+        <!-- Legend -->
+        <mxCell id="legend-c4" value="C4 MODEL LEGEND" style="text;html=1;strokeColor=#1A4D7C;fillColor=#E7E6E6;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=14;fontStyle=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="810" width="200" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend-person" value="Person" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427b;strokeColor=#ffffff;fontColor=#ffffff;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="860" width="90" height="35" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend-system" value="Software System" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168bd;strokeColor=#ffffff;fontColor=#ffffff;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1210" y="860" width="90" height="35" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend-external" value="External System" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#ffffff;fontColor=#ffffff;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="915" width="90" height="35" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend-supporting" value="Supporting System" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#ffffff;fontColor=#ffffff;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1210" y="915" width="90" height="35" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend-mandatory" value="──── Mandatory flow" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#707070;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="970" width="200" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend-optional" value="- - - - Optional/Triggered" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#707070;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="990" width="200" height="20" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
