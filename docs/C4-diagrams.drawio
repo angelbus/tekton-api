@@ -1,0 +1,1523 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" version="29.3.7" pages="6">
+  <diagram id="C4-Context" name="C4 Context Diagram">
+    <mxGraphModel dx="1432" dy="766" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title-context" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;" value="&lt;b&gt;XENA System - C4 Context Diagram&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="400" x="335" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="risk-analysts" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#0D5091;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Risk Analysts / Model Validation&lt;/b&gt;&lt;br&gt;[Person]&lt;br&gt;&lt;br&gt;Interact indirectly via risk tools and Sigma/Markets UIs. Require reliable, explainable, and replayable calibration results (PnL, Greeks)." vertex="1">
+          <mxGeometry height="120" width="200" x="80" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="operations" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#0D5091;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Operations / Run-the-Bank&lt;/b&gt;&lt;br&gt;[Person]&lt;br&gt;&lt;br&gt;Use monitoring and operational tools to manage XENA batches, incidents, and replays. Need clear SLAs, alerts, and recovery procedures." vertex="1">
+          <mxGeometry height="120" width="200" x="80" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="developers" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#0D5091;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Developers / Quant Teams&lt;/b&gt;&lt;br&gt;[Person]&lt;br&gt;&lt;br&gt;Use lower environments (DEV, PRE) for testing models and flows. Need consistent data contracts and reproducible environments." vertex="1">
+          <mxGeometry height="120" width="200" x="80" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="xena-system" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0D5091;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;XENA System&lt;/b&gt;&lt;br&gt;[Software System]&lt;br&gt;&lt;br&gt;Market data calibration and risk calculation platform. Processes raw market data, calibrates models, and produces PnL, Greeks, and risk metrics for trading and regulatory reporting." vertex="1">
+          <mxGeometry height="140" width="270" x="400" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="sigma-datalake" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#6D6D6D;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Sigma / DataLake&lt;/b&gt;&lt;br&gt;[External System]&lt;br&gt;&lt;br&gt;Provides Parquet-backed datasets (Market, IR Jacobians, Securitizations, Assignments, configurations). Consumes XENA results for CCR analytics." vertex="1">
+          <mxGeometry height="120" width="240" x="800" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="markets-platforms" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#6D6D6D;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Markets Platforms&lt;/b&gt;&lt;br&gt;[External System]&lt;br&gt;&lt;br&gt;Risk &amp; Reporting Systems that consume XENA-produced metrics (calibrated parameters, exposures, PnL, Greeks) for trading, risk management, and regulatory reporting." vertex="1">
+          <mxGeometry height="120" width="240" x="800" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="batch-schedulers" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#6D6D6D;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Batch Schedulers&lt;/b&gt;&lt;br&gt;[External System]&lt;br&gt;&lt;br&gt;Control-M, Airflow DAGs trigger daily/intraday calibration and risk processes and manage DAGs." vertex="1">
+          <mxGeometry height="100" width="240" x="800" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="scib-datalake" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#6D6D6D;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;SCIB Data Lake&lt;/b&gt;&lt;br&gt;[External System]&lt;br&gt;&lt;br&gt;On-premise data storage for raw market data (Jacobians, Calibration Config, Regulatory Scenarios)." vertex="1">
+          <mxGeometry height="100" width="240" x="800" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="observability" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#6D6D6D;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Observability &amp; Monitoring&lt;/b&gt;&lt;br&gt;[External System]&lt;br&gt;&lt;br&gt;Grafana, CloudWatch, central log platforms collect logs, metrics, and traces used by support teams." vertex="1">
+          <mxGeometry height="100" width="200" x="80" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="edge1" edge="1" parent="1" source="risk-analysts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="xena-system">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge1-label" connectable="0" parent="edge1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Indirectly interact via&lt;br&gt;Sigma/Risk tools" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="-4" y="-19" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge2" edge="1" parent="1" source="operations" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="xena-system">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="290" y="340" as="sourcePoint" />
+            <mxPoint x="390" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge2-label" connectable="0" parent="edge2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Monitor batches,&lt;br&gt;manage incidents" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="10" y="-19" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge3" edge="1" parent="1" source="developers" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="xena-system">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="480" y="490" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge3-label" connectable="0" parent="edge3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Test models in&lt;br&gt;DEV/PRE" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="24" y="-19" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge4" edge="1" parent="1" source="xena-system" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;" target="sigma-datalake">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="600" y="180" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge4-label" connectable="0" parent="edge4" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Reads market data,&lt;br&gt;writes calibrated results" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="32" y="-19" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge5" edge="1" parent="1" source="xena-system" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;" target="markets-platforms">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="770" y="330" />
+              <mxPoint x="770" y="330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge5-label" connectable="0" parent="edge5" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Provides calibrated metrics,&lt;br&gt;PnL, Greeks" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="12" y="-19" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge6" edge="1" parent="1" source="batch-schedulers" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;exitX=-0.012;exitY=0.6;exitDx=0;exitDy=0;exitPerimeter=0;" target="xena-system">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="590" y="490" />
+            </Array>
+            <mxPoint x="790" y="490" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge6-label" connectable="0" parent="edge6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Triggers calibration&lt;br&gt;jobs via HTTPS" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="12" y="-21" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge7" edge="1" parent="1" source="xena-system" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;" target="scib-datalake">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="550" y="620" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge7-label" connectable="0" parent="edge7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Reads raw data&lt;br&gt;via GSNet" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="49" y="8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge8" edge="1" parent="1" source="xena-system" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="510" y="620" />
+              <mxPoint x="280" y="620" />
+            </Array>
+            <mxPoint x="280" y="620" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge8-label" connectable="0" parent="edge8" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Sends logs, metrics,&lt;br&gt;traces" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="-61" y="16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="C4-Container" name="C4 Container Diagram">
+    <mxGraphModel dx="1432" dy="1966" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="cQMnc8DZxg1dtxHmtIWf-5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#1168BD;strokeWidth=3;dashed=1;" value="" vertex="1">
+          <mxGeometry height="930" width="200" x="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cQMnc8DZxg1dtxHmtIWf-7" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#1168BD;strokeWidth=3;dashed=1;" value="" vertex="1">
+          <mxGeometry height="930" width="260" x="1300" as="geometry" />
+        </mxCell>
+        <mxCell id="title-container" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;" value="&lt;b&gt;XENA System - C4 Container Diagram&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="400" x="600" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="scib-datalake-ext" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#6D6D6D;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;SCIB Data Lake&lt;/b&gt;&lt;br&gt;[External]&lt;br&gt;&lt;br&gt;On-Premise Storage" vertex="1">
+          <mxGeometry height="80" width="160" x="80" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="sigma-ext" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#6D6D6D;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Sigma/DataLake&lt;/b&gt;&lt;br&gt;[External]&lt;br&gt;&lt;br&gt;Parquet Datasets" vertex="1">
+          <mxGeometry height="80" width="160" x="80" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="markets-ext" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#6D6D6D;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Markets Platforms&lt;/b&gt;&lt;br&gt;[External]&lt;br&gt;&lt;br&gt;Risk &amp; Reporting" vertex="1">
+          <mxGeometry height="80" width="160" x="79" y="810.5" as="geometry" />
+        </mxCell>
+        <mxCell id="mto-grid-ext" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#6D6D6D;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;AWS MTO GRID&lt;/b&gt;&lt;br&gt;[External]&lt;br&gt;&lt;br&gt;Grid Connector" vertex="1">
+          <mxGeometry height="80" width="180" x="1370" y="626" as="geometry" />
+        </mxCell>
+        <mxCell id="xena-boundary" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#1168BD;strokeWidth=3;dashed=1;" value="" vertex="1">
+          <mxGeometry height="930" width="950" x="330" as="geometry" />
+        </mxCell>
+        <mxCell id="xena-label" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#1168BD;fontStyle=1" value="&lt;b&gt;XENA System [AWS Public Cloud]&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="300" x="340" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="api-gateway" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#23A3DD;strokeColor=#0E7DAD;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;API Gateway&lt;/b&gt;&lt;br&gt;[Container: AWS API Gateway]&lt;br&gt;&lt;br&gt;HTTPS endpoint for triggering calibration. JWT-based authentication via ACM. Routes requests to XENA Loader." vertex="1">
+          <mxGeometry height="120" width="179" x="361" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="xena-loader" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#23A3DD;strokeColor=#0E7DAD;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;XENA Loader&lt;/b&gt;&lt;br&gt;[Container: AWS Lambda]&lt;br&gt;&lt;br&gt;Serverless function. Fetches calibration config from S3, validates, stores in cache, calls Calibration Service." vertex="1">
+          <mxGeometry height="120" width="170" x="790" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="s3-input" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7AA116;strokeColor=#5D7F0F;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;S3 Input Bucket&lt;/b&gt;&lt;br&gt;[Container: AWS S3]&lt;br&gt;&lt;br&gt;Stores raw market Jacobians, calibration configs, regulatory scenarios from SCIB Data Lake." vertex="1">
+          <mxGeometry height="120" width="179" x="361" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="xena-cache" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#23A3DD;strokeColor=#0E7DAD;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;XENA Cache&lt;/b&gt;&lt;br&gt;[Container: ElastiCache Redis]&lt;br&gt;&lt;br&gt;In-memory cache for calibration requests. Enables fast lookups, idempotency, and replay." vertex="1">
+          <mxGeometry height="120" width="200" x="1031" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="secrets-manager" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D86613;strokeColor=#A94F0F;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Secrets Manager&lt;/b&gt;&lt;br&gt;[Container: AWS Secrets Manager]&lt;br&gt;&lt;br&gt;Stores EKS/XENA secrets and credentials." vertex="1">
+          <mxGeometry height="100" width="180" x="810" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="acm" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D86613;strokeColor=#A94F0F;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;ACM&lt;/b&gt;&lt;br&gt;[Container: AWS ACM]&lt;br&gt;&lt;br&gt;Certificate management for intranet/backend XENA Custom Domains." vertex="1">
+          <mxGeometry height="100" width="150" x="640" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="kms" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7AA116;strokeColor=#5D7F0F;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;KMS&lt;/b&gt;&lt;br&gt;[Container: AWS KMS]&lt;br&gt;&lt;br&gt;Encryption key management." vertex="1">
+          <mxGeometry height="100" width="140" x="1040" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="eks-boundary" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#D86613;strokeWidth=2;dashed=1;" value="" vertex="1">
+          <mxGeometry height="330" width="920" x="340" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="eks-label" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#D86613;fontStyle=1" value="&lt;b&gt;EKS Cluster (XENA Namespace)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="25" width="250" x="360" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="scib-gateway" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#5184F3;strokeColor=#3D6DC7;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;SCIB Security Gateway&lt;/b&gt;&lt;br&gt;[Container: Pod/Service]&lt;br&gt;&lt;br&gt;Verifies JWT from API Gateway. Authenticates and routes calibration requests to Calibration Service (HTTPS)." vertex="1">
+          <mxGeometry height="120" width="220" x="680" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="calibration-service" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#5184F3;strokeColor=#3D6DC7;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Calibration Service&lt;/b&gt;&lt;br&gt;[Container: Pod/Service]&lt;br&gt;&lt;br&gt;Core HTTPS service. Executes heavy calculations: calibration, FMTM, PnL, Greeks, mitigation. Orchestrates computational workflows." vertex="1">
+          <mxGeometry height="140" width="220" x="361" y="596" as="geometry" />
+        </mxCell>
+        <mxCell id="grid-connector" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#5184F3;strokeColor=#3D6DC7;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Grid Connector&lt;/b&gt;&lt;br&gt;[Container: Pod/Service]&lt;br&gt;&lt;br&gt;HTTPS service. Returns calibration result payloads to external GRID Cache. Bridges XENA to MTO GRID." vertex="1">
+          <mxGeometry height="140" width="220" x="1021" y="596" as="geometry" />
+        </mxCell>
+        <mxCell id="quantlib-xva" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#6D6D6D;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;MTO GRID + QuantLib XVA Library&lt;/b&gt;&lt;br&gt;[Container: External Compute]&lt;br&gt;&lt;br&gt;Heavy calibration computations executed externally. Returns results to Grid Connector." vertex="1">
+          <mxGeometry height="120" width="220" x="1330" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="s3-output" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7AA116;strokeColor=#5D7F0F;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;S3 Output Bucket&lt;/b&gt;&lt;br&gt;[Container: AWS S3]&lt;br&gt;&lt;br&gt;Stores calibrated market data: PnL, Greeks, exposures, aggregated metrics for consumption by Markets Platforms." vertex="1">
+          <mxGeometry height="101" width="220" x="360" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="ecr" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D86613;strokeColor=#A94F0F;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;ECR&lt;/b&gt;&lt;br&gt;[Container: AWS ECR]&lt;br&gt;&lt;br&gt;Container image registry for EKS pods." vertex="1">
+          <mxGeometry height="100" width="160" x="680" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="cloudwatch" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D86613;strokeColor=#A94F0F;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;CloudWatch / Observability&lt;/b&gt;&lt;br&gt;[Container: AWS CloudWatch]&lt;br&gt;&lt;br&gt;Centralized logging, metrics, traces for all XENA containers." vertex="1">
+          <mxGeometry height="100" width="220" x="900" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="c-edge2" edge="1" parent="1" source="scib-datalake-ext" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;" target="s3-input">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="330" y="140" />
+              <mxPoint x="330" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c-edge2-label" connectable="0" parent="c-edge2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="PUT raw data&lt;br&gt;[S3 via GSNet]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="5" y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c-edge3" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;entryX=0.01;entryY=0.908;entryDx=0;entryDy=0;dashed=1;entryPerimeter=0;" target="s3-input">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="361" y="220" />
+              <mxPoint x="361" y="219" />
+            </Array>
+            <mxPoint x="240" y="220" as="sourcePoint" />
+            <mxPoint x="361" y="190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c-edge3-label" connectable="0" parent="c-edge3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="PUT datasets&lt;br&gt;[S3 API]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="5" y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c-edge4" edge="1" parent="1" source="s3-input" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="xena-loader">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c-edge4-label" connectable="0" parent="c-edge4" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Invoke [HTTPS]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c-edge5" edge="1" parent="1" source="xena-loader" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" target="api-gateway">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="833" y="240" />
+              <mxPoint x="461" y="240" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c-edge5-label" connectable="0" parent="c-edge5" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Request Calubration" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="-10" y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c-edge6" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="secrets-manager">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="910" y="230" />
+            </Array>
+            <mxPoint x="910" y="230" as="sourcePoint" />
+            <mxPoint x="740" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c-edge6-label" connectable="0" parent="c-edge6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Get API Client/Secrets" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c-edge7" edge="1" parent="1" source="xena-loader" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="xena-cache">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c-edge7-label" connectable="0" parent="c-edge7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Save request" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c-edge8" edge="1" parent="1" source="api-gateway" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="scib-gateway">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="451" y="410" />
+              <mxPoint x="790" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c-edge8-label" connectable="0" parent="c-edge8" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Call [HTTPS]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="10" y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c-edge10" edge="1" parent="1" source="scib-gateway" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="calibration-service">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="471" y="530" />
+            </Array>
+            <mxPoint x="560" y="530" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c-edge10-label" connectable="0" parent="c-edge10" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Forward request&lt;br&gt;[HTTPS]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="-16" y="-21" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c-edge11" edge="1" parent="1" source="calibration-service" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="grid-connector">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c-edge11-label" connectable="0" parent="c-edge11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Request calibration&lt;br&gt;[HTTPS]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-18" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c-edge12" edge="1" parent="1" source="mto-grid-ext" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=0.375;exitY=0.013;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitPerimeter=0;" target="quantlib-xva">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c-edge12-label" connectable="0" parent="c-edge12" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Execute heavy&lt;br&gt;calculations" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c-edge13" edge="1" parent="1" source="grid-connector" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" target="mto-grid-ext">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1340" y="666" />
+              <mxPoint x="1340" y="666" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c-edge13-label" connectable="0" parent="c-edge13" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Send requests&lt;br&gt;[HTTPS]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="37" y="-25" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c-edge14" edge="1" parent="1" source="calibration-service" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="s3-output">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c-edge14-label" connectable="0" parent="c-edge14" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="PUT calibrated&lt;br&gt;results" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="-42" y="11" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c-edge15" edge="1" parent="1" source="s3-output" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="markets-ext">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="529" y="801" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c-edge15-label" connectable="0" parent="c-edge15" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Consume via&lt;br&gt;Sigma/DaaS" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="-23" y="-20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c-edge16" edge="1" parent="1" source="xena-loader" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;endArrow=classic;endFill=1;dashed=1;strokeColor=#999999;exitX=1;exitY=0.75;exitDx=0;exitDy=0;" target="cloudwatch">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1010" y="200" />
+            </Array>
+            <mxPoint x="820" y="230" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c-edge17" edge="1" parent="1" source="calibration-service" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;endArrow=classic;endFill=1;dashed=1;exitX=0.723;exitY=0.971;exitDx=0;exitDy=0;strokeColor=#999999;exitPerimeter=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="520" y="839" />
+              <mxPoint x="960" y="839" />
+            </Array>
+            <mxPoint x="960" y="890" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cQMnc8DZxg1dtxHmtIWf-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#6D6D6D;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Batch Schedulers&lt;/b&gt;&lt;br&gt;[External]&lt;br&gt;&lt;br&gt;Control-M, Airflow" vertex="1">
+          <mxGeometry height="80" width="160" x="80" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="cQMnc8DZxg1dtxHmtIWf-3" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;" target="acm">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="540" y="320" as="sourcePoint" />
+            <mxPoint x="663" y="319" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cQMnc8DZxg1dtxHmtIWf-4" connectable="0" parent="cQMnc8DZxg1dtxHmtIWf-3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Get Domain Certificate" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="7" y="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cQMnc8DZxg1dtxHmtIWf-6" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#1168BD;fontStyle=1" value="&lt;b&gt;OHE [SCIB On-Premise]&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="170" x="80" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cQMnc8DZxg1dtxHmtIWf-8" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#1168BD;fontStyle=1" value="&lt;b&gt;GRID [AWS Public Cloud]&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="180" x="1320" y="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="C4-Component" name="C4 Component Diagram - Calibration Service">
+    <mxGraphModel dx="1432" dy="766" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title-component" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;" value="&lt;b&gt;XENA MVP1 - C4 Component Diagram: Calibration Flow&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="600" x="500" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="mvp1-note" parent="1" style="text;html=1;strokeColor=#D86613;fillColor=#FFF4E6;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;fontSize=11;arcSize=5;" value="&lt;b&gt;Scope: MVP1 Calibration Flow Only&lt;/b&gt;&lt;br&gt;Data Preparation → Loader/Ingest → Calibration Request → Results Storage → Monitoring" vertex="1">
+          <mxGeometry height="100" width="180" x="80" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="sigma-datalake-comp" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#6D6D6D;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Sigma/DataLake&lt;/b&gt;&lt;br&gt;[External System]&lt;br&gt;&lt;br&gt;DaaS API - Parquet datasets" vertex="1">
+          <mxGeometry height="90" width="180" x="80" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="batch-orchestrator-comp" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#6D6D6D;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Batch Scheduler/Orchestrator&lt;/b&gt;&lt;br&gt;[External System]&lt;br&gt;&lt;br&gt;Control-M, Airflow" vertex="1">
+          <mxGeometry height="90" width="180" x="80" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="mto-grid-comp" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#6D6D6D;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;MTO GRID (AWS)&lt;/b&gt;&lt;br&gt;[External System]&lt;br&gt;&lt;br&gt;QuantLib calibration" vertex="1">
+          <mxGeometry height="90" width="180" x="1360" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="s3-output-comp" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#6D6D6D;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;S3 Hot/Cold Storage&lt;/b&gt;&lt;br&gt;[External Container]&lt;br&gt;&lt;br&gt;Calibrated outputs" vertex="1">
+          <mxGeometry height="90" width="180" x="1360" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="sigma-markets-comp" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#6D6D6D;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Sigma/Markets&lt;/b&gt;&lt;br&gt;[External System]&lt;br&gt;&lt;br&gt;Consumers via DaaS" vertex="1">
+          <mxGeometry height="90" width="180" x="1360" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="observability-comp" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#6D6D6D;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Observability Tools&lt;/b&gt;&lt;br&gt;[External System]&lt;br&gt;&lt;br&gt;Monitoring, alerts, logs" vertex="1">
+          <mxGeometry height="90" width="180" x="80" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="cal-service-boundary" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#5184F3;strokeWidth=3;dashed=1;" value="" vertex="1">
+          <mxGeometry height="760" width="980" x="320" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="cal-service-label" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#5184F3;fontStyle=1" value="&lt;b&gt;XENA MVP1 System [AWS Public Cloud]&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="400" x="340" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="flow1-label" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#D86613;fontStyle=1" value="&lt;b&gt;1. Data Preparation&lt;/b&gt;" vertex="1">
+          <mxGeometry height="25" width="200" x="340" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="daas-interface" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4A90E2;strokeColor=#3D6DC7;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;DaaS API Interface&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Exposes calibration inputs (Market, Jacobians, configurations) as Parquet datasets from Sigma/DataLake." vertex="1">
+          <mxGeometry height="110" width="240" x="360" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="flow2-label" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#D86613;fontStyle=1" value="&lt;b&gt;2. XENA Loader/Ingest Trigger&lt;/b&gt;" vertex="1">
+          <mxGeometry height="25" width="250" x="640" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="xena-loader" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4A90E2;strokeColor=#3D6DC7;fontColor=#ffffff;align=left;arcSize=10;" value="&lt;b&gt;XENA Loader/Ingest&lt;/b&gt;&lt;br&gt;[Component: Lambda]&lt;br&gt;&lt;br&gt;• Triggered by batch/orchestrator&lt;br&gt;• Obtains datasets from DaaS&lt;br&gt;• Verifies completeness &amp; schema&lt;br&gt;• Triggers Calibration Service" vertex="1">
+          <mxGeometry height="150" width="240" x="660" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="validation-controls" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4A90E2;strokeColor=#3D6DC7;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Data Validation&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Completeness and schema correctness controls (PAD: Market Object Completeness, Schema Validation)" vertex="1">
+          <mxGeometry height="110" width="220" x="950" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="flow3-label" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#D86613;fontStyle=1" value="&lt;b&gt;3. Calibration Request to GRID&lt;/b&gt;" vertex="1">
+          <mxGeometry height="25" width="250" x="340" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="scib-gateway" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4A90E2;strokeColor=#3D6DC7;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;SCIB Security Gateway&lt;/b&gt;&lt;br&gt;[Component: EKS Pod]&lt;br&gt;&lt;br&gt;API Gateway - validates and routes requests" vertex="1">
+          <mxGeometry height="110" width="200" x="360" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="calibration-service" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4A90E2;strokeColor=#3D6DC7;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Calibration Service&lt;/b&gt;&lt;br&gt;[Component: EKS Pod]&lt;br&gt;&lt;br&gt;Builds calibration request using internal domain objects (market data, model configuration)" vertex="1">
+          <mxGeometry height="110" width="240" x="620" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="grid-connector" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4A90E2;strokeColor=#3D6DC7;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;XENA GRID Connector&lt;/b&gt;&lt;br&gt;[Component: EKS Pod]&lt;br&gt;&lt;br&gt;Sends calibration request to MTO GRID (AWS) which runs QuantLib calibration" vertex="1">
+          <mxGeometry height="110" width="240" x="920" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="flow4-label" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#D86613;fontStyle=1" value="&lt;b&gt;4. Results Return and Storage&lt;/b&gt;" vertex="1">
+          <mxGeometry height="25" width="250" x="340" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="grid-cache-handler" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4A90E2;strokeColor=#3D6DC7;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;GRID Results Handler&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;MTO GRID writes results to cache/store and returns responses via GRID Connector" vertex="1">
+          <mxGeometry height="110" width="240" x="920" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="output-persister" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4A90E2;strokeColor=#3D6DC7;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Output Persister&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;XENA persists calibrated outputs to S3 hot/cold storage" vertex="1">
+          <mxGeometry height="110" width="240" x="620" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="daas-publisher" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4A90E2;strokeColor=#3D6DC7;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;DaaS/DataLake Publisher&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Publishes calibrated outputs back via DaaS/DataLake interfaces for consumption by Sigma and Markets" vertex="1">
+          <mxGeometry height="120" width="220" x="360" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="flow5-label" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#D86613;fontStyle=1" value="&lt;b&gt;5. Monitoring &amp; Controls&lt;/b&gt;" vertex="1">
+          <mxGeometry height="25" width="250" x="340" y="730" as="geometry" />
+        </mxCell>
+        <mxCell id="pad-controls" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4A90E2;strokeColor=#3D6DC7;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;PAD Controls Monitor&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Technical and functional controls (API Connectivity, Timeout, No Calibration/Connectivity) tracked via observability" vertex="1">
+          <mxGeometry height="100" width="280" x="360" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="observability-agent" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4A90E2;strokeColor=#3D6DC7;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Observability Agent&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Collects logs, metrics, traces. Sends to external monitoring tools" vertex="1">
+          <mxGeometry height="100" width="240" x="700" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-edge1" edge="1" parent="1" source="sigma-datalake-comp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="daas-interface">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-edge1-label" connectable="0" parent="comp-edge1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Expose datasets&lt;br&gt;[DaaS API/Parquet]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-edge2" edge="1" parent="1" source="batch-orchestrator-comp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" target="xena-loader">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-edge2-label" connectable="0" parent="comp-edge2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Trigger ingestion&lt;br&gt;[HTTPS]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-edge3" edge="1" parent="1" source="xena-loader" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;dashed=1;" target="daas-interface">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-edge3-label" connectable="0" parent="comp-edge3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Obtain datasets&lt;br&gt;[DaaS API]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-edge4" edge="1" parent="1" source="xena-loader" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="validation-controls">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-edge4-label" connectable="0" parent="comp-edge4" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Validate data" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-edge5" edge="1" parent="1" source="xena-loader" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="scib-gateway">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="780" y="340" />
+              <mxPoint x="460" y="340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-edge5-label" connectable="0" parent="comp-edge5" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Trigger calibration&lt;br&gt;[Internal call]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="-40" y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-edge6" edge="1" parent="1" source="scib-gateway" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="calibration-service">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-edge6-label" connectable="0" parent="comp-edge6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Forward request&lt;br&gt;[HTTPS]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-edge7" edge="1" parent="1" source="calibration-service" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="grid-connector">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-edge7-label" connectable="0" parent="comp-edge7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Build &amp; send request" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-edge8" edge="1" parent="1" source="grid-connector" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" target="mto-grid-comp">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1280" y="398" />
+              <mxPoint x="1280" y="305" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-edge8-label" connectable="0" parent="comp-edge8" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Execute calibration&lt;br&gt;[HTTPS/QuantLib]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="10" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-edge9" edge="1" parent="1" source="mto-grid-comp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;dashed=1;" target="grid-connector">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1280" y="305" />
+              <mxPoint x="1280" y="453" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-edge9-label" connectable="0" parent="comp-edge9" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Return results&lt;br&gt;[HTTPS]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="10" y="20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-edge10" edge="1" parent="1" source="grid-connector" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="grid-cache-handler">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-edge10-label" connectable="0" parent="comp-edge10" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Process results" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-edge11" edge="1" parent="1" source="grid-cache-handler" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="output-persister">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-edge11-label" connectable="0" parent="comp-edge11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Forward results" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-edge12" edge="1" parent="1" source="output-persister" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" target="s3-output-comp">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="860" y="550" />
+              <mxPoint x="1280" y="550" />
+              <mxPoint x="1280" y="665" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-edge12-label" connectable="0" parent="comp-edge12" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Write outputs&lt;br&gt;[S3 API]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="10" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-edge13" edge="1" parent="1" source="output-persister" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="daas-publisher">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-edge13-label" connectable="0" parent="comp-edge13" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Publish results" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-edge14" edge="1" parent="1" source="s3-output-comp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" target="sigma-markets-comp">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1320" y="688" />
+              <mxPoint x="1320" y="795" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-edge14-label" connectable="0" parent="comp-edge14" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Consume via&lt;br&gt;DaaS/DataLake" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="10" y="15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-edge15" edge="1" parent="1" source="pad-controls" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="observability-agent">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-edge15-label" connectable="0" parent="comp-edge15" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Send control data" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-edge16" edge="1" parent="1" source="observability-agent" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" target="observability-comp">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="300" y="810" />
+              <mxPoint x="300" y="785" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-edge16-label" connectable="0" parent="comp-edge16" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;" value="Logs, metrics, traces" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="-10" y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-edge17" edge="1" parent="1" source="xena-loader" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;endArrow=classic;endFill=1;dashed=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;strokeColor=#999999;" target="pad-controls">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-edge18" edge="1" parent="1" source="calibration-service" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;endArrow=classic;endFill=1;dashed=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeColor=#999999;" target="pad-controls">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="C4 Component - XENA Loader (Lambda)" id="784wAAjTbv21f0ClwuQP">
+    <mxGraphModel dx="1432" dy="766" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=22;fontStyle=1" value="&lt;b&gt;XENA MVP1 - C4 Component Diagram: XENA Loader (Lambda)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="800" x="400" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="principles" parent="1" style="text;html=1;strokeColor=#D86613;fillColor=#FFF4E6;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;fontSize=11;arcSize=5;fontStyle=0" value="&lt;b&gt;ARCHITECTURAL PRINCIPLES&lt;/b&gt;&lt;br&gt;&lt;br&gt;✓ Lightweight edge gateway&lt;br&gt;✓ STREAM Parquet (NO buffering)&lt;br&gt;✓ EARLY schema validation (fail-fast)&lt;br&gt;✓ Reject invalid data at edge&lt;br&gt;✓ Store S3 URI reference in Redis&lt;br&gt;✓ Edge idempotency enforcement&lt;br&gt;✓ NO full objects in Redis&lt;br&gt;✓ Memory-efficient for large files&lt;br&gt;&lt;br&gt;&lt;b&gt;PERFORMANCE TARGET&lt;/b&gt;&lt;br&gt;Total execution: &lt;2s (not 30s!)" vertex="1">
+          <mxGeometry height="200" width="200" x="120" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="api-gateway" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;API Gateway&lt;/b&gt;&lt;br&gt;[External Container]" vertex="1">
+          <mxGeometry height="70" width="140" x="120" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="s3-input" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;S3 Input Bucket&lt;/b&gt;&lt;br&gt;[External Container]&lt;br&gt;&lt;span style=&quot;font-size:10px&quot;&gt;Parquet files&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="140" x="120" y="295" as="geometry" />
+        </mxCell>
+        <mxCell id="redis" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;XENA Cache&lt;/b&gt;&lt;br&gt;[External Container]&lt;br&gt;&lt;span style=&quot;font-size:10px&quot;&gt;Redis - refs only&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="150" x="1250" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="scib-gateway" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;SQS Queue&lt;/b&gt;&lt;br&gt;[External Container]&lt;br&gt;&lt;span style=&quot;font-size:10px&quot;&gt;Input Event Notification&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="140" x="120" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="lambda-boundary" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#1ba1e2;strokeWidth=3;dashed=1;" value="" vertex="1">
+          <mxGeometry height="710" width="870" x="360" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="lambda-label" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#1ba1e2;fontStyle=1" value="&lt;b&gt;XENA Loader Container [AWS Lambda - JAVA]&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="450" x="380" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="comp1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4472C4;strokeColor=#2E5C9A;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Event Handler&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Receives event from SQS Notifications. Extracts S3 URI, metadata, correlation ID." vertex="1">
+          <mxGeometry height="100" width="200" x="400" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="comp2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4472C4;strokeColor=#2E5C9A;fontColor=#ffffff;align=left;arcSize=10;" value="&lt;b&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;Edge Idempotency Checker&lt;/b&gt;&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;[Component]&lt;br&gt;&lt;br&gt;✓ Generate UUID key&lt;br&gt;✓ Check Redis&lt;br&gt;✓ ABORT if duplicate" vertex="1">
+          <mxGeometry height="110" width="220" x="680" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="comp3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4472C4;strokeColor=#2E5C9A;fontColor=#ffffff;align=left;arcSize=10;" value="&lt;b&gt;S3 Streaming Reader&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;✓ ResponseInputStream&lt;br&gt;✓ NO buffering&lt;br&gt;✓ Memory-efficient" vertex="1">
+          <mxGeometry height="110" width="190" x="400" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="comp4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4472C4;strokeColor=#2E5C9A;fontColor=#ffffff;align=left;arcSize=10;" value="&lt;b&gt;Parquet Schema Validator&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;✓ EARLY validation (fail-fast)&lt;br&gt;✓ Parse schema from stream&lt;br&gt;✓ Validate completeness&lt;br&gt;✓ REJECT invalid HERE" vertex="1">
+          <mxGeometry height="130" width="219" x="681" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="comp5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4472C4;strokeColor=#2E5C9A;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Metadata Extractor&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Extract calibration metadata. Generate correlation key." vertex="1">
+          <mxGeometry height="100" width="200" x="400" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="comp6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4472C4;strokeColor=#2E5C9A;fontColor=#ffffff;align=left;arcSize=10;" value="&lt;b&gt;Reference Builder&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Build lightweight reference:&lt;br&gt;• S3 URI (not payload!)&lt;br&gt;• Idempotency key&lt;br&gt;• Metadata&lt;br&gt;Size: ~1-2 KB" vertex="1">
+          <mxGeometry height="130" width="220" x="680" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="comp7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4472C4;strokeColor=#2E5C9A;fontColor=#ffffff;align=left;arcSize=10;" value="&lt;b&gt;Redis Reference Writer&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;✓ Store REFERENCE only (~1KB)&lt;br&gt;✓ NOT full Parquet&lt;br&gt;✓ Fast write &lt;100ms&lt;br&gt;✓ TTL: 24-48h" vertex="1">
+          <mxGeometry height="120" width="200" x="1000" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="comp8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4472C4;strokeColor=#2E5C9A;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Calibration Trigger&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Invoke SCIB Gateway with reference key (NOT payload)." vertex="1">
+          <mxGeometry height="100" width="220" x="400" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="comp9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C0504D;strokeColor=#984344;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Error Handler&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Early rejection. Log failures. Return error. Do NOT pollute Redis." vertex="1">
+          <mxGeometry height="100" width="210" x="990" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="comp10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4472C4;strokeColor=#2E5C9A;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Observability Logger&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Logs, metrics, traces to CloudWatch." vertex="1">
+          <mxGeometry height="90" width="210" x="690" y="660" as="geometry" />
+        </mxCell>
+        <mxCell id="edge1" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="comp1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="210" y="420" />
+              <mxPoint x="370" y="420" />
+              <mxPoint x="370" y="180" />
+            </Array>
+            <mxPoint x="210" y="470" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge1-label" connectable="0" parent="edge1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Trigger event" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="-39" y="-20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge2" edge="1" parent="1" source="comp1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="comp2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="630" y="185" />
+              <mxPoint x="630" y="185" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge2-label" connectable="0" parent="edge2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Check duplicate" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="8" y="-14" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge3" edge="1" parent="1" source="comp2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;" target="redis">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1210" y="185" />
+              <mxPoint x="1210" y="185" />
+            </Array>
+            <mxPoint x="1410" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge3-label" connectable="0" parent="edge3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Check key" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="16" y="-14" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge4" edge="1" parent="1" source="comp1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="comp3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="495" y="250" />
+              <mxPoint x="495" y="250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge4-label" connectable="0" parent="edge4" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Extract S3 URI" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge5" edge="1" parent="1" source="comp3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;" target="s3-input">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="210" y="335" />
+              <mxPoint x="210" y="335" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge5-label" connectable="0" parent="edge5" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="STREAM Parquet&lt;br&gt;(no buffering)" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="-42" y="14" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge6" edge="1" parent="1" source="comp3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=1.005;exitY=0.618;exitDx=0;exitDy=0;exitPerimeter=0;" target="comp4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="591" y="345" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge6-label" connectable="0" parent="edge6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Stream to validator" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="9" y="-17" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge7" edge="1" parent="1" source="comp4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="comp5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="800" y="430" />
+              <mxPoint x="530" y="430" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge7-label" connectable="0" parent="edge7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;backgroundColor=#FFFFFF;fontColor=#27AE60;fontStyle=1" value="✓ VALID" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="20" y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge8" edge="1" parent="1" source="comp4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=3;endArrow=classic;endFill=1;strokeColor=#C0504D;" target="comp9">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="900" y="345" />
+              <mxPoint x="900" y="345" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge8-label" connectable="0" parent="edge8" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;backgroundColor=#FFFFFF;fontColor=#C0504D;fontStyle=1" value="✗ INVALID&lt;br&gt;REJECT" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="1" y="26" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge9" edge="1" parent="1" source="comp5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="comp6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="670" y="510" />
+              <mxPoint x="670" y="510" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge9-label" connectable="0" parent="edge9" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Metadata + key" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="8" y="-19" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge10" edge="1" parent="1" source="comp6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="comp7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1100" y="535" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge10-label" connectable="0" parent="edge10" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Reference object&lt;br&gt;(S3 URI + meta)&lt;br&gt;~1-2 KB" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="-11" y="26" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge11" edge="1" parent="1" source="comp7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;" target="redis">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge11-label" connectable="0" parent="edge11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Store ref&lt;br&gt;&lt;100ms" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge12" edge="1" parent="1" source="comp6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="comp8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="500" y="590" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge12-label" connectable="0" parent="edge12" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Trigger with key" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="20" y="-21" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge13" edge="1" parent="1" source="comp8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;" target="api-gateway">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="300" y="700" />
+              <mxPoint x="300" y="700" />
+            </Array>
+            <mxPoint x="180" y="700" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge13-label" connectable="0" parent="edge13" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Invoke [HTTPS&lt;br&gt;+ idem key]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="-34" y="-21" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ARroRWO8CT-q2yjZDWwb-1" connectable="0" parent="edge13" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="ç" vertex="1">
+          <mxGeometry relative="1" x="0.3156" y="2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge14" edge="1" parent="1" source="comp4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;endArrow=classic;endFill=1;dashed=1;strokeColor=#999999;" target="comp10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="830" y="570" />
+              <mxPoint x="830" y="570" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge15" edge="1" parent="1" source="comp9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;endArrow=classic;endFill=1;dashed=1;strokeColor=#999999;" target="comp10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1140" y="470" />
+              <mxPoint x="950" y="470" />
+              <mxPoint x="950" y="700" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5sZ3dSbCcODnse7ila79-3" edge="1" parent="1" source="s3-input" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=0.389;exitY=0.994;exitDx=0;exitDy=0;exitPerimeter=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="175" y="430" />
+              <mxPoint x="175" y="480" />
+            </Array>
+            <mxPoint x="130" y="430" as="sourcePoint" />
+            <mxPoint x="175" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5sZ3dSbCcODnse7ila79-4" connectable="0" parent="5sZ3dSbCcODnse7ila79-3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Trigger Event" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="-5" y="-13" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="C4 Component - Calibration Service (EKS)" id="oG9M7bYJD54UPouN-vVI">
+    <mxGraphModel dx="1432" dy="766" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title2" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=22;fontStyle=1" value="&lt;b&gt;XENA MVP1 - C4 Component Diagram: Calibration Service (EKS Pod)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="1000" x="300" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="principles2" parent="1" style="text;html=1;strokeColor=#8E44AD;fillColor=#F4ECF7;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;fontSize=10;arcSize=5;fontStyle=0" value="&lt;b&gt;ARCHITECTURAL PRINCIPLES&lt;/b&gt;&lt;br&gt;&lt;br&gt;✓ Business orchestration layer&lt;br&gt;✓ Defensive idempotency (backend)&lt;br&gt;✓ Retrieve Parquet from S3 by URI&lt;br&gt;✓ Manage output lifecycle&lt;br&gt;✓ Auditability &amp; traceability&lt;br&gt;✓ Isolate GRID integration&lt;br&gt;✓ NOT a pass-through&lt;br&gt;&lt;br&gt;&lt;b&gt;SEPARATION OF CONCERNS&lt;/b&gt;&lt;br&gt;CalibrationService ≠ GRIDConnector&lt;br&gt;&lt;br&gt;• CalibrationService: Platform&lt;br&gt;  protection, lifecycle, contracts&lt;br&gt;• GRIDConnector: External system&lt;br&gt;  integration isolation" vertex="1">
+          <mxGeometry height="232" width="185" x="1280" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="scib-gw" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;SCIB Gateway&lt;/b&gt;&lt;br&gt;[External Container]" vertex="1">
+          <mxGeometry height="70" width="140" x="55" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="redis2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;XENA Cache&lt;/b&gt;&lt;br&gt;[External Container]&lt;br&gt;&lt;span style=&quot;font-size:10px&quot;&gt;Redis&lt;/span&gt;" vertex="1">
+          <mxGeometry height="70" width="140" x="55" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="s3-input2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;S3 Input Bucket&lt;/b&gt;&lt;br&gt;[External Container]&lt;br&gt;&lt;span style=&quot;font-size:10px&quot;&gt;Parquet files&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="140" x="55" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="grid-conn" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Grid Connector&lt;/b&gt;&lt;br&gt;[External Container]&lt;br&gt;&lt;span style=&quot;font-size:10px&quot;&gt;EKS Pod&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="160" x="1305" y="464" as="geometry" />
+        </mxCell>
+        <mxCell id="s3-output2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;S3 Output Bucket&lt;/b&gt;&lt;br&gt;[External Container]&lt;br&gt;&lt;span style=&quot;font-size:10px&quot;&gt;Calibrated Parquet&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="160" x="1305" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="cal-boundary" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#70AD47;strokeWidth=3;dashed=1;" value="" vertex="1">
+          <mxGeometry height="940" width="900" x="360" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="cal-label" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#70AD47;fontStyle=1" value="&lt;b&gt;Calibration Service Container [EKS Pod - Java/Spring Boot]&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="500" x="380" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="cal1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#70AD47;strokeColor=#5A8A37;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Request Handler&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;HTTPS REST endpoint. Receives request with idempotency key + reference key." vertex="1">
+          <mxGeometry height="90" width="200" x="400" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="cal2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#70AD47;strokeColor=#5A8A37;fontColor=#ffffff;align=left;arcSize=10;" value="&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(255, 255, 255), rgb(18, 18, 18));&quot;&gt;&lt;b&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;Defensive Idempotency&lt;br&gt;&lt;/b&gt;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(255, 255, 255), rgb(18, 18, 18));&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;[Component]&lt;/span&gt;&lt;/div&gt;&lt;br&gt;✓ Extract idempotency key&lt;br&gt;✓ Check Redis&lt;br&gt;✓ ABORT if processed&lt;br&gt;✓ Backend protection" vertex="1">
+          <mxGeometry height="120" width="220" x="702" y="115" as="geometry" />
+        </mxCell>
+        <mxCell id="cal3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#70AD47;strokeColor=#5A8A37;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Reference Resolver&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Retrieve reference from Redis. Extract S3 URI + metadata." vertex="1">
+          <mxGeometry height="100" width="200" x="1005" y="125" as="geometry" />
+        </mxCell>
+        <mxCell id="cal4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#70AD47;strokeColor=#5A8A37;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;S3 Parquet Retriever&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Retrieve Parquet from S3 by URI. S3 is source of truth." vertex="1">
+          <mxGeometry height="100" width="220" x="402" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="cal5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#70AD47;strokeColor=#5A8A37;fontColor=#ffffff;align=left;arcSize=10;" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(255, 255, 255), rgb(18, 18, 18));&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; Calibration Orchestrator&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(255, 255, 255), rgb(18, 18, 18));&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; [Component]&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/div&gt;Business logic coordinator:&lt;br&gt;• Prepare request&lt;br&gt;• Invoke GRID&lt;br&gt;• Handle response&lt;br&gt;• Manage state" vertex="1">
+          <mxGeometry height="130" width="220" x="704" y="275" as="geometry" />
+        </mxCell>
+        <mxCell id="cal6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#70AD47;strokeColor=#5A8A37;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;GRID Invoker&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Call Grid Connector. Isolate external dependency." vertex="1">
+          <mxGeometry height="100" width="200" x="963" y="454" as="geometry" />
+        </mxCell>
+        <mxCell id="cal7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#70AD47;strokeColor=#5A8A37;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Results Processor&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Process GRID results. Transform to Parquet. Validate." vertex="1">
+          <mxGeometry height="100" width="200" x="400" y="507" as="geometry" />
+        </mxCell>
+        <mxCell id="cal8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#70AD47;strokeColor=#5A8A37;fontColor=#ffffff;align=left;arcSize=10;" value="&lt;b&gt;Output Lifecycle Manager&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;✓ Write Parquet to S3 Output&lt;br&gt;✓ Manage output contract&lt;br&gt;✓ Update Redis state&lt;br&gt;✓ Ensure auditability" vertex="1">
+          <mxGeometry height="120" width="240" x="680" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="cal9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#70AD47;strokeColor=#5A8A37;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Audit &amp;amp; Traceability&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Record processing history. Link request to output. Compliance." vertex="1">
+          <mxGeometry height="100" width="220" x="400" y="746" as="geometry" />
+        </mxCell>
+        <mxCell id="cal10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C0504D;strokeColor=#984344;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Error Handler&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Exception handling. Circuit breaker. Retry logic. Alerts." vertex="1">
+          <mxGeometry height="100" width="200" x="400" y="881" as="geometry" />
+        </mxCell>
+        <mxCell id="cal11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#70AD47;strokeColor=#5A8A37;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Observability Agent&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Logs, metrics, traces. Link to Lambda keys." vertex="1">
+          <mxGeometry height="90" width="220" x="830" y="886" as="geometry" />
+        </mxCell>
+        <mxCell id="cedge1" edge="1" parent="1" source="scib-gw" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="cal1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cedge1-label" connectable="0" parent="cedge1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Request + keys" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="1" y="-12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge2" edge="1" parent="1" source="cal1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="cal2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cedge2-label" connectable="0" parent="cedge2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Check processed" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="3" y="-11" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge3" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="redis2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="300" y="230" />
+              <mxPoint x="300" y="605" />
+            </Array>
+            <mxPoint x="702" y="230" as="sourcePoint" />
+            <mxPoint x="200" y="605" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge3-label" connectable="0" parent="cedge3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Check idem key" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="306" y="-14" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge4" edge="1" parent="1" source="cal2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="cal3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cedge4-label" connectable="0" parent="cedge4" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Get reference" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="2" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge6" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;" target="cal4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="963" y="493" />
+              <mxPoint x="963" y="490" />
+              <mxPoint x="510" y="490" />
+            </Array>
+            <mxPoint x="963" y="490" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge6-label" connectable="0" parent="cedge6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="S3 URI" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="60" y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge7" edge="1" parent="1" source="cal4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="s3-input2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="200" y="340" />
+              <mxPoint x="200" y="340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge7-label" connectable="0" parent="cedge7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="GET Parquet" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="-89" y="-16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge8" edge="1" parent="1" source="cal4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.02;entryY=0.16;entryDx=0;entryDy=0;entryPerimeter=0;" target="cal6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="567" y="470" />
+            </Array>
+            <mxPoint x="700" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge8-label" connectable="0" parent="cedge8" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Parquet data" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge9" edge="1" parent="1" source="cal5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="cal6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="790" y="440" />
+              <mxPoint x="1063" y="440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge9-label" connectable="0" parent="cedge9" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Request calibration + S3 URI" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="-23" y="-14" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge10" edge="1" parent="1" source="cal6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;" target="grid-conn">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cedge10-label" connectable="0" parent="cedge10" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Execute + return&lt;br&gt;[HTTPS]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="4" y="-19" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge11" edge="1" parent="1" source="cal6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="cal7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1063" y="640" />
+              <mxPoint x="500" y="640" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge11-label" connectable="0" parent="cedge11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="GRID results" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="38" y="-11" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge12" edge="1" parent="1" source="cal7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="cal8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cedge12-label" connectable="0" parent="cedge12" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Processed results" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-11" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge13" edge="1" parent="1" source="cal8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;" target="s3-output2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1320" y="730" />
+              <mxPoint x="1320" y="730" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge13-label" connectable="0" parent="cedge13" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="PUT calibrated&lt;br&gt;Parquet" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="10" y="20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge14" edge="1" parent="1" source="cal8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;" target="redis2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="320" y="700" />
+              <mxPoint x="320" y="620" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge14-label" connectable="0" parent="cedge14" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Update state&lt;br&gt;(complete + URI)" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="-20" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge15" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="cal9">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="510" y="728" />
+            </Array>
+            <mxPoint x="680" y="728" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge15-label" connectable="0" parent="cedge15" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Audit trail" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge16" edge="1" parent="1" source="cal5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;endArrow=classic;endFill=1;dashed=1;strokeColor=#999999;" target="cal11">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="940" y="340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge17" edge="1" parent="1" source="cal9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;endArrow=classic;endFill=1;dashed=1;strokeColor=#999999;" target="cal11">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="810" y="828" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cedge18" edge="1" parent="1" source="cal5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;endArrow=classic;endFill=1;dashed=1;strokeColor=#C0504D;" target="cal10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="640" y="340" />
+              <mxPoint x="640" y="931" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cf0VD4jtJlvv76KxOcYi-3" edge="1" parent="1" source="cal3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="cal5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1105" y="308" />
+              <mxPoint x="930" y="308" />
+            </Array>
+            <mxPoint x="1343" y="550" as="sourcePoint" />
+            <mxPoint x="890" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cf0VD4jtJlvv76KxOcYi-4" connectable="0" parent="cf0VD4jtJlvv76KxOcYi-3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="S3 URI" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="-2" y="-19" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="C4 Component - GRIDConnector" id="aH81Ifz5Yhou52T_zqX3">
+    <mxGraphModel dx="1685" dy="901" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hJS82S2HU44f2StYQk2V-1" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=22;fontStyle=1" value="&lt;b&gt;XENA MVP1 - C4 Component Diagram: GRID Connector (EKS Pod)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="900" x="320" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-2" parent="1" style="text;html=1;strokeColor=#E67E22;fillColor=#FEF5E7;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;fontSize=10;arcSize=5;fontStyle=0" value="&lt;b&gt;ARCHITECTURAL ROLE&lt;/b&gt;&lt;br&gt;&lt;br&gt;Type: External Integration Adapter&lt;br&gt;Scope: Technical integration ONLY&lt;br&gt;&lt;br&gt;✓ Stateless&lt;br&gt;✓ Does NOT own idempotency&lt;br&gt;✓ Does NOT own output lifecycle&lt;br&gt;✓ Does NOT manage business logic&lt;br&gt;&lt;br&gt;&lt;b&gt;SINGLE RESPONSIBILITY&lt;/b&gt;&lt;br&gt;Isolate platform from external&lt;br&gt;GRID dependency&lt;br&gt;&lt;br&gt;&lt;b&gt;INTEGRATION PATTERN&lt;/b&gt;&lt;br&gt;1. PUT input to GRID Redis&lt;br&gt;2. POST RESTful API to GRID&lt;br&gt;3. Receive processing key&lt;br&gt;4. BLPOP results from GRID Redis" vertex="1">
+          <mxGeometry height="310" width="210" x="80" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-3" parent="1" style="text;html=1;strokeColor=#8E44AD;fillColor=#F4ECF7;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;fontSize=11;arcSize=5;fontStyle=0" value="&lt;b&gt;ISOLATION PRINCIPLE&lt;/b&gt;&lt;br&gt;&lt;br&gt;GRIDConnector exists to&lt;br&gt;ISOLATE the platform from&lt;br&gt;external GRID integration.&lt;br&gt;&lt;br&gt;CalibrationService protects&lt;br&gt;the platform FROM GRIDConnector.&lt;br&gt;&lt;br&gt;This separation is DELIBERATE." vertex="1">
+          <mxGeometry height="170" width="210" x="80" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Calibration Service&lt;/b&gt;&lt;br&gt;[External Container]&lt;br&gt;&lt;span style=&quot;font-size:10px&quot;&gt;EKS Pod&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="140" x="80" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;GRID Redis&lt;/b&gt;&lt;br&gt;[External System]&lt;br&gt;&lt;span style=&quot;font-size:10px&quot;&gt;MTO GRID AWS&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="150" x="1350" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;GRID REST API&lt;/b&gt;&lt;br&gt;[External System]&lt;br&gt;&lt;span style=&quot;font-size:10px&quot;&gt;MTO GRID AWS&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="150" x="1350" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-7" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#E67E22;strokeWidth=3;dashed=1;" value="" vertex="1">
+          <mxGeometry height="770" width="980" x="330" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-8" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#E67E22;fontStyle=1" value="&lt;b&gt;GRID Connector Container [EKS Pod - Java/Spring Boot]&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="500" x="350" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E67E22;strokeColor=#B85A14;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Request Handler&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;HTTPS REST endpoint. Receives calibration request from CalibrationService. Stateless entry point." vertex="1">
+          <mxGeometry height="110" width="220" x="370" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E67E22;strokeColor=#B85A14;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Input Serializer&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Serialize calibration input data into GRID-expected format. Prepare payload for GRID Redis." vertex="1">
+          <mxGeometry height="110" width="220" x="650" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E67E22;strokeColor=#B85A14;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;GRID Redis Writer&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;PUT serialized input files into GRID Redis namespace. Uses Redis SET/HSET operations." vertex="1">
+          <mxGeometry height="110" width="240" x="970" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E67E22;strokeColor=#B85A14;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;GRID API Client&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;POST RESTful API request to GRID. Sends calibration job request. Receives processing key from GRID." vertex="1">
+          <mxGeometry height="120" width="230" x="370" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E67E22;strokeColor=#B85A14;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Processing Key Manager&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Receive and manage processing key from GRID API. Track key for result retrieval." vertex="1">
+          <mxGeometry height="120" width="220" x="670" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E67E22;strokeColor=#B85A14;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;GRID Redis Reader (BLPOP)&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;BLPOP (blocking list pop) results from GRID Redis using processing key. Waits for GRID to complete processing." vertex="1">
+          <mxGeometry height="130" width="240" x="970" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-15" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E67E22;strokeColor=#B85A14;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Result Deserializer&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Deserialize GRID results from Redis format. Parse calibrated output data." vertex="1">
+          <mxGeometry height="110" width="180" x="410" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E67E22;strokeColor=#B85A14;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Response Builder&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Build response for CalibrationService. Return calibrated results." vertex="1">
+          <mxGeometry height="90" width="180" x="700" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-17" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E67E22;strokeColor=#B85A14;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;GRID Protocol Adapter&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Adapts between internal platform protocols and GRID-specific protocols. Isolates GRID dependency." vertex="1">
+          <mxGeometry height="120" width="240" x="970" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-18" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C0504D;strokeColor=#984344;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Error Handler&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Handle GRID-specific errors: timeout, connection failures, invalid responses. Propagate to CalibrationService." vertex="1">
+          <mxGeometry height="110" width="240" x="370" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-19" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E67E22;strokeColor=#B85A14;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Observability Logger&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Log GRID interactions, timing, errors. Metrics for GRID performance monitoring." vertex="1">
+          <mxGeometry height="110" width="220" x="670" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-20" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E67E22;strokeColor=#B85A14;fontColor=#ffffff;align=center;arcSize=10;" value="&lt;b&gt;Connection Pool Manager&lt;/b&gt;&lt;br&gt;[Component]&lt;br&gt;&lt;br&gt;Manage Redis and HTTP connections to GRID. Connection pooling for performance." vertex="1">
+          <mxGeometry height="110" width="240" x="970" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-21" edge="1" parent="1" source="hJS82S2HU44f2StYQk2V-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="hJS82S2HU44f2StYQk2V-9">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="310" y="630" />
+              <mxPoint x="310" y="175" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-22" connectable="0" parent="hJS82S2HU44f2StYQk2V-21" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Calibration request&lt;br&gt;[HTTPS]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="-46" y="132" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-23" edge="1" parent="1" source="hJS82S2HU44f2StYQk2V-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="hJS82S2HU44f2StYQk2V-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-24" connectable="0" parent="hJS82S2HU44f2StYQk2V-23" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Input data" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-25" edge="1" parent="1" source="hJS82S2HU44f2StYQk2V-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="hJS82S2HU44f2StYQk2V-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-26" connectable="0" parent="hJS82S2HU44f2StYQk2V-25" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Serialized payload" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-27" edge="1" parent="1" source="hJS82S2HU44f2StYQk2V-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;" target="hJS82S2HU44f2StYQk2V-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-28" connectable="0" parent="hJS82S2HU44f2StYQk2V-27" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="PUT input files&lt;br&gt;[Redis SET/HSET]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-29" edge="1" parent="1" source="hJS82S2HU44f2StYQk2V-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;entryX=0.188;entryY=0.017;entryDx=0;entryDy=0;entryPerimeter=0;" target="hJS82S2HU44f2StYQk2V-12">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="415" y="300" />
+              <mxPoint x="415" y="300" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-30" connectable="0" parent="hJS82S2HU44f2StYQk2V-29" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Initiate job" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-31" edge="1" parent="1" source="hJS82S2HU44f2StYQk2V-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;" target="hJS82S2HU44f2StYQk2V-6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="490" y="280" />
+              <mxPoint x="1250" y="280" />
+              <mxPoint x="1250" y="470" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-32" connectable="0" parent="hJS82S2HU44f2StYQk2V-31" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="POST calibration job&lt;br&gt;[REST API]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="-248" y="-19" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-33" edge="1" parent="1" source="hJS82S2HU44f2StYQk2V-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;" target="hJS82S2HU44f2StYQk2V-13">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1330" y="450" />
+              <mxPoint x="1330" y="260" />
+              <mxPoint x="930" y="260" />
+              <mxPoint x="930" y="360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-34" connectable="0" parent="hJS82S2HU44f2StYQk2V-33" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Return processing key&lt;br&gt;[HTTPS Response]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="132" y="119" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-35" edge="1" parent="1" source="hJS82S2HU44f2StYQk2V-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="hJS82S2HU44f2StYQk2V-14">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="940" y="370" />
+              <mxPoint x="940" y="370" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-36" connectable="0" parent="hJS82S2HU44f2StYQk2V-35" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Processing key" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="8" y="16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-37" edge="1" parent="1" source="hJS82S2HU44f2StYQk2V-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;" target="hJS82S2HU44f2StYQk2V-5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1270" y="400" />
+              <mxPoint x="1270" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-38" connectable="0" parent="hJS82S2HU44f2StYQk2V-37" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="BLPOP results&lt;br&gt;(blocking wait)" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="10" y="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-39" edge="1" parent="1" source="hJS82S2HU44f2StYQk2V-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="hJS82S2HU44f2StYQk2V-15">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1050" y="450" />
+              <mxPoint x="510" y="450" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-40" connectable="0" parent="hJS82S2HU44f2StYQk2V-39" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Raw GRID results" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="60" y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-41" edge="1" parent="1" source="hJS82S2HU44f2StYQk2V-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="620" y="545" />
+              <mxPoint x="620" y="545" />
+            </Array>
+            <mxPoint x="700" y="545" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-42" connectable="0" parent="hJS82S2HU44f2StYQk2V-41" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Deserialized results" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-43" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="740" y="640" />
+              <mxPoint x="220" y="640" />
+            </Array>
+            <mxPoint x="740" y="590" as="sourcePoint" />
+            <mxPoint x="220" y="640" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-44" connectable="0" parent="hJS82S2HU44f2StYQk2V-43" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Return calibrated&lt;br&gt;results [HTTPS]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="36" y="9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-45" edge="1" parent="1" source="hJS82S2HU44f2StYQk2V-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="hJS82S2HU44f2StYQk2V-17">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="760" y="250" />
+              <mxPoint x="1230" y="250" />
+              <mxPoint x="1230" y="560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-46" connectable="0" parent="hJS82S2HU44f2StYQk2V-45" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Use protocol" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="20" y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-47" edge="1" parent="1" source="hJS82S2HU44f2StYQk2V-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;" target="hJS82S2HU44f2StYQk2V-17">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="780" y="600" />
+              <mxPoint x="780" y="600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-48" connectable="0" parent="hJS82S2HU44f2StYQk2V-47" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;backgroundColor=#FFFFFF;" value="Use protocol" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="168" y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-49" edge="1" parent="1" source="hJS82S2HU44f2StYQk2V-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;endArrow=classic;endFill=1;dashed=1;strokeColor=#999999;" target="hJS82S2HU44f2StYQk2V-20">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1090" y="250" />
+              <mxPoint x="1090" y="660" />
+              <mxPoint x="1090" y="660" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-50" connectable="0" parent="hJS82S2HU44f2StYQk2V-49" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;fontColor=#999999;" value="Use connection" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="29" y="60" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-51" edge="1" parent="1" source="hJS82S2HU44f2StYQk2V-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;endArrow=classic;endFill=1;dashed=1;strokeColor=#999999;" target="hJS82S2HU44f2StYQk2V-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-52" connectable="0" parent="hJS82S2HU44f2StYQk2V-51" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;fontColor=#999999;" value="Use connection" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="29" y="-45" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-53" edge="1" parent="1" source="hJS82S2HU44f2StYQk2V-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;endArrow=classic;endFill=1;dashed=1;strokeColor=#999999;" target="hJS82S2HU44f2StYQk2V-20">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="610" y="380" />
+              <mxPoint x="610" y="640" />
+              <mxPoint x="950" y="640" />
+              <mxPoint x="950" y="735" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-54" connectable="0" parent="hJS82S2HU44f2StYQk2V-53" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;fontColor=#999999;" value="Use HTTP pool" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="10" y="-219" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-55" edge="1" parent="1" source="hJS82S2HU44f2StYQk2V-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;strokeColor=#C0504D;" target="hJS82S2HU44f2StYQk2V-18">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="400" y="550" />
+              <mxPoint x="400" y="550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-56" connectable="0" parent="hJS82S2HU44f2StYQk2V-55" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;fontColor=#C0504D;" value="On error" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="19" y="-84" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-57" edge="1" parent="1" source="hJS82S2HU44f2StYQk2V-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;strokeColor=#C0504D;" target="hJS82S2HU44f2StYQk2V-18">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1090" y="470" />
+              <mxPoint x="630" y="470" />
+              <mxPoint x="630" y="740" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-58" connectable="0" parent="hJS82S2HU44f2StYQk2V-57" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;backgroundColor=#FFFFFF;fontColor=#C0504D;" value="On timeout/error" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="1" as="geometry">
+            <mxPoint x="60" y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-59" edge="1" parent="1" source="hJS82S2HU44f2StYQk2V-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;endArrow=classic;endFill=1;dashed=1;strokeColor=#999999;" target="hJS82S2HU44f2StYQk2V-19">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1090" y="250" />
+              <mxPoint x="780" y="250" />
+              <mxPoint x="780" y="660" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-60" edge="1" parent="1" source="hJS82S2HU44f2StYQk2V-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;endArrow=classic;endFill=1;dashed=1;strokeColor=#999999;" target="hJS82S2HU44f2StYQk2V-19">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="650" y="360" />
+              <mxPoint x="650" y="735" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-61" edge="1" parent="1" source="hJS82S2HU44f2StYQk2V-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;endArrow=classic;endFill=1;dashed=1;strokeColor=#999999;" target="hJS82S2HU44f2StYQk2V-19">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1090" y="480" />
+              <mxPoint x="930" y="480" />
+              <mxPoint x="930" y="735" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hJS82S2HU44f2StYQk2V-62" edge="1" parent="1" source="hJS82S2HU44f2StYQk2V-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;endArrow=classic;endFill=1;dashed=1;strokeColor=#999999;" target="hJS82S2HU44f2StYQk2V-19">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="640" y="760" />
+              <mxPoint x="640" y="760" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
