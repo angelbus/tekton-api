@@ -72,3 +72,46 @@ kubectl apply -f ingress-backup.yaml
 kubectl scale deployment scib-security-gateway-deployment \
   -n xena-pre \
   --replicas=1
+
+
+
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: xena-ingress
+  namespace: xena-pre
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/issuer: arcadia-issuer
+    cert-manager.io/issuer-kind: AWSPCAClusterIssuer
+    cert-manager.io/issuer-group: awspca.cert-manager.io
+    cert-manager.io/usages: "server auth,client auth"
+    cert-manager.io/common-name: xena.sepiag.aws.scib.pre.corp
+    cert-manager.io/email-sans: bzdesxena@gruposantander.com
+    cert-manager.io/subject-organizations: "Grupo Santander"
+    cert-manager.io/subject-organizationalunits: SCIB
+    cert-manager.io/subject-countries: ES
+    cert-manager.io/subject-provinces: Madrid
+    cert-manager.io/subject-localities: Madrid
+    cert-manager.io/private-key-rotation-policy: Always
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+
+spec:
+  tls:
+    - hosts:
+        - xena.sepiag.aws.scib.pre.corp
+      secretName: nginx-ingr-cert
+
+  rules:
+    - host: xena.sepiag.aws.scib.pre.corp
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: calibration-service
+                port:
+                  number: 80
+
