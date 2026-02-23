@@ -1,0 +1,74 @@
+############################################
+# 0️⃣  Verify current state
+############################################
+
+kubectl get ingress -n xena-pre
+kubectl get svc -n xena-pre
+kubectl get deploy -n xena-pre
+kubectl get pods -n xena-pre
+
+
+############################################
+# 1️⃣  Backup current Ingress (safety net)
+############################################
+
+kubectl get ingress xena-ingress \
+  -n xena-pre \
+  -o yaml > ingress-backup.yaml
+
+
+############################################
+# 2️⃣  Deploy ingress change via CI/CD
+# (Commit + push your repo change)
+############################################
+# No kubectl apply manually — let pipeline deploy.
+
+
+############################################
+# 3️⃣  Verify ingress now routes to backend
+############################################
+
+kubectl describe ingress xena-ingress -n xena-pre
+
+
+############################################
+# 4️⃣  Validate from inside cluster
+############################################
+
+kubectl run curltest --rm -it \
+  --image=curlimages/curl \
+  -n xena-pre -- \
+  curl -k https://xena.sepiag.aws.scib.pre.corp
+
+
+############################################
+# 5️⃣  If traffic is confirmed working,
+#     optionally scale SEPIA to zero
+############################################
+
+kubectl scale deployment scib-security-gateway-deployment \
+  -n xena-pre \
+  --replicas=0
+
+
+############################################
+# 6️⃣  Verify SEPIA pods are down
+############################################
+
+kubectl get pods -n xena-pre
+
+
+############################################
+# 🔄 ROLLBACK (if needed)
+############################################
+
+# Option A: Git revert (recommended)
+# git revert <commit>
+# push → pipeline redeploys
+
+# Option B: Emergency manual restore
+kubectl apply -f ingress-backup.yaml
+
+kubectl scale deployment scib-security-gateway-deployment \
+  -n xena-pre \
+  --replicas=1
