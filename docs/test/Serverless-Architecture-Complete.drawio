@@ -1,0 +1,441 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" version="29.6.1">
+  <diagram name="XENA MVP2 - Serverless Architecture" id="WT0xBimSPaIIJTfSMyn4">
+    <mxGraphModel dx="2852" dy="1532" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="AO6TVO0RdpcXst9PySqn-1" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=28;fontStyle=1;fontColor=#1F4E78;" value="&lt;b&gt;XENA MVP2 - New Serverless Architecture for GRID Integration&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 24px;&quot;&gt;Event-Driven, Cost-Optimized, No EKS/Microservices Required&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="2200" x="100" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F8F5;strokeColor=#27AE60;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="120" width="2200" x="100" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-3" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#27AE60;" value="&lt;b&gt;🎯 Key Achievements&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="300" x="130" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-4" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;" value="✅ &lt;b&gt;No EKS/K8s Required&lt;/b&gt; - Eliminated microservices complexity" vertex="1">
+          <mxGeometry height="30" width="450" x="130" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-5" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;" value="✅ &lt;b&gt;Serverless-First&lt;/b&gt; - Lambda + S3 + SQS only" vertex="1">
+          <mxGeometry height="30" width="450" x="130" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-6" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;" value="✅ &lt;b&gt;Event-Driven&lt;/b&gt; - No BLPOP polling anti-pattern" vertex="1">
+          <mxGeometry height="30" width="450" x="630" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-7" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;" value="✅ &lt;b&gt;Massive Cost Reduction&lt;/b&gt; - Drastically reduced overhead" vertex="1">
+          <mxGeometry height="30" width="450" x="630" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-8" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;" value="✅ &lt;b&gt;GRID Does Heavy Lifting&lt;/b&gt; - XDE C++ engine, direct S3 access" vertex="1">
+          <mxGeometry height="30" width="550" x="1130" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-9" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;" value="✅ &lt;b&gt;Simple Architecture&lt;/b&gt; - 3 buckets, 3 queues, 5 Lambdas, 1 EventBridge" vertex="1">
+          <mxGeometry height="30" width="550" x="1130" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF4E6;strokeColor=#F4B183;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="600" width="380" x="100" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-11" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#F4B183;" value="&lt;b&gt;DATA LAKE / MUREX&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:12px&quot;&gt;Data Ingestion Layer&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="340" x="120" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#F4B183;strokeWidth=2;fontSize=14;fontStyle=1" value="&lt;b&gt;Murex&lt;/b&gt;&lt;br&gt;Export Engine" vertex="1">
+          <mxGeometry height="80" width="280" x="150" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-13" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#FFE6CC;strokeColor=#D79B00;size=15;fontSize=13;fontStyle=1" value="&lt;b&gt;Parquet Files&lt;/b&gt;&lt;br&gt;(Books Export)" vertex="1">
+          <mxGeometry height="80" width="220" x="180" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-14" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=12;fontStyle=1;fontColor=#E67E22;" value="&lt;b&gt;1. Upload Book&lt;/b&gt;&lt;br&gt;PUT to S3 Input Bucket" vertex="1">
+          <mxGeometry height="50" width="280" x="150" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-15" edge="1" parent="1" source="AO6TVO0RdpcXst9PySqn-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=4;endArrow=block;endFill=1;strokeColor=#E67E22;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="AO6TVO0RdpcXst9PySqn-19">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="570" as="sourcePoint" />
+            <mxPoint x="540" y="570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-16" connectable="0" parent="AO6TVO0RdpcXst9PySqn-15" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontStyle=1;fontColor=#E67E22;" value="Upload" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="2" as="geometry">
+            <mxPoint x="10" y="-12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-17" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E7F3FF;strokeColor=#4472C4;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="600" width="420" x="610" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-18" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#4472C4;" value="&lt;b&gt;XENA DATA PLANE&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:12px&quot;&gt;S3 Shared Storage (Single Source of Truth)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="380" x="630" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-19" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#7AA116;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;" value="" vertex="1">
+          <mxGeometry height="60" width="60" x="660" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-20" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;fontStyle=1" value="&lt;b&gt;S3 Input Bucket&lt;/b&gt;&lt;br&gt;xena-input-{env}" vertex="1">
+          <mxGeometry height="50" width="250" x="740" y="425" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-21" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#7AA116;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;" value="" vertex="1">
+          <mxGeometry height="60" width="60" x="660" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-22" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;fontStyle=1" value="&lt;b&gt;S3 Output Bucket&lt;/b&gt;&lt;br&gt;xena-output-{env}&lt;br&gt;&lt;span style=&quot;font-size:11px&quot;&gt;manifest.json triggers event&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="250" x="740" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-23" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#7AA116;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;" value="" vertex="1">
+          <mxGeometry height="60" width="60" x="660" y="660" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-24" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;fontStyle=1" value="&lt;b&gt;S3 Error Bucket&lt;/b&gt;&lt;br&gt;xena-error-{env}&lt;br&gt;&lt;span style=&quot;font-size:11px&quot;&gt;Failed deals&lt;/span&gt;" vertex="1">
+          <mxGeometry height="50" width="250" x="740" y="665" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-25" parent="1" style="text;html=1;strokeColor=#4472C4;fillColor=#E7F3FF;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;fontSize=11;arcSize=10;" value="&lt;b&gt;Note:&lt;/b&gt; S3 is the single source&lt;br&gt;of truth. No payload duplication." vertex="1">
+          <mxGeometry height="60" width="330" x="660" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-26" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF5E7;strokeColor=#E67E22;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="600" width="520" x="1144" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-27" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#E67E22;" value="&lt;b&gt;XENA CONTROL PLANE&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:12px&quot;&gt;Event-Driven Orchestration (Serverless)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="480" x="1164" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-28" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontStyle=1;fontColor=#E67E22;" value="&lt;b&gt;SQS Queues (Event Decoupling)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="250" x="1184" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-121" edge="1" parent="1" source="AO6TVO0RdpcXst9PySqn-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="AO6TVO0RdpcXst9PySqn-33" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-29" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#E7157B;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sqs;" value="" vertex="1">
+          <mxGeometry height="50" width="50" x="1194" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-30" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;" value="&lt;b&gt;SQS Input Queue&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="150" x="1264" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-31" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#E7157B;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sqs;" value="" vertex="1">
+          <mxGeometry height="50" width="50" x="1434" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-32" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;" value="&lt;b&gt;SQS Output Queue&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="150" x="1504" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-33" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#E7157B;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sqs;" value="" vertex="1">
+          <mxGeometry height="50" width="50" x="1314" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-34" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=11;" value="&lt;b&gt;SQS DLQ&lt;/b&gt;&lt;br&gt;(Dead Letter Queue)" vertex="1">
+          <mxGeometry height="40" width="150" x="1384" y="505" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-35" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontStyle=1;fontColor=#E67E22;" value="&lt;b&gt;Lambda Functions (Orchestration)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="300" x="1184" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-36" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" value="" vertex="1">
+          <mxGeometry height="50" width="50" x="1194" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-37" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;" value="&lt;b&gt;1. XENALoader&lt;/b&gt;" vertex="1">
+          <mxGeometry height="20" width="90" x="1174" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-38" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" value="" vertex="1">
+          <mxGeometry height="50" width="50" x="1304" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-39" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;" value="&lt;b&gt;2. GRIDSubmit&lt;/b&gt;" vertex="1">
+          <mxGeometry height="20" width="90" x="1284" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-40" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" value="" vertex="1">
+          <mxGeometry height="50" width="50" x="1414" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-41" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;" value="&lt;b&gt;3. ManifestHandler&lt;/b&gt;" vertex="1">
+          <mxGeometry height="20" width="100" x="1389" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-42" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" value="" vertex="1">
+          <mxGeometry height="50" width="50" x="1194" y="730" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-43" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;" value="&lt;b&gt;4. ResultProcessor&lt;/b&gt;" vertex="1">
+          <mxGeometry height="20" width="90" x="1174" y="790" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-44" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" value="" vertex="1">
+          <mxGeometry height="50" width="50" x="1304" y="730" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-45" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;" value="&lt;b&gt;5. XENAFilter&lt;/b&gt;" vertex="1">
+          <mxGeometry height="20" width="80" x="1289" y="790" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-46" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#E7157B;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.eventbridge;" value="" vertex="1">
+          <mxGeometry height="60" width="60" x="1574" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-47" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=11;fontStyle=1" value="&lt;b&gt;EventBridge&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:10px&quot;&gt;Reconciliation Job&lt;br&gt;(every 10 min)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1464" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-48" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F8F5;strokeColor=#27AE60;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="600" width="520" x="1770" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-49" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#27AE60;" value="&lt;b&gt;GRID COMPUTE PLANE&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:12px&quot;&gt;High-Performance Computing (External AWS Account)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="480" x="1790" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-50" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#27AE60;strokeWidth=2;fontSize=16;fontStyle=1" value="&lt;b&gt;MTO GRID&lt;/b&gt;&lt;br&gt;Cluster" vertex="1">
+          <mxGeometry height="80" width="180" x="1850" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-51" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="280" width="420" x="1820" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-52" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=15;fontStyle=1;fontColor=#27AE60;" value="&lt;b&gt;XDE C++ Execution Engine&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="380" x="1840" y="555" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-53" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82B366;fontSize=11;" value="&lt;b&gt;Parquet Streaming Reader&lt;/b&gt;&lt;br&gt;Bounded memory" vertex="1">
+          <mxGeometry height="50" width="170" x="1850" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-54" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82B366;fontSize=11;" value="&lt;b&gt;Worker Thread Pool&lt;/b&gt;&lt;br&gt;Deal-level parallelism" vertex="1">
+          <mxGeometry height="50" width="170" x="2040" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-55" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82B366;fontSize=11;" value="&lt;b&gt;Aggregator&lt;/b&gt;&lt;br&gt;Progress tracking" vertex="1">
+          <mxGeometry height="50" width="170" x="1850" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-56" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82B366;fontSize=11;" value="&lt;b&gt;S3 Writer Pool&lt;/b&gt;&lt;br&gt;Direct S3 writes" vertex="1">
+          <mxGeometry height="50" width="170" x="2040" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-57" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82B366;fontSize=11;" value="&lt;b&gt;Reconciliation Engine&lt;/b&gt;&lt;br&gt;Stateless S3 checks" vertex="1">
+          <mxGeometry height="50" width="170" x="1850" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-58" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82B366;fontSize=11;" value="&lt;b&gt;Manifest Generator&lt;/b&gt;&lt;br&gt;Completion signal" vertex="1">
+          <mxGeometry height="50" width="170" x="2040" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-59" parent="1" style="text;html=1;strokeColor=#27AE60;fillColor=#E8F8F5;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;fontSize=11;arcSize=10;" value="&lt;b&gt;Direct S3 Access:&lt;/b&gt;&lt;br&gt;• Reads from S3 Input&lt;br&gt;• Writes to S3 Output/Error&lt;br&gt;• Cross-account IAM role&lt;br&gt;• No payload relay" vertex="1">
+          <mxGeometry height="100" width="180" x="2070" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-60" edge="1" parent="1" source="AO6TVO0RdpcXst9PySqn-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=3;endArrow=block;endFill=1;strokeColor=#4472C4;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="AO6TVO0RdpcXst9PySqn-29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-61" connectable="0" parent="AO6TVO0RdpcXst9PySqn-60" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;fontColor=#4472C4;" value="S3 Event" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint y="-11" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-62" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=3;endArrow=block;endFill=1;strokeColor=#E67E22;entryX=0.5;entryY=0;" target="AO6TVO0RdpcXst9PySqn-36">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1214" y="500" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-63" connectable="0" parent="AO6TVO0RdpcXst9PySqn-62" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;fontColor=#E67E22;" value="Trigger" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-64" edge="1" parent="1" source="AO6TVO0RdpcXst9PySqn-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=3;endArrow=block;endFill=1;strokeColor=#27AE60;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="AO6TVO0RdpcXst9PySqn-50">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1681" y="645" />
+              <mxPoint x="1681" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-65" connectable="0" parent="AO6TVO0RdpcXst9PySqn-64" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;fontColor=#27AE60;" value="Submit Job&lt;br&gt;(S3 paths)" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="30" y="30" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-66" edge="1" parent="1" source="AO6TVO0RdpcXst9PySqn-51" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=3;endArrow=block;endFill=1;strokeColor=#7AA116;dashed=1;exitX=0;exitY=0.25;entryX=1;entryY=0.5;" target="AO6TVO0RdpcXst9PySqn-19">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1630" y="610" />
+              <mxPoint x="1630" y="450" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-67" connectable="0" parent="AO6TVO0RdpcXst9PySqn-66" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;fontColor=#7AA116;" value="Read Book" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="-37" y="-11" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-68" edge="1" parent="1" source="AO6TVO0RdpcXst9PySqn-51" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=3;endArrow=block;endFill=1;strokeColor=#7AA116;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" target="AO6TVO0RdpcXst9PySqn-21">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1630" y="680" />
+              <mxPoint x="1630" y="570" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-69" connectable="0" parent="AO6TVO0RdpcXst9PySqn-68" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;fontColor=#7AA116;" value="Write Results&lt;br&gt;+ manifest.json" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="-37" y="20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-70" edge="1" parent="1" source="AO6TVO0RdpcXst9PySqn-51" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=3;endArrow=block;endFill=1;strokeColor=#D79B00;dashed=1;exitX=0;exitY=0.75;entryX=1;entryY=0.5;" target="AO6TVO0RdpcXst9PySqn-23">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1630" y="750" />
+              <mxPoint x="1630" y="690" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-71" connectable="0" parent="AO6TVO0RdpcXst9PySqn-70" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;fontColor=#D79B00;" value="Failed Deals" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="-27" y="-11" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-72" edge="1" parent="1" source="AO6TVO0RdpcXst9PySqn-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=3;endArrow=block;endFill=1;strokeColor=#4472C4;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="AO6TVO0RdpcXst9PySqn-31">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1070" y="570" />
+              <mxPoint x="1070" y="465" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-73" connectable="0" parent="AO6TVO0RdpcXst9PySqn-72" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;fontColor=#4472C4;" value="manifest.json&lt;br&gt;Event" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="40" y="15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-74" edge="1" parent="1" source="AO6TVO0RdpcXst9PySqn-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=3;endArrow=block;endFill=1;strokeColor=#E67E22;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="AO6TVO0RdpcXst9PySqn-40">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-75" edge="1" parent="1" source="AO6TVO0RdpcXst9PySqn-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;endArrow=block;endFill=1;strokeColor=#E7157B;dashed=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" target="AO6TVO0RdpcXst9PySqn-44">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1554" y="650" />
+              <mxPoint x="1554" y="755" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-76" connectable="0" parent="AO6TVO0RdpcXst9PySqn-75" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1;fontColor=#E7157B;" value="Every 10 min&lt;br&gt;Check stalled books" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="10" y="20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-77" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF5E7;strokeColor=#E67E22;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="490" width="1260" x="100" y="980" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-78" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;fontColor=#E67E22;" value="&lt;b&gt;📊 Architecture Comparison: Old vs New&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="1160" x="130" y="1000" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-79" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCCCC;strokeColor=#CC0000;strokeWidth=2;fontSize=14;fontStyle=1;verticalAlign=top;" value="&lt;b&gt;❌ OLD ARCHITECTURE&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:12px&quot;&gt;(Over-engineered, High Cost)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="360" width="530" x="150" y="1060" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-80" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;" value="• &lt;b&gt;EKS Cluster&lt;/b&gt; (complex K8s management)" vertex="1">
+          <mxGeometry height="30" width="480" x="170" y="1110" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-81" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;" value="• &lt;b&gt;Multiple Microservices&lt;/b&gt; (overhead)" vertex="1">
+          <mxGeometry height="30" width="480" x="170" y="1145" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-82" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;" value="• &lt;b&gt;GRIDConnector with BLPOP&lt;/b&gt; (anti-pattern)" vertex="1">
+          <mxGeometry height="30" width="480" x="170" y="1180" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-83" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;" value="• &lt;b&gt;Synchronous blocking&lt;/b&gt; (10s timeouts)" vertex="1">
+          <mxGeometry height="30" width="480" x="170" y="1215" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-84" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;" value="• &lt;b&gt;Security Gateway&lt;/b&gt; (container context only)" vertex="1">
+          <mxGeometry height="30" width="480" x="170" y="1250" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-85" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;" value="• &lt;b&gt;API Stack/Catalog&lt;/b&gt; (unnecessary overhead)" vertex="1">
+          <mxGeometry height="30" width="480" x="170" y="1285" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-86" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;" value="• &lt;b&gt;Payload relay&lt;/b&gt; through services" vertex="1">
+          <mxGeometry height="30" width="480" x="170" y="1320" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-87" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;" value="• &lt;b&gt;High operational cost&lt;/b&gt; (24/7 EKS)" vertex="1">
+          <mxGeometry height="30" width="480" x="170" y="1355" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-88" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#27AE60;strokeWidth=2;fontSize=14;fontStyle=1;verticalAlign=top;" value="&lt;b&gt;✅ NEW ARCHITECTURE&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:12px&quot;&gt;(Serverless, Event-Driven, Cost-Optimized)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="360" width="570" x="740" y="1060" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-89" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#27AE60;fontStyle=1" value="✓ &lt;b&gt;3 S3 Buckets&lt;/b&gt; (Input, Output, Error)" vertex="1">
+          <mxGeometry height="30" width="520" x="770" y="1110" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-90" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#27AE60;fontStyle=1" value="✓ &lt;b&gt;3 SQS Queues&lt;/b&gt; (Input, Output, DLQ)" vertex="1">
+          <mxGeometry height="30" width="520" x="770" y="1145" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-91" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#27AE60;fontStyle=1" value="✓ &lt;b&gt;5 Lambda Functions&lt;/b&gt; (orchestration only)" vertex="1">
+          <mxGeometry height="30" width="520" x="770" y="1180" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-92" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#27AE60;fontStyle=1" value="✓ &lt;b&gt;1 EventBridge Job&lt;/b&gt; (reconciliation scheduler)" vertex="1">
+          <mxGeometry height="30" width="520" x="770" y="1215" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-93" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#27AE60;fontStyle=1" value="✓ &lt;b&gt;Event-Driven&lt;/b&gt; (S3 events → SQS → Lambda)" vertex="1">
+          <mxGeometry height="30" width="520" x="770" y="1250" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-94" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#27AE60;fontStyle=1" value="✓ &lt;b&gt;GRID Direct S3 Access&lt;/b&gt; (no payload relay)" vertex="1">
+          <mxGeometry height="30" width="520" x="770" y="1285" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-95" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#27AE60;fontStyle=1" value="✓ &lt;b&gt;Serverless Scaling&lt;/b&gt; (pay-per-use, scale to zero)" vertex="1">
+          <mxGeometry height="30" width="520" x="770" y="1320" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-96" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#27AE60;fontStyle=1" value="✓ &lt;b&gt;Drastically Reduced Costs&lt;/b&gt; (no EKS charges)" vertex="1">
+          <mxGeometry height="30" width="520" x="770" y="1355" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-97" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E7F3FF;strokeColor=#4472C4;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="490" width="880" x="1420" y="980" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-98" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;fontColor=#4472C4;" value="&lt;b&gt;🚀 Key Benefits &amp; Architectural Wins&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="720" x="1520" y="1000" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-99" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#4472C4;" value="&lt;b&gt;1. Serverless-First Architecture&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="680" x="1460" y="1060" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-100" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;" value="No EKS/K8s overhead. Pure Lambda + S3 + SQS.&lt;br&gt;Infrastructure scales automatically, pay only for usage." vertex="1">
+          <mxGeometry height="40" width="660" x="1480" y="1090" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-101" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#4472C4;" value="&lt;b&gt;2. Eliminated Anti-Patterns&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="680" x="1460" y="1145" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-102" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;" value="❌ No BLPOP polling (was causing 10s timeouts)&lt;br&gt;❌ No synchronous blocking&lt;br&gt;✅ Event-driven with S3 ObjectCreated events" vertex="1">
+          <mxGeometry height="60" width="660" x="1480" y="1175" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-103" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#4472C4;" value="&lt;b&gt;3. GRID Does Heavy Lifting&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="680" x="1460" y="1250" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-104" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;" value="XDE C++ engine handles all computation.&lt;br&gt;Direct S3 read/write (cross-account IAM).&lt;br&gt;XENA = thin orchestration layer only." vertex="1">
+          <mxGeometry height="60" width="660" x="1480" y="1280" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-105" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#4472C4;" value="&lt;b&gt;4. Massive Cost Reduction&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="680" x="1460" y="1355" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-106" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;" value="No 24/7 EKS cluster charges.&lt;br&gt;Serverless = pay-per-request pricing.&lt;br&gt;S3 storage costs only for actual data." vertex="1">
+          <mxGeometry height="50" width="660" x="1480" y="1385" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-107" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#666666;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="120" width="2200" x="100" y="1500" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-108" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" value="&lt;b&gt;Data Flow Legend&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="200" x="140" y="1520" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-109" edge="1" parent="1" style="endArrow=block;html=1;strokeWidth=3;strokeColor=#E67E22;endFill=1;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="140" y="1570" as="sourcePoint" />
+            <mxPoint x="240" y="1570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-110" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;" value="Parquet Upload / Book Ingestion" vertex="1">
+          <mxGeometry height="30" width="250" x="260" y="1555" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-111" edge="1" parent="1" style="endArrow=block;html=1;strokeWidth=3;strokeColor=#4472C4;endFill=1;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="560" y="1570" as="sourcePoint" />
+            <mxPoint x="660" y="1570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-112" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;" value="S3 Events → SQS (Event-Driven)" vertex="1">
+          <mxGeometry height="30" width="250" x="680" y="1555" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-113" edge="1" parent="1" style="endArrow=block;html=1;strokeWidth=3;strokeColor=#27AE60;endFill=1;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="980" y="1570" as="sourcePoint" />
+            <mxPoint x="1080" y="1570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-114" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;" value="GRID Job Submission" vertex="1">
+          <mxGeometry height="30" width="250" x="1100" y="1555" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-115" edge="1" parent="1" style="endArrow=block;html=1;strokeWidth=3;strokeColor=#7AA116;endFill=1;dashed=1;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="1400" y="1570" as="sourcePoint" />
+            <mxPoint x="1500" y="1570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-116" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;" value="GRID Direct S3 Access (Cross-Account)" vertex="1">
+          <mxGeometry height="30" width="300" x="1520" y="1555" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-117" edge="1" parent="1" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#E7157B;endFill=1;dashed=1;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="1870" y="1570" as="sourcePoint" />
+            <mxPoint x="1970" y="1570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-118" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;" value="EventBridge Scheduled Job (Reconciliation)" vertex="1">
+          <mxGeometry height="30" width="350" x="1990" y="1555" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-119" parent="1" style="text;html=1;strokeColor=#27AE60;fillColor=#E8F8F5;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=13;arcSize=5;fontStyle=0" value="&lt;b&gt;Architecture Validation:&lt;/b&gt; This serverless architecture eliminates microservices complexity, removes BLPOP anti-pattern, and drastically reduces operational costs while maintaining high performance and reliability. GRID handles heavy computation with direct S3 access, XENA provides thin event-driven orchestration." vertex="1">
+          <mxGeometry height="80" width="2200" x="100" y="1660" as="geometry" />
+        </mxCell>
+        <mxCell id="AO6TVO0RdpcXst9PySqn-120" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#666666;" value="&lt;b&gt;XENA MVP2 - Serverless Architecture&lt;/b&gt; | March 16, 2026 | Board Approved Architecture | Confidential" vertex="1">
+          <mxGeometry height="30" width="2200" x="100" y="1780" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
