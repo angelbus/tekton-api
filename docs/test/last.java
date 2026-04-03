@@ -324,3 +324,31 @@ public class RedisServiceImpl implements ElasticCacheService {
     }
 }
 
+---
+private void processValidFile(Metadata metadata,
+                              String objectKey,
+                              Context context) {
+
+    String uniqueKey = LambdaUtil.generateUniqueKey(metadata);
+    String hashedKey = LambdaUtil.getSafeKey(uniqueKey);
+
+    context.getLogger().log(
+            "Initializing job state for key=" + uniqueKey
+    );
+
+    JobState state = new JobState(
+            objectKey,
+            JobStatus.RECEIVED,
+            Instant.now()
+    );
+
+    redisService.saveState(hashedKey, state, context);
+
+    context.getLogger().log(
+            "State stored in Redis: key=" + uniqueKey +
+            ", status=" + state.getStatus()
+    );
+
+    // Continue with enqueue logic...
+}
+
