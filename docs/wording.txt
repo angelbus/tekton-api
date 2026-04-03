@@ -1,0 +1,119 @@
+Hi team,
+
+We are observing consistent issues when invoking the GRID endpoint:
+
+POST /v1/market_calculator/sessions
+
+🔎 Current behavior
+
+Across multiple environments:
+
+PROD (Kubernetes, stable / no recent changes):
+❌ 502 Bad Gateway
+This environment was working correctly until Wednesday ~10:47 AM (UTC-3)
+DEV (Lambda, new flow):
+
+Initially: ❌ 400 Bad Request
+
+"Invalid request body: Code(2)"
+
+
+Now: ❌ 504 Gateway Timeout
+
+{
+  "code": 504,
+  "message": "Gateway Timeout",
+  "description": "integration Timeout"
+}
+
+🧠 Observations
+The issue is reproducible across environments, including PROD which has not been modified
+The failure mode has evolved over time (400 → 502 → 504), suggesting backend or gateway instability or changes
+Requests are reaching the GRID endpoint, but failing either:
+during validation/parsing (400), or
+downstream (502 / 504)
+❓ Questions
+
+Could you please help clarify:
+
+Recent changes
+Were there any deployments or configuration changes affecting:
+/v1/market_calculator/sessions
+its upstream services or integrations?
+Error details
+
+What does "Code(2)" represent in:
+
+"Invalid request body: Code(2)"
+
+What is the root cause behind the current 502 / 504 responses?
+API contract
+
+Is the endpoint still expected to support:
+
+{ "payload_key": "...", "num_tasks": 1 }
+
+Or is a full payload now required?
+Timeouts / dependencies
+Are there known issues or latency increases in downstream services (e.g., market calculator, calibration services)?
+Has any timeout configuration changed recently?
+💡 Suggestion (API versioning)
+
+As a general improvement to avoid cross-environment disruptions:
+
+The current endpoint is still versioned as /v1/
+If there are breaking changes in payload or behavior, it would be very helpful to:
+introduce a new version (e.g. /v2/)
+maintain backward compatibility for /v1/
+
+This would allow clients (like XENA) to migrate safely without impacting stable production environments.
+
+Please let us know if you need request samples, payloads, or timestamps — happy to provide anything useful for debugging.
+
+Thanks in advance for your support.
+
+
+---------
+Hi team,
+
+I’m currently investigating an issue with a secret in AWS Secrets Manager that appears to be reverting its values after manual updates.
+
+Problem description:
+
+The secret contains SOS client credentials used by XENA.
+When the credentials are incorrect, requests to GRID return 401 Unauthorized.
+Updating the secret manually with the correct values immediately resolves the issue.
+However, after some hours, the secret values revert to the previous (incorrect) ones.
+
+Verifications performed:
+
+Confirmed the correct AWS account and region (eu-west-1).
+Verified that Secrets Manager rotation is disabled.
+Confirmed there are no CI/CD pipelines or IaC processes managing or updating this secret.
+Validated that the application is using this exact secret (fix is effective immediately after update).
+Reviewed CloudTrail (last 24h):
+Observed only: GetSecretValue, DescribeSecret, ListSecretVersionIds, GetResourcePolicy
+No PutSecretValue, UpdateSecret, or UpdateSecretVersionStage events (except my manual updates)
+
+Concern:
+The secret value is clearly being modified, but no corresponding write events are visible in CloudTrail. This suggests either:
+
+CloudTrail is not logging write management events, or
+Write events are being logged in a different trail (e.g., organization-level or centralized logging account)
+
+Request:
+Could you please help verify:
+
+Whether CloudTrail is configured to log management write events in this account/region
+If there is an organization-level trail capturing these events elsewhere
+Any known automation (Lambda, scheduled jobs, or security tooling) that might be updating Secrets Manager values
+
+I’ll attach screenshots of:
+
+The secret values
+CloudTrail filters and results
+
+Thanks in advance for your help.
+
+Best regards,
+Angel
