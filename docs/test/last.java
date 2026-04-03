@@ -258,4 +258,69 @@ public class RedisServiceImpl implements RedisService {
 }
 
 ----
+@RequiredArgsConstructor
+public class RedisServiceImpl implements ElasticCacheService {
+
+    private final LambdaConfig config;
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    @Override
+    public boolean tryAcquireLock(String key, Context context) {
+
+        final String TTL_SECONDS = config.getRedisLockTTLSeconds();
+
+        try (Jedis jedis = config.getJedisPool().getResource()) {
+
+            SetParams params = new SetParams()
+                    .nx()
+                    .ex(Integer.parseInt(TTL_SECONDS));
+
+            String result = jedis.set(key, "LOCKED", params);
+
+            context.getLogger().log(
+                    "Acquired Idempotency Lock for key: " + key +
+                    " from Redis: " + result,
+                    LogLevel.INFO
+            );
+
+            return "OK".equals(result);
+
+        } catch (Exception e) {
+            context.getLogger().log(
+                    "Error acquiring Idempotency Lock for key: " + key +
+                    " from Redis: " + e.getMessage(),
+                    LogLevel.ERROR
+            );
+            return false;
+        }
+    }
+
+    // ✅ NEW METHOD (replaces save metadata)
+    @Override
+    public void saveState(String key, JobState state, Context context) {
+
+        try (Jedis jedis = config.getJedisPool().getResource()) {
+
+            String value = objectMapper.writeValueAsString(state);
+
+            // TTL for state (you may want a different config)
+            int ttlSeconds = Integer.parseInt(config.getRedisStateTTLSeconds());
+
+            jedis.setex(key, ttlSeconds, value);
+
+            context.getLogger().log(
+                    "JobState saved to Redis. key=" + key +
+                    ", status=" + state.getStatus(),
+                    LogLevel.INFO
+            );
+
+        } catch (Exception e) {
+            context.getLogger().log(
+                    "Error saving JobState for key: " + key +
+                    " to Redis: " + e.getMessage(),
+                    LogLevel.ERROR
+            );
+        }
+    }
+}
 
