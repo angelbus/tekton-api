@@ -150,3 +150,112 @@ class RiskPayloadBuilder implements PayloadBuilder { ... }
 
 👉 Register it → done
 👉 No modification to existing logic
+
+
+----
+package com.santander.cib.xena.model;
+
+public enum JobStatus {
+    RECEIVED,
+    VALIDATED,
+    ENQUEUED,
+    PROCESSING,
+    COMPLETED,
+    FAILED
+}
+
+
+---
+package com.santander.cib.xena.model;
+
+import java.time.Instant;
+
+public class JobState {
+
+    private String objectKey;
+    private JobStatus status;
+    private Instant timestamp;
+
+    public JobState() {}
+
+    public JobState(String objectKey, JobStatus status, Instant timestamp) {
+        this.objectKey = objectKey;
+        this.status = status;
+        this.timestamp = timestamp;
+    }
+
+    public String getObjectKey() {
+        return objectKey;
+    }
+
+    public JobStatus getStatus() {
+        return status;
+    }
+
+    public Instant getTimestamp() {
+        return timestamp;
+    }
+
+    public void setObjectKey(String objectKey) {
+        this.objectKey = objectKey;
+    }
+
+    public void setStatus(JobStatus status) {
+        this.status = status;
+    }
+
+    public void setTimestamp(Instant timestamp) {
+        this.timestamp = timestamp;
+    }
+}
+
+----
+package com.santander.cib.xena.service;
+
+import com.amazonaws.services.lambda.runtime.Context;
+import com.santander.cib.xena.model.JobState;
+
+public interface RedisService {
+
+    void saveState(String key, JobState state, Context context);
+
+}
+
+----
+package com.santander.cib.xena.service.impl;
+
+import com.amazonaws.services.lambda.runtime.Context;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.santander.cib.xena.model.JobState;
+import com.santander.cib.xena.service.RedisService;
+
+import java.time.Duration;
+
+public class RedisServiceImpl implements RedisService {
+
+    private final RedisClient redisClient; // your existing client
+    private final ObjectMapper objectMapper;
+
+    public RedisServiceImpl(RedisClient redisClient) {
+        this.redisClient = redisClient;
+        this.objectMapper = new ObjectMapper();
+    }
+
+    @Override
+    public void saveState(String key, JobState state, Context context) {
+
+        try {
+            String value = objectMapper.writeValueAsString(state);
+
+            // Optional TTL (recommended)
+            redisClient.set(key, value, Duration.ofHours(24));
+
+        } catch (Exception e) {
+            context.getLogger().log("Error storing state in Redis: " + e.getMessage());
+            throw new RuntimeException("Failed to store job state", e);
+        }
+    }
+}
+
+----
+
