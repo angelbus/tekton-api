@@ -1,0 +1,78 @@
+
+
+
+Subject: XENA MVP2 Release – Deployment & Testing Report (DEV/PRE/PRO)
+
+Hi team,
+
+I wanted to share an update on the XENA MVP2 Release following deployment and testing across DEV, PRE, and PRO environments.
+
+---
+
+BLOCKER – PRE/PRO environments
+
+PRE and PRO deployments are currently failing. The root cause is that the GRID team has applied the correct XENA Role only for the DEV environment, which means XDE does not have access to XENA buckets in PRE/PRO. This needs to be resolved by the GRID team before we can proceed with testing in those environments.
+
+---
+
+DEV Testing Results
+
+1. Calibration – Execution Time Improvements
+
+Calibrations were tested across three architectural configurations for two different output file sizes. Results show increasingly significant improvements as file size grows, which highlights the strength of the new Shared-Storage model for heavier workloads.
+
+Small output file (~350 B):
+
+  • Old architecture:            ~1m 30s (90s)
+  • Python Lambdas (XENA):       ~15s       (-83% vs old)
+  • Shared-Storage model (new):  ~11s       (-88% vs old)
+
+Large output file (~15 MB — Data Team input file):
+
+  • Old architecture:            up to 5 minutes (300s)
+  • Python Lambdas (XENA):       up to 1 minute  (~60s)    (-80% vs old)
+  • Shared-Storage model (new):  20–25 seconds   (~22s)    (-93% vs old)
+
+[Please insert the performance comparison charts here]
+
+The improvement is notably more pronounced for larger files. This is expected: the Shared-Storage model avoids transferring output data through the pipeline by writing results directly to shared storage, so the benefit scales with file size. For the 15 MB use case, we went from up to 5 minutes down to 20–25 seconds — a ~93% reduction.
+
+2. Stress Testing – Parallel Execution
+
+We conducted stress testing by submitting 30 calibration jobs simultaneously to evaluate the GRID's parallel processing capabilities under the new architecture.
+
+Context: In the previous implementation, the system was unable to run parallel executions due to the BLPOP mechanism, which caused Redis to block worker PODs while waiting for new jobs. This effectively serialized all executions regardless of available compute resources.
+
+Under the new architecture, our expectation was that HTC (High-Throughput Computing) would process jobs concurrently. However, stress test results indicate that jobs are still being processed sequentially. The 30 calibration files took approximately 11 minutes and 53 seconds to complete — which aligns with a sequential model (30 × ~15–20s) rather than the near-simultaneous completion expected from true parallel execution (~15–20s total).
+
+This is a concern we are flagging for the GRID team to investigate. The HTC scheduler's concurrency configuration should be reviewed to confirm that parallel job dispatch is correctly enabled.
+
+---
+
+FMTM Results
+
+FMTM end-to-end execution was also validated in DEV. The following timestamps were recorded for a single deal:
+
+  • XENALoader event received:   03:18:35.6
+  • GRIDConnector job finished:  03:18:43.0
+  • FMTM deal result received:   03:18:46.0
+
+Total end-to-end latency: ~10.4 seconds, broken down as:
+
+  • GRID computation time:   ~7.4s  (XENALoader → GRIDConnector)
+  • Result delivery time:    ~3.0s  (GRIDConnector → FMTM)
+
+These are encouraging results and confirm that the FMTM pipeline is functioning correctly in DEV.
+
+---
+
+Next Steps
+
+  • GRID team to apply the correct XENA Role to PRE and PRO environments.
+  • GRID team to review HTC concurrency configuration to enable true parallel execution.
+  • Retest PRE/PRO once access is restored.
+
+Please let me know if you have any questions or need additional detail on any of the above.
+
+Best regards,
+[Your name]
