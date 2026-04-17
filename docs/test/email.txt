@@ -1,0 +1,29 @@
+Hi team,
+
+First of all, great work on the MVP2 release — this is a significant step forward both technically (100% serverless, event-driven, shared storage) and functionally (FMTM in place).
+
+I noticed the repositories have been tagged as **1.1.0**, and I’d like to suggest aligning our versioning strategy with the scope of the changes delivered.
+
+From an architectural and product perspective, MVP2 introduces:
+
+* A fundamental shift in architecture (not incremental)
+* New processing model and execution semantics
+* New functional capability (FMTM vs Calibration-only in MVP1)
+
+Given this, the release would more accurately correspond to a **major version (2.0.0)** under semantic versioning, as it represents a breaking and transformative change rather than a minor evolution.
+
+Additionally, I strongly recommend:
+
+* Maintaining a **Changelog** per repo (clear visibility of changes, impacts, and migration notes)
+* Establishing a **mapping between MVPs and semantic versions** (e.g., MVP1 → 1.x, MVP2 → 2.x) to keep technical and business milestones aligned
+
+This will improve clarity for:
+
+* Internal teams (development, operations, architecture)
+* Future integrations
+* Governance and release tracking
+
+Happy to help define a simple versioning + changelog standard if useful.
+
+Thanks,
+Angel
