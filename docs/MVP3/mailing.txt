@@ -1,0 +1,115 @@
+1) On traceability, governance, and existing APIs
+
+We fully agree that governance, auditability, and perimeter control already exist in Market Risk (APIs with OAuth2, FSE, STS/SOS, etc.). The objective of XENA is not to duplicate those capabilities, but to solve a different problem:
+
+Orchestrating large-scale, asynchronous, data-driven computations in a consistent and observable way.
+
+XENA operates as a control plane on top of a data plane, not as a replacement for online governed APIs. Both models are complementary:
+
+APIs → synchronous, user-driven, transactional use cases
+XENA → asynchronous, high-throughput, batch/event-driven workloads
+
+2) On origin/destination as parameters
+
+Passing locations as parameters is a valid pattern for direct service invocation. However, XENA intentionally avoids this by design.
+
+In our model:
+
+The S3 data plane is the contract, not a parameter
+
+This ensures:
+
+deterministic event triggering
+uniform ingestion
+decoupling between producers and consumers
+full traceability through storage and events
+
+Allowing arbitrary input/output paths via parameters would reintroduce:
+
+coupling between client and compute
+loss of event-driven guarantees
+fragmentation of ingestion patterns
+
+3) On Parquet as “envelope”
+
+This is an important point, and I agree with part of the concern.
+
+We are not using Parquet as a generic transport format, nor forcing columnar modeling where it does not apply.
+
+The intention is:
+
+To enforce a single, self-contained input artifact with embedded metadata, avoiding multi-file coordination and ingestion branching
+
+This brings operational benefits:
+
+one event per job
+no dependency between payload files
+simpler validation and idempotency
+consistent ingestion across all libraries
+
+That said, the internal payload (e.g., JSON) remains fully flexible and library-specific.
+
+So the model is:
+
+Platform contract → standardized container
+Library contract → internal schema (unchanged)
+
+4) On “contract = schema, not transport”
+
+We partially agree, but in XENA both aspects are intentionally coupled:
+
+The contract includes both the schema and how it is delivered
+
+This is a deliberate platform decision to avoid:
+
+multiple ingestion mechanisms
+format-driven branching
+operational inconsistency across libraries
+
+Without this constraint, the system quickly evolves into a set of special cases.
+
+5) On flexibility vs. standardization
+
+The concern about “forcing a single model” is valid in general, but here the constraint is intentional.
+
+XENA is designed as a Library-as-a-Service platform, where:
+
+libraries remain independent
+but integration is standardized
+
+This is what enables:
+
+reuse across domains
+simplified onboarding
+consistent observability
+reduced operational complexity
+
+Without a strong contract, the platform loses those properties.
+
+6) On online use cases
+
+We fully acknowledge the need for synchronous, low-latency scenarios (pricing online, what-if analysis, etc.).
+
+However:
+
+XENA is not intended to replace those APIs.
+
+Instead, it complements them by handling:
+
+large-scale batch computations
+long-running processes
+asynchronous workloads
+
+If needed, both models can coexist, and even share underlying libraries.
+
+Closing
+
+The goal of XENA is not to constrain libraries, but to provide a stable, scalable, and reusable execution platform.
+
+To achieve that, we need to enforce a small number of non-negotiable platform contracts, while keeping everything else flexible at the library level.
+
+Happy to walk through a concrete example together and adapt your use case to the model with minimal friction.
+
+Thanks again for the discussion.
+
+Best regards,
