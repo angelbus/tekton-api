@@ -1,0 +1,593 @@
+<mxfile host="app.diagrams.net" agent="Claude" pages="3">
+  <diagram id="Functional-Storage-View" name="1. Functional - Storage Architecture">
+    <mxGraphModel dx="3535" dy="1915" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2800" pageHeight="2000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="storage-title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=26;fontStyle=1;fontColor=#1F4E78;" value="&lt;font style=&quot;&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 36px;&quot;&gt;XENA Storage Architecture - Dual-Plane Model&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 24px;&quot;&gt;Separation of Business Data from Configuration Metadata&lt;/span&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="2490" x="100" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="data-plane-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E7F3FF;strokeColor=#4472C4;strokeWidth=4;" value="" vertex="1">
+          <mxGeometry height="1640" width="1270" x="100" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="data-plane-title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=22;fontStyle=1;fontColor=#4472C4;" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;&lt;b&gt;DATA PLANE&lt;/b&gt;&lt;br&gt;Business Data Processing (High Throughput)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="1210" x="120" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="input-bucket-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7AA116;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="480" width="350" x="160" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="input-bucket-icon" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#7AA116;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;" value="" vertex="1">
+          <mxGeometry height="80" width="80" x="295" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="input-bucket-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=14;fontStyle=1;fontColor=#7AA116;" value="&lt;b&gt;S3 Input Bucket&lt;/b&gt;&lt;br&gt;xena-data-lake-input-{env}" vertex="1">
+          <mxGeometry height="40" width="310" x="180" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="input-bucket-content" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=11;" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b&gt;Purpose:&lt;/b&gt; Job submission storage&lt;br&gt;&lt;br&gt;&lt;b&gt;Characteristics:&lt;/b&gt;&lt;br&gt;• Large objects (10 MB - 10 GB)&lt;br&gt;• High throughput (bursty)&lt;br&gt;• Immutable artifacts&lt;br&gt;&lt;br&gt;&lt;b&gt;Write Access:&lt;/b&gt;&lt;br&gt;XVA CCR Data Provisioning ONLY&lt;br&gt;&lt;br&gt;&lt;b&gt;Read Access:&lt;/b&gt;&lt;br&gt;• XENALoader Lambda&lt;br&gt;• GRID (cross-account)&lt;br&gt;&lt;br&gt;&lt;b&gt;Path Structure:&lt;/b&gt;&lt;br&gt;{library}/{country}/{purpose}/&lt;br&gt;{date}/{subpurpose}/{iteration}/&lt;br&gt;input.parquet&lt;/font&gt;" vertex="1">
+          <mxGeometry height="300" width="280" x="195" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="output-bucket-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7AA116;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="480" width="350" x="560" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="output-bucket-icon" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#7AA116;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;" value="" vertex="1">
+          <mxGeometry height="80" width="80" x="695" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="output-bucket-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=14;fontStyle=1;fontColor=#7AA116;" value="&lt;b&gt;S3 Output Bucket&lt;/b&gt;&lt;br&gt;xena-data-lake-output-{env}" vertex="1">
+          <mxGeometry height="40" width="310" x="580" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="output-bucket-content" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=11;" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b&gt;Purpose:&lt;/b&gt; Job results storage&lt;br&gt;&lt;br&gt;&lt;b&gt;Contains:&lt;/b&gt;&lt;br&gt;• results.parquet&lt;br&gt;• _progress.json (every 10 min)&lt;br&gt;• manifest.json (LAST)&lt;br&gt;&lt;br&gt;&lt;b&gt;Write Access:&lt;/b&gt;&lt;br&gt;GRID cross-account ONLY&lt;br&gt;&lt;br&gt;&lt;b&gt;Read Access:&lt;/b&gt;&lt;br&gt;• OutputHandler Lambda&lt;br&gt;• Client teams&lt;br&gt;&lt;br&gt;&lt;b&gt;Path Mirroring:&lt;/b&gt;&lt;br&gt;Replicates input hierarchy&lt;br&gt;for traceability&lt;/font&gt;" vertex="1">
+          <mxGeometry height="300" width="280" x="595" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="error-bucket-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7AA116;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="480" width="350" x="960" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="error-bucket-icon" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#7AA116;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;" value="" vertex="1">
+          <mxGeometry height="80" width="80" x="1095" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="error-bucket-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=14;fontStyle=1;fontColor=#7AA116;" value="&lt;b&gt;S3 Error Bucket&lt;/b&gt;&lt;br&gt;xena-data-lake-errors-{env}" vertex="1">
+          <mxGeometry height="40" width="310" x="980" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="error-bucket-content" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=11;" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b&gt;Purpose:&lt;/b&gt; Failed items isolation&lt;br&gt;&lt;br&gt;&lt;b&gt;Contains:&lt;/b&gt;&lt;br&gt;• failed_items.parquet&lt;br&gt;• error_details.json&lt;br&gt;&lt;br&gt;&lt;b&gt;Write Access:&lt;/b&gt;&lt;br&gt;GRID cross-account ONLY&lt;br&gt;&lt;br&gt;&lt;b&gt;Read Access:&lt;/b&gt;&lt;br&gt;• ErrorHandler Lambda&lt;br&gt;• Ops teams&lt;br&gt;&lt;br&gt;&lt;b&gt;Retention:&lt;/b&gt;&lt;br&gt;7 days → Glacier&lt;br&gt;&lt;br&gt;&lt;b&gt;Use Case:&lt;/b&gt;&lt;br&gt;Investigation &amp;amp; retry&lt;/font&gt;" vertex="1">
+          <mxGeometry height="300" width="280" x="995" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="data-characteristics-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F8F5;strokeColor=#27AE60;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="290" width="1150" x="160" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="data-characteristics-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=16;fontStyle=1;fontColor=#27AE60;" value="&lt;b&gt;&lt;font style=&quot;font-size: 24px;&quot;&gt;Data Plane Characteristics&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="1110" x="180" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="data-char-1" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;fontColor=#27AE60;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b style=&quot;&quot;&gt;✅ Large Objects&lt;/b&gt;&lt;br&gt;Parquet files: 10 MB - 10 GB&lt;br&gt;Optimized for bulk transfers&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="330" x="200" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="data-char-2" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;fontColor=#27AE60;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;✅ High Throughput&lt;/b&gt;&lt;br&gt;Bursty writes during batch windows&lt;br&gt;100+ jobs/min sustained&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="330" x="570" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="data-char-3" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;fontColor=#27AE60;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;✅ Immutable Artifacts&lt;/b&gt;&lt;br&gt;Once written, never modified&lt;br&gt;S3 versioning for recovery&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="330" x="940" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="data-char-4" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;fontColor=#27AE60;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;✅ Streaming Optimized&lt;/b&gt;&lt;br&gt;Row group-based processing&lt;br&gt;5,000 deals per row group&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="330" x="200" y="980" as="geometry" />
+        </mxCell>
+        <mxCell id="data-char-5" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;fontColor=#27AE60;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;✅ Parallel Reads&lt;/b&gt;&lt;br&gt;Multiple GRID workers&lt;br&gt;Process chunks simultaneously&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="330" x="570" y="980" as="geometry" />
+        </mxCell>
+        <mxCell id="data-char-6" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;fontColor=#27AE60;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;✅ Cross-Account Access&lt;/b&gt;&lt;br&gt;GRID reads/writes via IAM&lt;br&gt;ExternalId protection&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="330" x="940" y="980" as="geometry" />
+        </mxCell>
+        <mxCell id="contract-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF4E6;strokeColor=#F4B183;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="580" width="1150" x="160" y="1150" as="geometry" />
+        </mxCell>
+        <mxCell id="contract-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=16;fontStyle=1;fontColor=#F4B183;" value="&lt;b&gt;&lt;font style=&quot;font-size: 24px;&quot;&gt;📋 Contract Model - Hierarchical Path Structure&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="1110" x="180" y="1170" as="geometry" />
+        </mxCell>
+        <mxCell id="contract-structure" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=11;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b style=&quot;&quot;&gt;Input Path Structure (Contract):&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot;&gt;s3://xena-data-lake-input-{env}/&lt;br&gt;└── {jobType}/                 # Library (e.g., &quot;risk-factor&quot;)&lt;br&gt;    └── {country}/             # ISO 3166-1 (e.g., &quot;ES&quot;, &quot;US&quot;)&lt;br&gt;        └── {purpose}/         # Context (e.g., &quot;DAILY_BATCH&quot;)&lt;br&gt;            └── {date}/        # YYYYMMDD&lt;br&gt;                └── {subpurpose}/  # &quot;production&quot;, &quot;testing&quot;&lt;br&gt;                    └── {iteration}/   # 1, 2, 3...&lt;br&gt;                        └── input.parquet&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="200" width="1070" x="200" y="1220" as="geometry" />
+        </mxCell>
+        <mxCell id="contract-examples" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=11;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b style=&quot;&quot;&gt;Example Paths:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b style=&quot;&quot;&gt;Production:&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot;&gt;s3://.../risk-factor/ES/DAILY_BATCH/20260426/production/1/input.parquet&lt;/font&gt;&lt;br&gt;&lt;br&gt;&lt;b style=&quot;&quot;&gt;UAT Testing:&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot;&gt;s3://.../pricing/US/ADHOC/20260426/testing/1/input.parquet&lt;/font&gt;&lt;br&gt;&lt;br&gt;&lt;b style=&quot;&quot;&gt;Retry:&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot;&gt;s3://.../valuation/BR/INTRADAY/20260426/production/2/input.parquet&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="180" width="1070" x="200" y="1440" as="geometry" />
+        </mxCell>
+        <mxCell id="contract-rule" parent="1" style="text;html=1;strokeColor=#CC0000;fillColor=#FFE6E6;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=12;arcSize=10;fontStyle=1" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b style=&quot;&quot;&gt;⚠️ CRITICAL CONTRACT RULE:&lt;/b&gt;&lt;br&gt;&lt;br&gt;Each input MUST be a &lt;b style=&quot;&quot;&gt;single self-contained Parquet file&lt;/b&gt; with metadata in footer.&lt;br&gt;&lt;br&gt;❌ &lt;b style=&quot;&quot;&gt;NO secondary files allowed&lt;/b&gt; (no request.json, no separate metadata)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="1070" x="200" y="1640" as="geometry" />
+        </mxCell>
+        <mxCell id="config-plane-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F8F5;strokeColor=#27AE60;strokeWidth=4;" value="" vertex="1">
+          <mxGeometry height="1640" width="1200" x="1420" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="config-plane-title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=22;fontStyle=1;fontColor=#27AE60;" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;&lt;b&gt;CONFIGURATION PLANE&lt;/b&gt;&lt;br&gt;Execution Metadata (Low Frequency)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="1210" x="1440" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="registry-bucket-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#27AE60;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="480" width="1050" x="1490" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="registry-bucket-icon" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#7AA116;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;" value="" vertex="1">
+          <mxGeometry height="80" width="80" x="1975" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="registry-bucket-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=14;fontStyle=1;fontColor=#27AE60;" value="&lt;b&gt;S3 Registry Bucket&lt;/b&gt;&lt;br&gt;xena-registry-{env}/libraries/registry.json" vertex="1">
+          <mxGeometry height="40" width="1010" x="1510" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="registry-content" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=11;" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b&gt;Purpose:&lt;/b&gt; Library catalog &amp;amp; version management&lt;br&gt;&lt;br&gt;&lt;b&gt;Characteristics:&lt;/b&gt;&lt;br&gt;• Small objects (~5 KB)&lt;br&gt;• Low frequency (release-time updates)&lt;br&gt;• Eventual consistency acceptable&lt;br&gt;&lt;br&gt;&lt;b&gt;Ownership:&lt;/b&gt;&lt;br&gt;GRID Team (authoritative source)&lt;br&gt;&lt;br&gt;&lt;b&gt;Write Access:&lt;/b&gt;&lt;br&gt;GRID deployment pipelines ONLY&lt;br&gt;&lt;br&gt;&lt;b&gt;Read Access:&lt;/b&gt;&lt;br&gt;• GRIDConnector Lambda (cached, 5 min TTL)&lt;br&gt;&lt;br&gt;&lt;b&gt;Contains:&lt;/b&gt;&lt;br&gt;• Library names &amp;amp; versions&lt;br&gt;• Endpoint URLs&lt;br&gt;• Deprecation flags&lt;br&gt;• Capabilities metadata&lt;/font&gt;" vertex="1">
+          <mxGeometry height="300" width="965" x="1535" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="config-characteristics-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E7F3FF;strokeColor=#4472C4;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="300" width="1050" x="1490" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="config-characteristics-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=16;fontStyle=1;fontColor=#4472C4;" value="&lt;b&gt;&lt;font style=&quot;font-size: 24px;&quot;&gt;Configuration Plane Characteristics&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="1010" x="1510" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="config-char-1" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;fontColor=#4472C4;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;✅ Small Objects&lt;/b&gt;&lt;br&gt;Registry: ~5 KB&lt;br&gt;Fast downloads&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="300" x="1530" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="config-char-2" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;fontColor=#4472C4;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;✅ Low Frequency&lt;/b&gt;&lt;br&gt;Updated on release&lt;br&gt;~1-2 times/week&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="300" x="1870" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="config-char-3" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;fontColor=#4472C4;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;✅ Cached Reads&lt;/b&gt;&lt;br&gt;5 min TTL in Lambda&lt;br&gt;&amp;lt;1ms latency (cache hit)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="300" x="2210" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="config-char-4" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;fontColor=#4472C4;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;✅ Eventual Consistency&lt;/b&gt;&lt;br&gt;5 min max staleness&lt;br&gt;Acceptable for registry&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="300" x="1530" y="980" as="geometry" />
+        </mxCell>
+        <mxCell id="config-char-5" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;fontColor=#4472C4;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;✅ No Database Needed&lt;/b&gt;&lt;br&gt;S3 sufficient for access pattern&lt;br&gt;Reduced complexity&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="300" x="1870" y="980" as="geometry" />
+        </mxCell>
+        <mxCell id="config-char-6" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;fontColor=#4472C4;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;✅ Version Resolution&lt;/b&gt;&lt;br&gt;GRID resolves at runtime&lt;br&gt;Staleness doesn&#39;t affect correctness&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="300" x="2210" y="980" as="geometry" />
+        </mxCell>
+        <mxCell id="registry-example-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#27AE60;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="580" width="1050" x="1490" y="1150" as="geometry" />
+        </mxCell>
+        <mxCell id="registry-example-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=16;fontStyle=1;fontColor=#27AE60;" value="&lt;b&gt;&lt;font style=&quot;font-size: 24px;&quot;&gt;📖 Registry Schema Example&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="1010" x="1510" y="1170" as="geometry" />
+        </mxCell>
+        <mxCell id="registry-json" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=10;" value="&lt;font face=&quot;Courier New&quot; style=&quot;font-size: 14px;&quot;&gt;{&lt;br&gt;  &quot;registryVersion&quot;: &quot;2026-04-26T12:00:00Z&quot;,&lt;br&gt;  &quot;libraries&quot;: {&lt;br&gt;    &quot;risk-factor&quot;: {&lt;br&gt;      &quot;displayName&quot;: &quot;Risk Factor Engine&quot;,&lt;br&gt;      &quot;latest&quot;: &quot;2.1.3&quot;,&lt;br&gt;      &quot;versions&quot;: {&lt;br&gt;        &quot;2.1.3&quot;: {&lt;br&gt;          &quot;status&quot;: &quot;active&quot;,&lt;br&gt;          &quot;endpoint&quot;: &quot;/risk/v2/run&quot;,&lt;br&gt;          &quot;capabilities&quot;: [&quot;parquet-input&quot;, &quot;json-payload&quot;]&lt;br&gt;        },&lt;br&gt;        &quot;2.1.1&quot;: {&lt;br&gt;          &quot;status&quot;: &quot;deprecated&quot;,&lt;br&gt;          &quot;endpoint&quot;: &quot;/risk/v2/run&quot;,&lt;br&gt;          &quot;replacedBy&quot;: &quot;2.1.3&quot;&lt;br&gt;        }&lt;br&gt;      }&lt;br&gt;    },&lt;br&gt;    &quot;pricing-lib&quot;: { ... }&lt;br&gt;  }&lt;br&gt;}&lt;/font&gt;" vertex="1">
+          <mxGeometry height="390" width="960" x="1535" y="1220" as="geometry" />
+        </mxCell>
+        <mxCell id="separation-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#D79B00;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="180" width="2540" x="100" y="1810" as="geometry" />
+        </mxCell>
+        <mxCell id="separation-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=18;fontStyle=1;fontColor=#D79B00;" value="&lt;b&gt;&lt;font style=&quot;font-size: 24px;&quot;&gt;🎯 Architectural Principle: Separation of Concerns&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="2470" x="120" y="1820" as="geometry" />
+        </mxCell>
+        <mxCell id="separation-content" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;fontColor=#D79B00;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b style=&quot;&quot;&gt;Data Plane&lt;/b&gt; carries &lt;b style=&quot;&quot;&gt;WHAT&lt;/b&gt; is executed (business data, inputs, outputs)&lt;br&gt;&lt;br&gt;&lt;b style=&quot;&quot;&gt;Configuration Plane&lt;/b&gt; defines &lt;b style=&quot;&quot;&gt;HOW&lt;/b&gt; execution should occur (library versions, endpoints, capabilities)&lt;br&gt;&lt;br&gt;✅ Result: Independent scaling, clear ownership, simplified compliance&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="2330" x="195" y="1890" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="Technical-State-View" name="2. Technical - State Management">
+    <mxGraphModel dx="2828" dy="1532" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2800" pageHeight="2000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="state-title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=26;fontStyle=1;fontColor=#1F4E78;" value="&lt;font style=&quot;font-size: 36px;&quot;&gt;&lt;b&gt;XENA Job State Management - Redis Model&lt;/b&gt;&lt;br&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 24px;&quot;&gt;Dual-State Tracking with S3 as Source of Truth&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="2320" x="100" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="dual-state-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF4E6;strokeColor=#F4B183;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="400" width="2310" x="100" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="dual-state-title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;fontColor=#F4B183;" value="&lt;b&gt;&lt;font style=&quot;font-size: 28px;&quot;&gt;Dual-State Model: Control Plane vs Execution State&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="2280" x="120" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="control-state-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E7F3FF;strokeColor=#4472C4;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="260" width="600" x="200" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="control-state-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=15;fontStyle=1;fontColor=#4472C4;" value="&lt;b&gt;&lt;font style=&quot;font-size: 22px;&quot;&gt;Control Plane State (XENA-Owned)&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="560" x="220" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="control-flow" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#D0E8FF;strokeColor=#4472C4;" value="" vertex="1">
+          <mxGeometry height="40" width="120" x="240" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="control-flow-label1" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;RECEIVED&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="110" x="245" y="315" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-c1" edge="1" parent="1" style="endArrow=classic;html=1;strokeWidth=3;strokeColor=#4472C4;">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="370" y="329.5" as="sourcePoint" />
+            <mxPoint x="420" y="329.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="control-flow2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#D0E8FF;strokeColor=#4472C4;" value="" vertex="1">
+          <mxGeometry height="40" width="120" x="430" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="control-flow-label2" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;VALIDATED&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="110" x="435" y="315" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-c2" edge="1" parent="1" style="endArrow=classic;html=1;strokeWidth=3;strokeColor=#4472C4;">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="560" y="329.5" as="sourcePoint" />
+            <mxPoint x="610" y="329.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="control-flow3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#D0E8FF;strokeColor=#4472C4;" value="" vertex="1">
+          <mxGeometry height="40" width="120" x="620" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="control-flow-label3" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;ENQUEUED&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="110" x="625" y="315" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-c3" edge="1" parent="1" style="endArrow=classic;html=1;strokeWidth=3;strokeColor=#4472C4;dashed=1;">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="680" y="360" as="sourcePoint" />
+            <mxPoint x="680" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="control-flow4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#D0E8FF;strokeColor=#4472C4;" value="" vertex="1">
+          <mxGeometry height="40" width="120" x="620" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="control-flow-label4" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;DISPATCHED&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="110" x="625" y="415" as="geometry" />
+        </mxCell>
+        <mxCell id="control-components" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=11;fontColor=#4472C4;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;Components:&lt;/b&gt;&lt;br&gt;• XENALoader&lt;br&gt;• GRIDConnector&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="180" x="240" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="exec-state-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F8F5;strokeColor=#27AE60;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="260" width="1410" x="900" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="exec-state-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=15;fontStyle=1;fontColor=#27AE60;" value="&lt;b&gt;&lt;font style=&quot;font-size: 22px;&quot;&gt;Execution State (GRID-Owned)&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="1420" x="920" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="exec-flow1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#27AE60;" value="" vertex="1">
+          <mxGeometry height="40" width="140" x="940" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="exec-flow-label1" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;PROCESSING&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="130" x="945" y="315" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-e1" edge="1" parent="1" style="endArrow=classic;html=1;strokeWidth=3;strokeColor=#27AE60;">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="1090" y="329.5" as="sourcePoint" />
+            <mxPoint x="1150" y="329.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="exec-flow2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#27AE60;" value="" vertex="1">
+          <mxGeometry height="40" width="140" x="1160" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="exec-flow-label2" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;IN_PROGRESS&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="130" x="1165" y="315" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-e2" edge="1" parent="1" style="endArrow=classic;html=1;strokeWidth=3;strokeColor=#27AE60;">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="1310" y="329.5" as="sourcePoint" />
+            <mxPoint x="1370" y="329.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="exec-flow3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#B8D9C8;strokeColor=#27AE60;" value="" vertex="1">
+          <mxGeometry height="40" width="140" x="1380" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="exec-flow-label3" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;COMPLETED&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="130" x="1385" y="315" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-e3" edge="1" parent="1" style="endArrow=classic;html=1;strokeWidth=3;strokeColor=#CC0000;dashed=1;">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="1230" y="360" as="sourcePoint" />
+            <mxPoint x="1230" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="exec-flow-error" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFE6E6;strokeColor=#CC0000;" value="" vertex="1">
+          <mxGeometry height="40" width="220" x="1080" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="exec-flow-error-label" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#CC0000;" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;IN_PROGRESS_WITH_ERRORS&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="210" x="1085" y="415" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-e4" edge="1" parent="1" style="endArrow=classic;html=1;strokeWidth=3;strokeColor=#CC0000;">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="1310" y="429.5" as="sourcePoint" />
+            <mxPoint x="1370" y="429.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="exec-flow-comp-err" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFD9B3;strokeColor=#D79B00;" value="" vertex="1">
+          <mxGeometry height="40" width="200" x="1380" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="exec-flow-comp-err-label" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#D79B00;" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;COMPLETED_WITH_ERRORS&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="190" x="1385" y="415" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-e5" edge="1" parent="1" style="endArrow=classic;html=1;strokeWidth=3;strokeColor=#990000;dashed=1;entryX=0.391;entryY=1.1;entryDx=0;entryDy=0;entryPerimeter=0;" target="exec-flow-failed-label">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="1190" y="470" />
+              <mxPoint x="1750" y="470" />
+              <mxPoint x="1828" y="470" />
+            </Array>
+            <mxPoint x="1190" y="460" as="sourcePoint" />
+            <mxPoint x="1190" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="exec-flow-failed" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#CC0000;strokeColor=#990000;" value="" vertex="1">
+          <mxGeometry height="40" width="120" x="1780" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="exec-flow-failed-label" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#FFFFFF;" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;FAILED&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="110" x="1785" y="315" as="geometry" />
+        </mxCell>
+        <mxCell id="exec-components" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=11;fontColor=#27AE60;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;Source:&lt;/b&gt;&lt;br&gt;• _progress.json&lt;br&gt;• manifest.json&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="180" x="1950" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="exec-note" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=11;fontColor=#27AE60;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;Note:&lt;/b&gt; GRID writes state to S3,&lt;br&gt;OutputHandler syncs to Redis&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="250" x="1950" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="redis-arch-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#D79B00;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="603" width="2310" x="100" y="577" as="geometry" />
+        </mxCell>
+        <mxCell id="redis-arch-title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;fontColor=#D79B00;" value="&lt;b&gt;&lt;font style=&quot;font-size: 28px;&quot;&gt;Redis Data Model - Transient State Cache&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="2280" x="120" y="597" as="geometry" />
+        </mxCell>
+        <mxCell id="job-hash-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#D79B00;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="463" width="680" x="200" y="677" as="geometry" />
+        </mxCell>
+        <mxCell id="job-hash-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=14;fontStyle=1;fontColor=#D79B00;" value="&lt;font style=&quot;font-size: 22px;&quot;&gt;&lt;b style=&quot;&quot;&gt;Job Metadata (Redis Hash)&lt;/b&gt;&lt;br&gt;Key: xena:job:{jobId}&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="740" x="220" y="697" as="geometry" />
+        </mxCell>
+        <mxCell id="job-hash-fields" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=10;" value="&lt;blockquote style=&quot;margin: 0px 0px 0px 40px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 0px;&quot;&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size: 14px;&quot;&gt;{&lt;br&gt;&lt;/font&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0px 0px 0px 40px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 0px;&quot;&gt;&lt;blockquote style=&quot;margin: 0px 0px 0px 40px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 0px;&quot;&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot; size=&quot;3&quot;&gt;  &quot;jobId&quot;: &quot;job-20260426-001&quot;,&lt;/font&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0px 0px 0px 40px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 0px;&quot;&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot; size=&quot;3&quot;&gt;  &quot;targetLibrary&quot;: &quot;risk-factor&quot;,&lt;/font&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0px 0px 0px 40px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 0px;&quot;&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot; size=&quot;3&quot;&gt;  &quot;targetVersion&quot;: &quot;latest&quot;,&lt;/font&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0px 0px 0px 40px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 0px;&quot;&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot; size=&quot;3&quot;&gt;  &quot;resolvedVersion&quot;: &quot;2.1.3&quot;,&lt;/font&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0px 0px 0px 40px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 0px;&quot;&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot; size=&quot;3&quot;&gt;  &quot;controlState&quot;: &quot;DISPATCHED&quot;,&lt;/font&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0px 0px 0px 40px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 0px;&quot;&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot; size=&quot;3&quot;&gt;  &quot;executionState&quot;: &quot;IN_PROGRESS&quot;,&lt;/font&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0px 0px 0px 40px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 0px;&quot;&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot; size=&quot;3&quot;&gt;  &quot;submittedAt&quot;: &quot;2026-04-26T10:00:00Z&quot;,&lt;/font&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0px 0px 0px 40px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 0px;&quot;&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot; size=&quot;3&quot;&gt;  &quot;dispatchedAt&quot;: &quot;2026-04-26T10:00:15Z&quot;,&lt;/font&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0px 0px 0px 40px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 0px;&quot;&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot; size=&quot;3&quot;&gt;  &quot;lastUpdate&quot;: &quot;2026-04-26T10:05:00Z&quot;,&lt;/font&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0px 0px 0px 40px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 0px;&quot;&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot; size=&quot;3&quot;&gt;  &quot;gridJobId&quot;: &quot;grid-job-xyz-789&quot;,&lt;/font&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0px 0px 0px 40px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 0px;&quot;&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot; size=&quot;3&quot;&gt;  &quot;processedItems&quot;: &quot;120000&quot;,&lt;/font&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0px 0px 0px 40px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 0px;&quot;&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot; size=&quot;3&quot;&gt;  &quot;totalItems&quot;: &quot;500000&quot;,&lt;/font&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0px 0px 0px 40px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 0px;&quot;&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot; size=&quot;3&quot;&gt;  &quot;failedItems&quot;: &quot;1200&quot;,&lt;/font&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0px 0px 0px 40px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 0px;&quot;&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot; size=&quot;3&quot;&gt;  &quot;lastWorkerId&quot;: &quot;worker-17&quot;,&lt;/font&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0px 0px 0px 40px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 0px;&quot;&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot; size=&quot;3&quot;&gt;  &quot;inputFile&quot;: &quot;s3://...&quot;,&lt;/font&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0px 0px 0px 40px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 0px;&quot;&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot; size=&quot;3&quot;&gt;  &quot;resultsPath&quot;: &quot;s3://...&quot;,&lt;/font&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0px 0px 0px 40px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 0px;&quot;&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot; size=&quot;3&quot;&gt;  &quot;errorPath&quot;: &quot;s3://...&quot;&lt;/font&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0px 0px 0px 40px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 0px;&quot;&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot; size=&quot;3&quot;&gt;}&lt;/font&gt;&lt;/blockquote&gt;" vertex="1">
+          <mxGeometry height="340" width="700" x="240" y="753" as="geometry" />
+        </mxCell>
+        <mxCell id="job-sets-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#D79B00;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="463" width="680" x="926" y="677" as="geometry" />
+        </mxCell>
+        <mxCell id="job-sets-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=14;fontStyle=1;fontColor=#D79B00;" value="&lt;b&gt;&lt;font style=&quot;font-size: 22px;&quot;&gt;Job Tracking (Redis Sets)&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="640" x="946" y="697" as="geometry" />
+        </mxCell>
+        <mxCell id="pending-set" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=11;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b style=&quot;&quot;&gt;xena:pending_jobs (Set)&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot;&gt;{&lt;br&gt;&lt;/font&gt;&lt;/font&gt;&lt;blockquote style=&quot;margin: 0px 0px 0px 40px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 0px;&quot;&gt;&lt;font size=&quot;3&quot;&gt;&lt;font style=&quot;&quot;&gt;&lt;font face=&quot;Courier New&quot;&gt;  &quot;job-20260426-001&quot;,&lt;br&gt;&lt;/font&gt;&lt;/font&gt;&lt;font style=&quot;&quot;&gt;&lt;font face=&quot;Courier New&quot;&gt;  &quot;job-20260426-002&quot;,&lt;br&gt;&lt;/font&gt;&lt;/font&gt;&lt;font style=&quot;&quot;&gt;&lt;font face=&quot;Courier New&quot;&gt;  &quot;job-20260426-003&quot;,&lt;br&gt;&lt;/font&gt;&lt;/font&gt;&lt;font style=&quot;&quot;&gt;&lt;font face=&quot;Courier New&quot;&gt;  ...&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;/blockquote&gt;&lt;font style=&quot;&quot; size=&quot;3&quot;&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot;&gt;}&lt;/font&gt;&lt;br&gt;&lt;br&gt;&lt;b style=&quot;&quot;&gt;Purpose:&lt;/b&gt;&lt;br&gt;ReconciliationJob scans this set&lt;/font&gt;" vertex="1">
+          <mxGeometry height="160" width="600" x="966" y="730" as="geometry" />
+        </mxCell>
+        <mxCell id="completed-set" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=11;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b style=&quot;&quot;&gt;xena:completed_jobs (Set)&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot;&gt;{&lt;br&gt;&lt;/font&gt;&lt;/font&gt;&lt;blockquote style=&quot;margin: 0px 0px 0px 40px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 0px;&quot;&gt;&lt;font size=&quot;3&quot;&gt;&lt;font style=&quot;&quot;&gt;&lt;font face=&quot;Courier New&quot;&gt;  &quot;job-20260425-100&quot;,&lt;br&gt;&lt;/font&gt;&lt;/font&gt;&lt;font style=&quot;&quot;&gt;&lt;font face=&quot;Courier New&quot;&gt;  &quot;job-20260425-101&quot;,&lt;br&gt;&lt;/font&gt;&lt;/font&gt;&lt;font style=&quot;&quot;&gt;&lt;font face=&quot;Courier New&quot;&gt;  ...&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;/blockquote&gt;&lt;font style=&quot;&quot; size=&quot;3&quot;&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot;&gt;}&lt;/font&gt;&lt;br&gt;&lt;br&gt;&lt;b style=&quot;&quot;&gt;TTL:&lt;/b&gt; 24 hours&lt;br&gt;&lt;b style=&quot;&quot;&gt;Purpose:&lt;/b&gt; Quick status lookup&lt;/font&gt;" vertex="1">
+          <mxGeometry height="150" width="600" x="966" y="936" as="geometry" />
+        </mxCell>
+        <mxCell id="idempotency-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#D79B00;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="463" width="640" x="1666" y="677" as="geometry" />
+        </mxCell>
+        <mxCell id="idempotency-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=14;fontStyle=1;fontColor=#D79B00;" value="&lt;b&gt;&lt;font style=&quot;font-size: 22px;&quot;&gt;Idempotency Tracking&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="800" x="1686" y="697" as="geometry" />
+        </mxCell>
+        <mxCell id="idempotency-content" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=11;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b style=&quot;&quot;&gt;processed:{messageId} (String with TTL)&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot; style=&quot;&quot;&gt;Key: processed:msg-abc-123&lt;br&gt;Value: &quot;1&quot;&lt;br&gt;TTL: 3600 seconds (1 hour)&lt;/font&gt;&lt;br&gt;&lt;br&gt;&lt;b style=&quot;&quot;&gt;Purpose:&lt;/b&gt;&lt;br&gt;Prevent duplicate processing from S3 duplicate events&lt;br&gt;&lt;br&gt;&lt;b style=&quot;&quot;&gt;Logic:&lt;/b&gt;&lt;br&gt;1. Check if key exists before processing&lt;br&gt;2. If exists → skip (already processed)&lt;br&gt;3. If not exists → process + set key&lt;br&gt;&lt;br&gt;&lt;b style=&quot;&quot;&gt;Auto-Expiry:&lt;/b&gt;&lt;br&gt;Keys expire after 1 hour (no manual cleanup)&lt;br&gt;&lt;b style=&quot;&quot;&gt;Memory:&lt;/b&gt;&lt;br&gt;~100 bytes per key × 50,000 keys = 5 MB&lt;/font&gt;" vertex="1">
+          <mxGeometry height="350" width="760" x="1706" y="739" as="geometry" />
+        </mxCell>
+        <mxCell id="truth-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6E6;strokeColor=#CC0000;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="270" width="2310" x="100" y="1217" as="geometry" />
+        </mxCell>
+        <mxCell id="truth-title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;fontColor=#CC0000;" value="&lt;b&gt;&lt;font style=&quot;font-size: 28px;&quot;&gt;⚠️ CRITICAL: Source of Truth Model&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="2270" x="120" y="1238" as="geometry" />
+        </mxCell>
+        <mxCell id="truth-content" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#CC0000;" value="&lt;font style=&quot;font-size: 22px;&quot;&gt;&lt;b style=&quot;&quot;&gt;Redis is NOT a source of truth.&lt;/b&gt; Redis is a &lt;b style=&quot;&quot;&gt;transient cache&lt;/b&gt; for fast lookups and reconciliation tracking.&lt;br&gt;&lt;br&gt;&lt;b style=&quot;&quot;&gt;The authoritative execution state resides in S3:&lt;/b&gt;&lt;br&gt;&lt;br&gt;• &lt;b style=&quot;&quot;&gt;_progress.json&lt;/b&gt; - Real-time execution state (written by GRID every 10 min or 500 items)&lt;br&gt;• &lt;b style=&quot;&quot;&gt;manifest.json&lt;/b&gt; - Final completion state (written LAST by GRID)&lt;br&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="130" width="1010" x="200" y="1310" as="geometry" />
+        </mxCell>
+        <mxCell id="reconciliation-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F8F5;strokeColor=#27AE60;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="476" width="2310" x="100" y="1524" as="geometry" />
+        </mxCell>
+        <mxCell id="reconciliation-title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;fontColor=#27AE60;" value="&lt;b&gt;&lt;font style=&quot;font-size: 28px;&quot;&gt;ReconciliationJob - Universal Stall Detection&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="2270" x="120" y="1545" as="geometry" />
+        </mxCell>
+        <mxCell id="reconciliation-flow" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;fontColor=#27AE60;" value="&lt;font style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 22px;&quot;&gt;&lt;b style=&quot;&quot;&gt;Reconciliation Flow (Every 10 Minutes):&lt;/b&gt;&lt;br&gt;&lt;br&gt;1. EventBridge triggers ReconciliationJob Lambda&lt;br&gt;2. Scan xena:pending_jobs set in Redis&lt;br&gt;3. For each job:&lt;br&gt;   a. Read _progress.json from S3 (resultsPath)&lt;br&gt;   b. Check lastUpdate timestamp&lt;br&gt;   c. If no update &amp;gt;10 min → STALLED&lt;br&gt;   d. If no _progress.json after 5 min → NO_PROGRESS&lt;br&gt;4. For stalled jobs:&lt;br&gt;   a. Increment bookRetries counter&lt;br&gt;   b. Build reconciliation payload (control.reconciliation = true)&lt;br&gt;   c. Resubmit to grid-connector-queue&lt;br&gt;5. If bookRetries &amp;gt;= 5 → PERMANENTLY_FAILED (alert ops)&lt;/font&gt;&lt;br&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="300" width="555" x="245" y="1600" as="geometry" />
+        </mxCell>
+        <mxCell id="reconciliation-key" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;fontColor=#27AE60;fontStyle=1" value="&lt;font style=&quot;font-size: 22px;&quot;&gt;&lt;br&gt;&lt;b style=&quot;&quot;&gt;GRID Libraries Handle Reconciliation:&lt;/b&gt;&lt;br&gt;• Check S3 for existing results&lt;br&gt;• Skip already-processed items&lt;br&gt;• Process only missing/failed items&lt;br&gt;• Write new progress + manifest&lt;br&gt;&lt;br&gt;&lt;b style=&quot;&quot;&gt;Result:&lt;/b&gt; Universal resilience without complexity&lt;/font&gt;" vertex="1">
+          <mxGeometry height="300" width="630" x="1683" y="1579" as="geometry" />
+        </mxCell>
+        <mxCell id="3S6fIXIDOASykBvcehVO-1" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontColor=#CC0000;" value="&lt;font style=&quot;font-size: 22px;&quot;&gt;&lt;b style=&quot;&quot;&gt;Redis is lost:&lt;/b&gt;&lt;br&gt;✅ Jobs continue processing (GRID independent)&lt;br&gt;✅ State can be rebuilt from S3 artifacts&lt;br&gt;✅ ReconciliationJob detects active jobs by scanning S3&lt;br&gt;&lt;br&gt;&lt;b style=&quot;&quot;&gt;Redis Role:&lt;/b&gt; Fast lookup (~1ms) + Reconciliation tracking&lt;/font&gt;" vertex="1">
+          <mxGeometry height="130" width="669" x="1683" y="1320" as="geometry" />
+        </mxCell>
+        <mxCell id="3S6fIXIDOASykBvcehVO-2" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;fontColor=#27AE60;" value="&lt;font style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 22px;&quot;&gt;&lt;b style=&quot;&quot;&gt;Constants:&lt;/b&gt;&lt;br&gt;• MAX_INITIAL_WAIT = 300s (5 minutes)&lt;br&gt;• MAX_STALL_TIME = 600s (10 minutes)&lt;br&gt;• MAX_RECONCILIATION_RETRIES = 5&lt;br&gt;&lt;br&gt;&lt;b style=&quot;&quot;&gt;🎯 Key Insight:&lt;/b&gt;&lt;br style=&quot;font-weight: 700;&quot;&gt;&lt;br style=&quot;font-weight: 700;&quot;&gt;&lt;span style=&quot;font-weight: 700;&quot;&gt;ReconciliationJob is&amp;nbsp;&lt;/span&gt;&lt;b style=&quot;&quot;&gt;library-agnostic&lt;/b&gt;&lt;br style=&quot;font-weight: 700;&quot;&gt;&lt;span style=&quot;font-weight: 700;&quot;&gt;Works for ALL libraries without library-specific logic:&lt;/span&gt;&lt;br style=&quot;font-weight: 700;&quot;&gt;&lt;br style=&quot;font-weight: 700;&quot;&gt;&lt;span style=&quot;font-weight: 700;&quot;&gt;✅ Uses standard _progress.json contract&lt;/span&gt;&lt;br style=&quot;font-weight: 700;&quot;&gt;&lt;span style=&quot;font-weight: 700;&quot;&gt;✅ Standard control.reconciliation flag&lt;/span&gt;&lt;br style=&quot;font-weight: 700;&quot;&gt;&lt;span style=&quot;font-weight: 700;&quot;&gt;✅ Standard S3-based stall detection&lt;/span&gt;&lt;br style=&quot;font-weight: 700;&quot;&gt;&lt;span style=&quot;font-weight: 700;&quot;&gt;✅ No branching logic for library types&lt;/span&gt;&lt;/font&gt;&lt;br style=&quot;font-size: 22px; font-weight: 700;&quot;&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="300" width="555" x="1025" y="1600" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="3. Observability - GETAFE Flow" id="h5SsfUMGzWraTm5wcUJa">
+    <mxGraphModel dx="2828" dy="1532" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2800" pageHeight="2000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="obs-title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=26;fontStyle=1;fontColor=#1F4E78;" value="&lt;b&gt;XENA Observability Flow - GETAFE Integration&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:18px&quot;&gt;Event-Driven Monitoring with Dual-Channel Architecture&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="2600" x="100" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="grid-exec-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F8F5;strokeColor=#27AE60;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="250" width="1000" x="900" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="grid-exec-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=18;fontStyle=1;fontColor=#27AE60;" value="&lt;b&gt;GRID Library Execution&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="960" x="920" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="grid-exec-content" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=13;" value="&lt;b&gt;Processing:&lt;/b&gt;&lt;br&gt;• Risk Factor Library v2.1.3&lt;br&gt;• Pricing Library v3.2&lt;br&gt;• Valuation Library v1.0&lt;br&gt;&lt;br&gt;&lt;b&gt;Writes to S3:&lt;/b&gt;&lt;br&gt;• _progress.json (every 10 min or 500 items)&lt;br&gt;• manifest.json (completion - written LAST)&lt;br&gt;&lt;br&gt;&lt;b&gt;Cross-Account:&lt;/b&gt; Direct S3 write via IAM AssumeRole" vertex="1">
+          <mxGeometry height="170" width="900" x="950" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-grid-s3" edge="1" parent="1" source="grid-exec-box" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=4;endArrow=block;endFill=1;strokeColor=#27AE60;" target="s3-output-box">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1400" y="410" as="sourcePoint" />
+            <mxPoint x="1400" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-grid-s3-label" connectable="0" parent="arrow-grid-s3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontStyle=1;fontColor=#27AE60;" value="S3 PUT&lt;br&gt;(event source)" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="2" as="geometry">
+            <mxPoint x="40" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s3-output-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E7F3FF;strokeColor=#4472C4;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="250" width="1000" x="900" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="s3-icon" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#7AA116;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;" value="" vertex="1">
+          <mxGeometry height="80" width="80" x="1360" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="s3-output-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=16;fontStyle=1;fontColor=#4472C4;" value="&lt;b&gt;S3 Output Bucket (Data Plane)&lt;/b&gt;&lt;br&gt;s3://xena-data-lake-output-{env}/..." vertex="1">
+          <mxGeometry height="40" width="960" x="920" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="s3-output-content" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=13;" value="&lt;b&gt;Contains:&lt;/b&gt;&lt;br&gt;• _progress.json (periodic updates)&lt;br&gt;• manifest.json (completion signal)&lt;br&gt;&lt;br&gt;&lt;b&gt;Event Configuration:&lt;/b&gt;&lt;br&gt;S3 Event Notification → SQS Output Queue&lt;br&gt;Suffix filters: _progress.json, manifest.json" vertex="1">
+          <mxGeometry height="80" width="900" x="950" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-s3-lambda" edge="1" parent="1" source="s3-output-box" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=4;endArrow=block;endFill=1;strokeColor=#4472C4;" target="lambda-handler-box">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1400" y="780" as="sourcePoint" />
+            <mxPoint x="1400" y="890" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-s3-lambda-label" connectable="0" parent="arrow-s3-lambda" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontStyle=1;fontColor=#4472C4;" value="S3 Event&lt;br&gt;Notification" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="2" as="geometry">
+            <mxPoint x="50" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lambda-handler-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#ED7100;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="280" width="1000" x="900" y="890" as="geometry" />
+        </mxCell>
+        <mxCell id="lambda-icon" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" value="" vertex="1">
+          <mxGeometry height="80" width="80" x="1360" y="910" as="geometry" />
+        </mxCell>
+        <mxCell id="lambda-handler-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=16;fontStyle=1;fontColor=#ED7100;" value="&lt;b&gt;OutputHandler / ErrorHandler (Lambda)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="960" x="920" y="1000" as="geometry" />
+        </mxCell>
+        <mxCell id="lambda-handler-content" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=13;" value="&lt;b&gt;Processing:&lt;/b&gt;&lt;br&gt;• Parses _progress.json / manifest.json&lt;br&gt;• Updates Redis (state tracking: xena:job:{jobId})&lt;br&gt;• Builds observability event payload&lt;br&gt;&lt;br&gt;&lt;b&gt;Event Structure:&lt;/b&gt;&lt;br&gt;{ eventType, timestamp, job: {jobId, library, ...}, execution: {...} }&lt;br&gt;&lt;br&gt;&lt;b&gt;Output:&lt;/b&gt; Enqueues to SQS observability queue" vertex="1">
+          <mxGeometry height="110" width="900" x="950" y="1001" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-lambda-sqs" edge="1" parent="1" source="lambda-handler-box" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=4;endArrow=block;endFill=1;strokeColor=#ED7100;" target="sqs-obs-box">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1400" y="1180" as="sourcePoint" />
+            <mxPoint x="1400" y="1290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-lambda-sqs-label" connectable="0" parent="arrow-lambda-sqs" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontStyle=1;fontColor=#ED7100;" value="Enqueue&lt;br&gt;(decoupling)" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="2" as="geometry">
+            <mxPoint x="40" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sqs-obs-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6E6;strokeColor=#E7157B;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="250" width="1000" x="900" y="1290" as="geometry" />
+        </mxCell>
+        <mxCell id="sqs-icon" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#E7157B;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sqs;" value="" vertex="1">
+          <mxGeometry height="80" width="80" x="1360" y="1310" as="geometry" />
+        </mxCell>
+        <mxCell id="sqs-obs-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=16;fontStyle=1;fontColor=#E7157B;" value="&lt;b&gt;SQS: xena-observability-queue&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="960" x="920" y="1400" as="geometry" />
+        </mxCell>
+        <mxCell id="sqs-obs-content" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=13;" value="&lt;b&gt;Purpose:&lt;/b&gt;&lt;br&gt;• Buffers events (decoupling layer)&lt;br&gt;• Handles retries and backpressure&lt;br&gt;• Retention: 14 days&lt;br&gt;&lt;br&gt;&lt;b&gt;Benefits:&lt;/b&gt;&lt;br&gt;✅ Lambda doesn&#39;t block on Kafka&lt;br&gt;✅ Automatic retry on failure&lt;br&gt;✅ Network issues don&#39;t block XENA" vertex="1">
+          <mxGeometry height="90" width="900" x="950" y="1376" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-sqs-kafka" edge="1" parent="1" source="sqs-obs-box" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=4;endArrow=block;endFill=1;strokeColor=#E7157B;" target="kafka-handler-box">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="900" y="1415" as="sourcePoint" />
+            <mxPoint x="600" y="1415" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-sqs-kafka-label" connectable="0" parent="arrow-sqs-kafka" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontStyle=1;fontColor=#E7157B;" value="Batch Consume" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="2" as="geometry">
+            <mxPoint y="-20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kafka-handler-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#ED7100;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="290" width="600" x="100" y="1269" as="geometry" />
+        </mxCell>
+        <mxCell id="kafka-lambda-icon" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" value="" vertex="1">
+          <mxGeometry height="80" width="80" x="360" y="1289" as="geometry" />
+        </mxCell>
+        <mxCell id="kafka-handler-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=16;fontStyle=1;fontColor=#ED7100;" value="&lt;b&gt;KafkaEventHandler (Lambda)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="560" x="120" y="1379" as="geometry" />
+        </mxCell>
+        <mxCell id="kafka-handler-content" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=13;" value="&lt;b&gt;Processing:&lt;/b&gt;&lt;br&gt;• Consumes SQS messages (batch)&lt;br&gt;• Publishes to GETAFE Kafka topic&lt;br&gt;• Handles retry with exponential backoff&lt;br&gt;&lt;br&gt;&lt;b&gt;Connection:&lt;/b&gt;&lt;br&gt;• SSL/TLS with mutual auth&lt;br&gt;• Via VPN to on-premise GETAFE" vertex="1">
+          <mxGeometry height="90" width="500" x="150" y="1408" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-kafka-getafe" edge="1" parent="1" source="kafka-handler-box" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=4;endArrow=block;endFill=1;strokeColor=#D79B00;dashed=1;" target="getafe-box">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="1269" as="sourcePoint" />
+            <mxPoint x="400" y="1029" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-kafka-getafe-label" connectable="0" parent="arrow-kafka-getafe" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;fontStyle=1;fontColor=#D79B00;" value="Kafka Publish&lt;br&gt;(On-Prem, via VPN)" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="2" as="geometry">
+            <mxPoint x="-80" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="getafe-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF4E6;strokeColor=#D79B00;strokeWidth=4;" value="" vertex="1">
+          <mxGeometry height="340" width="600" x="100" y="809" as="geometry" />
+        </mxCell>
+        <mxCell id="getafe-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=16;fontStyle=1;fontColor=#D79B00;" value="&lt;b&gt;GETAFE Platform (On-Premise)&lt;/b&gt;&lt;br&gt;Kafka → OpenSearch → Kibana" vertex="1">
+          <mxGeometry height="50" width="560" x="120" y="828" as="geometry" />
+        </mxCell>
+        <mxCell id="getafe-content" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=13;" value="&lt;b&gt;Components:&lt;/b&gt;&lt;br&gt;• Kafka: Event ingestion&lt;br&gt;• OpenSearch: Indexing (xena-events-* index)&lt;br&gt;• Kibana: Visualization &amp; dashboards&lt;br&gt;&lt;br&gt;&lt;b&gt;Capabilities:&lt;/b&gt;&lt;br&gt;• Real-time dashboards&lt;br&gt;• Historical trend analysis&lt;br&gt;• Cross-job correlation&lt;br&gt;• Ad-hoc querying&lt;br&gt;&lt;br&gt;&lt;b&gt;Retention:&lt;/b&gt;&lt;br&gt;• Hot: 7-14 days (SSD)&lt;br&gt;• Warm: 30-90 days (HDD)&lt;br&gt;• Cold: Optional archive" vertex="1">
+          <mxGeometry height="190" width="500" x="150" y="888" as="geometry" />
+        </mxCell>
+        <mxCell id="parallel-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F8F5;strokeColor=#27AE60;strokeWidth=3;dashed=1;" value="" vertex="1">
+          <mxGeometry height="1390" width="600" x="2100" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="parallel-title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#27AE60;" value="&lt;b&gt;PARALLEL CHANNEL&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:14px&quot;&gt;S3 Tracking Files (Dual Observability)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="560" x="2120" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="parallel-s3-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#27AE60;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="200" width="500" x="2150" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="parallel-s3-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=15;fontStyle=1;fontColor=#27AE60;" value="&lt;b&gt;S3 Tracking Files&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="460" x="2170" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="parallel-s3-content" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;" value="&lt;b&gt;_progress.json:&lt;/b&gt;&lt;br&gt;• Written every 10 min or 500 items&lt;br&gt;• Contains: processedItems, totalItems,&lt;br&gt;  failedItems, status, lastUpdate&lt;br&gt;&lt;br&gt;&lt;b&gt;manifest.json:&lt;/b&gt;&lt;br&gt;• Written LAST (completion signal)&lt;br&gt;• Contains: final counts, duration,&lt;br&gt;  resolvedVersion, status" vertex="1">
+          <mxGeometry height="130" width="420" x="2190" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-parallel-filebeat" edge="1" parent="1" source="parallel-s3-box" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=3;endArrow=block;endFill=1;strokeColor=#27AE60;" target="filebeat-box">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2400" y="470" as="sourcePoint" />
+            <mxPoint x="2400" y="550" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="filebeat-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#27AE60;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="150" width="500" x="2150" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="filebeat-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=15;fontStyle=1;fontColor=#27AE60;" value="&lt;b&gt;Filebeat (S3 Input)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="460" x="2170" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="filebeat-content" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;" value="• Monitors S3 for new tracking files&lt;br&gt;• Reads _progress.json + manifest.json&lt;br&gt;• Forwards to Logstash" vertex="1">
+          <mxGeometry height="80" width="420" x="2190" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-filebeat-logstash" edge="1" parent="1" source="filebeat-box" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=3;endArrow=block;endFill=1;strokeColor=#27AE60;" target="logstash-box">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2400" y="700" as="sourcePoint" />
+            <mxPoint x="2400" y="780" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="logstash-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#27AE60;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="150" width="500" x="2150" y="770" as="geometry" />
+        </mxCell>
+        <mxCell id="logstash-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=15;fontStyle=1;fontColor=#27AE60;" value="&lt;b&gt;Logstash (Parsing + Enrichment)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="460" x="2170" y="790" as="geometry" />
+        </mxCell>
+        <mxCell id="logstash-content" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;" value="• Parses JSON structure&lt;br&gt;• Enriches with metadata&lt;br&gt;• Indexes to OpenSearch" vertex="1">
+          <mxGeometry height="80" width="420" x="2190" y="830" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-logstash-opensearch" edge="1" parent="1" source="logstash-box" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=3;endArrow=block;endFill=1;strokeColor=#27AE60;" target="opensearch-box">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2400" y="930" as="sourcePoint" />
+            <mxPoint x="2400" y="1010" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="opensearch-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#27AE60;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="200" width="500" x="2150" y="1000" as="geometry" />
+        </mxCell>
+        <mxCell id="opensearch-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=15;fontStyle=1;fontColor=#27AE60;" value="&lt;b&gt;OpenSearch (xena-events-* index)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="460" x="2170" y="1020" as="geometry" />
+        </mxCell>
+        <mxCell id="opensearch-content" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;" value="• Indexed event data&lt;br&gt;• Full-text search&lt;br&gt;• Aggregations &amp; analytics&lt;br&gt;&lt;br&gt;&lt;b&gt;Same index as Kafka events&lt;/b&gt;&lt;br&gt;(dual-channel convergence)" vertex="1">
+          <mxGeometry height="130" width="420" x="2190" y="1060" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-opensearch-kibana" edge="1" parent="1" source="opensearch-box" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=3;endArrow=block;endFill=1;strokeColor=#27AE60;" target="kibana-box">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2400" y="1210" as="sourcePoint" />
+            <mxPoint x="2400" y="1290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kibana-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#27AE60;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="200" width="500" x="2150" y="1280" as="geometry" />
+        </mxCell>
+        <mxCell id="kibana-title" parent="1" style="text;html=1;align=center;verticalAlign=top;fontSize=15;fontStyle=1;fontColor=#27AE60;" value="&lt;b&gt;Kibana Dashboards&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="460" x="2170" y="1300" as="geometry" />
+        </mxCell>
+        <mxCell id="kibana-content" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=12;" value="&lt;b&gt;Dashboards:&lt;/b&gt;&lt;br&gt;• Real-Time Job Monitoring&lt;br&gt;• Library Performance&lt;br&gt;• Operational Health&lt;br&gt;• Audit Trail&lt;br&gt;&lt;br&gt;&lt;b&gt;Visualizes:&lt;/b&gt;&lt;br&gt;Both Kafka events AND&lt;br&gt;S3 tracking file data" vertex="1">
+          <mxGeometry height="130" width="420" x="2190" y="1340" as="geometry" />
+        </mxCell>
+        <mxCell id="advantage-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E7F3FF;strokeColor=#4472C4;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="300" width="2600" x="100" y="1620" as="geometry" />
+        </mxCell>
+        <mxCell id="advantage-title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;fontColor=#4472C4;" value="&lt;b&gt;🎯 Dual-Channel Observability Benefits&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="2560" x="120" y="1640" as="geometry" />
+        </mxCell>
+        <mxCell id="advantage-events" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=13;fontColor=#4472C4;" value="&lt;b&gt;Real-Time Events (Lambda → SQS → Kafka):&lt;/b&gt;&lt;br&gt;✅ Immediate visibility (seconds)&lt;br&gt;✅ Alerting and monitoring&lt;br&gt;✅ Live dashboards&lt;br&gt;✅ Operational response" vertex="1">
+          <mxGeometry height="120" width="550" x="200" y="1700" as="geometry" />
+        </mxCell>
+        <mxCell id="advantage-files" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=13;fontColor=#27AE60;" value="&lt;b&gt;S3 Tracking Files (Filebeat → Logstash → OpenSearch):&lt;/b&gt;&lt;br&gt;✅ Immutable audit trail&lt;br&gt;✅ Replayable (disaster recovery)&lt;br&gt;✅ Rich execution metadata&lt;br&gt;✅ Works even if Kafka is down" vertex="1">
+          <mxGeometry height="120" width="650" x="850" y="1700" as="geometry" />
+        </mxCell>
+        <mxCell id="advantage-combined" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=13;fontColor=#D79B00;fontStyle=1" value="&lt;b&gt;Combined Benefits:&lt;/b&gt;&lt;br&gt;✅ Best of both worlds&lt;br&gt;✅ Resilient (dual paths)&lt;br&gt;✅ Complete picture&lt;br&gt;✅ No single point of failure" vertex="1">
+          <mxGeometry height="120" width="450" x="1600" y="1700" as="geometry" />
+        </mxCell>
+        <mxCell id="advantage-note" parent="1" style="text;html=1;strokeColor=#4472C4;fillColor=#E7F3FF;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=12;arcSize=10;fontStyle=1" value="&lt;b&gt;Key Insight:&lt;/b&gt; Events for speed, Files for permanence. GETAFE indexes BOTH sources into the same xena-events-* index for unified querying." vertex="1">
+          <mxGeometry height="50" width="2400" x="200" y="1840" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
