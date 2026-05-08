@@ -1,0 +1,30 @@
+| Task Name                               | Description                                                                                                 | Area         | Domain    | Status      | Owner |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ------------ | --------- | ----------- | ----- |
+| Define LaaS Contract Model              | Formalize Parquet-based contract (metadata + clientPayload + paths) and remove library-specific assumptions | Architecture | XENA      | Planned     |       |
+| Refactor XENALoader to Generic Mode     | Remove calibration/FMTM branching; process based on contract metadata only                                  | Architecture | XENA      | Planned     |       |
+| Implement Registry Bucket               | Create config-plane S3 bucket for library registry (versions, endpoints, required fields)                   | Infra        | XENA      | Planned     |       |
+| Define Registry JSON Schema             | Design registry.json structure (library, version, endpoint, requiredFields)                                 | Architecture | XENA      | Planned     |       |
+| Implement Registry Sync Mechanism       | Enable GRID to update registry bucket on library release (event or direct write)                            | Architecture | GRID      | Planned     |       |
+| Integrate Registry in XENALoader        | Read registry to validate required fields and resolve library/version                                       | Development  | XENA      | Planned     |       |
+| Implement Version Resolution            | Resolve "latest" vs explicit version using registry at dispatch time                                        | Development  | XENA      | Planned     |       |
+| Standardize Input Bucket Contract       | Enforce full S3 path structure (jobType/country/purpose/date/subpurpose/iteration/...)                      | Architecture | XENA      | In Progress |       |
+| Extend Output Contract (Tracking Files) | Enforce `_progress.json` and `manifest.json` for all libraries                                              | Architecture | GRID      | Planned     |       |
+| Define Tracking File Schema             | Standardize fields: inputFile, version, timestamps, workerId, status, etc.                                  | Architecture | XENA      | Planned     |       |
+| Implement Dual-State Model              | Separate XENA (RECEIVED→DISPATCHED) and GRID (PROCESSING→COMPLETED) states                                  | Architecture | XENA/GRID | Planned     |       |
+| Update Redis State Model                | Align Redis keys with dual-state lifecycle and idempotency rules                                            | Development  | XENA      | Planned     |       |
+| Implement Idempotency Strategy          | Ensure safe reprocessing using unique keys + timestamp checks                                               | Development  | XENA      | Planned     |       |
+| Refactor GRIDConnector                  | Make fully generic (no library awareness, registry-driven dispatch)                                         | Development  | XENA      | Planned     |       |
+| Implement GETAFE Event Emission         | Emit events for DISPATCHED, IN_PROGRESS, COMPLETED, FAILED                                                  | Development  | XENA      | Planned     |       |
+| Add Kafka Event Handler Lambda          | Introduce async delivery to GETAFE (decouple from OutputHandler)                                            | Architecture | XENA      | Planned     |       |
+| Implement OutputHandler Enhancements    | Process manifest/progress, update Redis, emit events                                                        | Development  | XENA      | In Progress |       |
+| Implement ErrorHandler Enhancements     | Handle error artifacts and emit observability events                                                        | Development  | XENA      | Planned     |       |
+| Define Observability Model              | Standardize tracking via S3 artifacts + GETAFE (OpenSearch/Kibana)                                          | Architecture | XENA      | Planned     |       |
+| Implement ReconciliatorJob              | Periodic reconciliation of PROCESSING jobs (stuck detection, retries)                                       | Development  | XENA      | Planned     |       |
+| Define Retry & Failure Policy           | Standardize retry limits, failure states, and error reporting                                               | Architecture | XENA      | Planned     |       |
+| Implement NettingSet Handling (GRID)    | Handle domain-specific aggregation (counters, completion) inside GRID                                       | Development  | GRID      | Planned     |       |
+| Extend Manifest for Aggregations        | Include aggregation info (e.g., NettingSet distribution if needed)                                          | Development  | GRID      | Planned     |       |
+| Define Security Model (Data Plane)      | S3 access via IAM roles, prefix isolation per library                                                       | Security     | XENA      | Planned     |       |
+| Define Cross-Account Access Model       | Enable controlled `PutObject` to input prefixes (per library)                                               | Security     | XENA      | Planned     |       |
+| Evaluate API Layer (Future)             | Assess minimal API for job status and signed URLs (optional)                                                | Architecture | XENA      | Planned     |       |
+| Document LaaS Architecture              | Produce full ADD (Architecture Design Document)                                                             | Architecture | XENA      | In Progress |       |
+| Create Onboarding Guide for Libraries   | Define steps to onboard new libraries into LaaS                                                             | Architecture | XENA      | Planned     |       |
