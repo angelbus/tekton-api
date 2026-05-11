@@ -1,0 +1,20 @@
+Architecture Statement (you can reuse in your doc)
+
+XENA integrates with the GETAFE observability platform deployed on-premise.
+
+Given XENA’s fully serverless architecture (AWS Lambda-based), HTTP ingestion is selected over Kafka as the primary integration mechanism.
+
+This approach avoids the need for persistent connections and additional networking complexity (e.g., VPC proxies or long-lived brokers), while maintaining reliable event delivery through application-level retry mechanisms.
+
+Kafka ingestion remains a valid alternative for high-throughput or stateful producers, but is not required for XENA’s event-driven model.
+
+
+OutputHandler / ErrorHandler / GRIDConnector
+        ↓
+   Build event payload
+        ↓
+   HTTP POST → GETAFE endpoint
+        ↓
+   Retry on failure (with backoff)
+
+
