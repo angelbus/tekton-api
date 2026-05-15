@@ -1,0 +1,394 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="yKOAEYEaxQtd7K7sJu_V" name="Page-1">
+    <mxGraphModel dx="2175" dy="2347" grid="0" gridSize="10" guides="1" tooltips="1" connect="0" arrows="0" fold="0" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="1">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bg" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F0F4FA;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="1043" width="1581" y="-6" as="geometry" />
+        </mxCell>
+        <mxCell id="title_bar" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1B2A4A;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="72" width="1585" as="geometry" />
+        </mxCell>
+        <mxCell id="title_accent" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#2E5FA3;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="8" width="1580" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="title_text" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=22;fontStyle=1;fontColor=#FFFFFF;fontFamily=Arial;" value="XENA LaaS — Debug SDK Architecture" vertex="1">
+          <mxGeometry height="46" width="700" x="40" y="12" as="geometry" />
+        </mxCell>
+        <mxCell id="title_sub" parent="1" style="text;html=1;align=right;verticalAlign=middle;fontSize=12;fontColor=#93B8E0;fontFamily=Arial;" value="Deterministic Execution Analysis · Quants Team · Platform Engineering" vertex="1">
+          <mxGeometry height="30" width="847" x="687" y="18" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_box" parent="1" style="rounded=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.5;shadow=0;" value="" vertex="1">
+          <mxGeometry height="165" width="204" x="1350" y="93" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_title" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#1B2A4A;fontFamily=Arial;" value="Legend" vertex="1">
+          <mxGeometry height="20" width="200" x="1366" y="101" as="geometry" />
+        </mxCell>
+        <mxCell id="l1c" parent="1" style="rounded=6;fillColor=#D6E4F7;strokeColor=#2E5FA3;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="14" width="20" x="1366" y="127" as="geometry" />
+        </mxCell>
+        <mxCell id="l1t" parent="1" style="text;html=1;fontSize=10;fontColor=#374151;fontFamily=Arial;align=left;verticalAlign=middle;" value="SDK Component" vertex="1">
+          <mxGeometry height="20" width="130" x="1394" y="124" as="geometry" />
+        </mxCell>
+        <mxCell id="l2c" parent="1" style="rounded=6;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="14" width="20" x="1366" y="149" as="geometry" />
+        </mxCell>
+        <mxCell id="l2t" parent="1" style="text;html=1;fontSize=10;fontColor=#374151;fontFamily=Arial;align=left;verticalAlign=middle;" value="AWS / Cloud Service" vertex="1">
+          <mxGeometry height="20" width="130" x="1394" y="146" as="geometry" />
+        </mxCell>
+        <mxCell id="l3c" parent="1" style="rounded=6;fillColor=#FFF8E1;strokeColor=#F59E0B;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="14" width="20" x="1366" y="171" as="geometry" />
+        </mxCell>
+        <mxCell id="l3t" parent="1" style="text;html=1;fontSize=10;fontColor=#374151;fontFamily=Arial;align=left;verticalAlign=middle;" value="XENA Platform" vertex="1">
+          <mxGeometry height="20" width="130" x="1394" y="168" as="geometry" />
+        </mxCell>
+        <mxCell id="l4c" parent="1" style="rounded=6;fillColor=#FCE4EC;strokeColor=#C62828;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="14" width="20" x="1366" y="193" as="geometry" />
+        </mxCell>
+        <mxCell id="l4t" parent="1" style="text;html=1;fontSize=10;fontColor=#374151;fontFamily=Arial;align=left;verticalAlign=middle;" value="Data Lake (S3)" vertex="1">
+          <mxGeometry height="20" width="130" x="1394" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="l5_line" edge="1" parent="1" style="endArrow=block;endFill=1;edgeStyle=none;strokeColor=#2E5FA3;strokeWidth=2.5;" value="">
+          <mxGeometry height="1" relative="1" width="10" x="1386" y="215" as="geometry">
+            <Array as="points" />
+            <mxPoint x="1366" y="222" as="sourcePoint" />
+            <mxPoint x="1396" y="222" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="l5t" parent="1" style="text;html=1;fontSize=10;fontColor=#374151;fontFamily=Arial;align=left;verticalAlign=middle;" value="SDK Data Flow" vertex="1">
+          <mxGeometry height="20" width="130" x="1404" y="213" as="geometry" />
+        </mxCell>
+        <mxCell id="l6_line" edge="1" parent="1" style="endArrow=block;endFill=1;edgeStyle=none;strokeColor=#9E9E9E;strokeWidth=1.5;dashed=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1366" y="242" as="sourcePoint" />
+            <mxPoint x="1396" y="242" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="l6t" parent="1" style="text;html=1;fontSize=10;fontColor=#374151;fontFamily=Arial;align=left;verticalAlign=middle;" value="XENA Internal Flow" vertex="1">
+          <mxGeometry height="20" width="130" x="1404" y="233" as="geometry" />
+        </mxCell>
+        <mxCell id="zone_quants" parent="1" style="rounded=16;whiteSpace=wrap;html=1;fillColor=#EBF1FB;strokeColor=#2E5FA3;strokeWidth=2;dashed=0;verticalAlign=top;arcSize=3;" value="" vertex="1">
+          <mxGeometry height="813" width="290" x="30" y="88" as="geometry" />
+        </mxCell>
+        <mxCell id="zone_quants_label" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#2E5FA3;fontFamily=Arial;letterSpacing=2;" value="QUANTS WORKSTATION" vertex="1">
+          <mxGeometry height="22" width="290" x="30" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="quant_user" parent="1" style="rounded=12;whiteSpace=wrap;html=1;fillColor=#1B2A4A;strokeColor=#1B2A4A;fontColor=#FFFFFF;fontSize=11;fontFamily=Arial;verticalAlign=middle;align=center;shadow=1;" value="&lt;b style=&#39;font-size:13px;&#39;&gt;👤 Quant Engineer&lt;/b&gt;&lt;br/&gt;&lt;span style=&#39;font-size:10px;color:#6B7280;&#39;&gt;Debug / Analysis Request&lt;/span&gt;" vertex="1">
+          <mxGeometry height="62" width="220" x="65" y="132" as="geometry" />
+        </mxCell>
+        <mxCell id="sdk_core_bg" parent="1" style="rounded=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2E5FA3;strokeWidth=2.5;shadow=1;" value="" vertex="1">
+          <mxGeometry height="499" width="254" x="48" y="228" as="geometry" />
+        </mxCell>
+        <mxCell id="sdk_core_header" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#2E5FA3;strokeColor=none;arcSize=0;" value="" vertex="1">
+          <mxGeometry height="38" width="254" x="48" y="228" as="geometry" />
+        </mxCell>
+        <mxCell id="sdk_core_header_r" parent="1" style="rounded=14;whiteSpace=wrap;html=1;fillColor=#2E5FA3;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="52" width="254" x="48" y="228" as="geometry" />
+        </mxCell>
+        <mxCell id="sdk_core_header_sq" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#2E5FA3;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="28" width="254" x="48" y="252" as="geometry" />
+        </mxCell>
+        <mxCell id="sdk_label" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=12;fontStyle=1;fontColor=#FFFFFF;fontFamily=Arial;letterSpacing=1;" value="XENA DEBUG SDK (C++)" vertex="1">
+          <mxGeometry height="38" width="254" x="48" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="mod_session" parent="1" style="rounded=8;whiteSpace=wrap;html=1;fillColor=#D6E4F7;strokeColor=#2E5FA3;strokeWidth=1.5;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;" value="&lt;b&gt;Session Manager&lt;/b&gt;&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#4A7EC7;&#39;&gt;XenaSDK::Session&lt;/span&gt;&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#6B7280;&#39;&gt;fromSSO() · fromRole() · fromEnv()&lt;/span&gt;" vertex="1">
+          <mxGeometry height="62" width="226" x="62" y="282" as="geometry" />
+        </mxCell>
+        <mxCell id="mod_resolver" parent="1" style="rounded=8;whiteSpace=wrap;html=1;fillColor=#D6E4F7;strokeColor=#2E5FA3;strokeWidth=1.5;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;" value="&lt;b&gt;Artifact Resolver&lt;/b&gt;&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#4A7EC7;&#39;&gt;session.resolveJob(jobId)&lt;/span&gt;&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#6B7280;&#39;&gt;Resolves S3 paths from XENA contract&lt;/span&gt;" vertex="1">
+          <mxGeometry height="62" width="226" x="62" y="356" as="geometry" />
+        </mxCell>
+        <mxCell id="mod_parquet" parent="1" style="rounded=8;whiteSpace=wrap;html=1;fillColor=#D6E4F7;strokeColor=#2E5FA3;strokeWidth=1.5;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;" value="&lt;b&gt;Parquet Decoder&lt;/b&gt;&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#4A7EC7;&#39;&gt;artifacts.decode()&lt;/span&gt;&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#6B7280;&#39;&gt;Input · Output · Error artifacts&lt;/span&gt;" vertex="1">
+          <mxGeometry height="62" width="226" x="62" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="mod_manifest" parent="1" style="rounded=8;whiteSpace=wrap;html=1;fillColor=#D6E4F7;strokeColor=#2E5FA3;strokeWidth=1.5;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;" value="&lt;b&gt;Manifest Inspector&lt;/b&gt;&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#4A7EC7;&#39;&gt;artifacts.manifest()&lt;/span&gt;&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#6B7280;&#39;&gt;Status · Metrics · Debug Info&lt;/span&gt;" vertex="1">
+          <mxGeometry height="62" width="226" x="62" y="504" as="geometry" />
+        </mxCell>
+        <mxCell id="mod_url" parent="1" style="rounded=8;whiteSpace=wrap;html=1;fillColor=#D6E4F7;strokeColor=#2E5FA3;strokeWidth=1.5;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;" value="&lt;b&gt;Signed URL Generator&lt;/b&gt;&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#4A7EC7;&#39;&gt;artifacts.signedUrls(ttl)&lt;/span&gt;&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#6B7280;&#39;&gt;Client-side · Caller credentials · Time-limited&lt;/span&gt;" vertex="1">
+          <mxGeometry height="62" width="226" x="62" y="578" as="geometry" />
+        </mxCell>
+        <mxCell id="mod_runner" parent="1" style="rounded=8;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#F59E0B;strokeWidth=1.5;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;" value="&lt;b&gt;Local GRID Runner&lt;/b&gt;&lt;span style=&#39;font-size:9px;color:#F59E0B;&#39;&gt; ★ optional&lt;/span&gt;&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#4A7EC7;&#39;&gt;GridRunner::execute(cfg, input)&lt;/span&gt;&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#6B7280;&#39;&gt;Deterministic replay · Checksum diff&lt;/span&gt;" vertex="1">
+          <mxGeometry height="62" width="226" x="62" y="652" as="geometry" />
+        </mxCell>
+        <mxCell id="out_label" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=9;fontStyle=1;fontColor=#9E9E9E;fontFamily=Arial;letterSpacing=2;" value="LOCAL OUTPUTS" vertex="1">
+          <mxGeometry height="18" width="254" x="48" y="732" as="geometry" />
+        </mxCell>
+        <mxCell id="out_analysis" parent="1" style="rounded=8;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=1.5;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;fontColor=#1B5E20;" value="📊 Execution Analysis" vertex="1">
+          <mxGeometry height="38" width="107" x="62" y="756" as="geometry" />
+        </mxCell>
+        <mxCell id="out_debug" parent="1" style="rounded=8;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=1.5;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;fontColor=#1B5E20;" value="🔍 Debug Report" vertex="1">
+          <mxGeometry height="38" width="107" x="181" y="756" as="geometry" />
+        </mxCell>
+        <mxCell id="out_repro" parent="1" style="rounded=8;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=1.5;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;fontColor=#1B5E20;" value="🔁 Reproducibility Diff" vertex="1">
+          <mxGeometry height="38" width="107" x="62" y="804" as="geometry" />
+        </mxCell>
+        <mxCell id="out_sign" parent="1" style="rounded=8;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=1.5;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;fontColor=#1B5E20;" value="🔗 Signed URL" vertex="1">
+          <mxGeometry height="38" width="107" x="181" y="804" as="geometry" />
+        </mxCell>
+        <mxCell id="sdk_note" parent="1" style="rounded=8;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#F59E0B;strokeWidth=1.5;fontSize=9;fontFamily=Arial;align=center;verticalAlign=middle;fontColor=#92400E;" value="⚠ SDK operates under caller identity.&lt;br/&gt;No XENA API calls. No proxy. No custom OAuth." vertex="1">
+          <mxGeometry height="46" width="240" x="373" y="788" as="geometry" />
+        </mxCell>
+        <mxCell id="key_principle" parent="1" style="rounded=8;whiteSpace=wrap;html=1;fillColor=#1B2A4A;strokeColor=#1B2A4A;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;fontColor=#FFFFFF;" value="&lt;b&gt;Key Principle:&lt;/b&gt; The SDK provides access &amp; interpretation. XENA provides neither." vertex="1">
+          <mxGeometry height="46" width="240" x="373" y="848" as="geometry" />
+        </mxCell>
+        <mxCell id="zone_aws_sec" parent="1" style="rounded=16;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=2;verticalAlign=top;arcSize=3;" value="" vertex="1">
+          <mxGeometry height="402" width="270" x="358" y="88" as="geometry" />
+        </mxCell>
+        <mxCell id="zone_aws_sec_label" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#2E7D32;fontFamily=Arial;letterSpacing=2;" value="AWS SECURITY LAYER" vertex="1">
+          <mxGeometry height="22" width="270" x="358" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="sso" parent="1" style="rounded=10;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#2E7D32;strokeWidth=2;fontSize=11;fontFamily=Arial;align=center;verticalAlign=middle;" value="&lt;b&gt;AWS SSO&lt;/b&gt;&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#6B7280;&#39;&gt;aws sso login&lt;br/&gt;Short-lived credentials issued&lt;/span&gt;" vertex="1">
+          <mxGeometry height="72" width="230" x="378" y="132" as="geometry" />
+        </mxCell>
+        <mxCell id="sts" parent="1" style="rounded=10;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#2E7D32;strokeWidth=2;fontSize=11;fontFamily=Arial;align=center;verticalAlign=middle;" value="&lt;b&gt;AWS STS&lt;/b&gt; — AssumeRole&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#6B7280;&#39;&gt;Scoped session credentials&lt;br/&gt;Time-limited · Role-bound&lt;/span&gt;" vertex="1">
+          <mxGeometry height="72" width="230" x="378" y="224" as="geometry" />
+        </mxCell>
+        <mxCell id="iam" parent="1" style="rounded=10;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#2E7D32;strokeWidth=2;fontSize=11;fontFamily=Arial;align=center;verticalAlign=middle;" value="&lt;b&gt;IAM Policies&lt;/b&gt;&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#6B7280;&#39;&gt;s3:GetObject · s3:ListBucket&lt;br/&gt;Resource ARN scoped per role&lt;/span&gt;" vertex="1">
+          <mxGeometry height="72" width="230" x="378" y="316" as="geometry" />
+        </mxCell>
+        <mxCell id="abac" parent="1" style="rounded=10;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=1.5;strokeDasharray=6 4;fontSize=11;fontFamily=Arial;align=center;verticalAlign=middle;" value="&lt;b&gt;ABAC / Resource Tagging&lt;/b&gt;&lt;span style=&#39;font-size:9px;color:#F59E0B;&#39;&gt; ★ optional&lt;/span&gt;&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#6B7280;&#39;&gt;Multi-tenant isolation via resource tags&lt;/span&gt;" vertex="1">
+          <mxGeometry height="62" width="230" x="378" y="408" as="geometry" />
+        </mxCell>
+        <mxCell id="zone_s3" parent="1" style="rounded=16;whiteSpace=wrap;html=1;fillColor=#FCE4EC;strokeColor=#C62828;strokeWidth=2;verticalAlign=top;arcSize=3;" value="" vertex="1">
+          <mxGeometry height="814" width="290" x="666" y="88" as="geometry" />
+        </mxCell>
+        <mxCell id="zone_s3_label" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#C62828;fontFamily=Arial;letterSpacing=2;" value="S3 DATA LAKE (DIRECT ACCESS)" vertex="1">
+          <mxGeometry height="22" width="290" x="666" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="bucket_input_bg" parent="1" style="rounded=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#E57373;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="140" width="250" x="686" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="bucket_input_h" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontStyle=1;fontColor=#C62828;fontFamily=Arial;" value="🪣  xena-data-lake-input" vertex="1">
+          <mxGeometry height="20" width="222" x="700" y="136" as="geometry" />
+        </mxCell>
+        <mxCell id="bucket_input_line" parent="1" style="line;strokeColor=#FFCDD2;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="2" width="222" x="700" y="158" as="geometry" />
+        </mxCell>
+        <mxCell id="artifact_input" parent="1" style="rounded=6;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#E57373;strokeWidth=1;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;" value="📄 input.parquet&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#6B7280;&#39;&gt;Raw computation inputs&lt;br/&gt;Schema: XENA execution contract&lt;/span&gt;" vertex="1">
+          <mxGeometry height="54" width="222" x="700" y="166" as="geometry" />
+        </mxCell>
+        <mxCell id="artifact_input_chk" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#9E9E9E;fontFamily=Arial;fontStyle=2;" value="SHA-256 Checksum Verified" vertex="1">
+          <mxGeometry height="16" width="222" x="700" y="226" as="geometry" />
+        </mxCell>
+        <mxCell id="bucket_output_bg" parent="1" style="rounded=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#E57373;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="180" width="250" x="686" y="292" as="geometry" />
+        </mxCell>
+        <mxCell id="bucket_output_h" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontStyle=1;fontColor=#C62828;fontFamily=Arial;" value="🪣  xena-data-lake-output" vertex="1">
+          <mxGeometry height="20" width="222" x="700" y="298" as="geometry" />
+        </mxCell>
+        <mxCell id="bucket_output_line" parent="1" style="line;strokeColor=#FFCDD2;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="2" width="222" x="700" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="artifact_output" parent="1" style="rounded=6;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#E57373;strokeWidth=1;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;" value="📄 results.parquet&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#6B7280;&#39;&gt;Computation outputs&lt;br/&gt;Schema: GRID library contract&lt;/span&gt;" vertex="1">
+          <mxGeometry height="54" width="222" x="700" y="328" as="geometry" />
+        </mxCell>
+        <mxCell id="artifact_manifest" parent="1" style="rounded=6;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#E57373;strokeWidth=1;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;" value="📋 manifest.json&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#6B7280;&#39;&gt;jobId · libraryVersion · status&lt;br/&gt;metrics · debugInfo · checksums&lt;/span&gt;" vertex="1">
+          <mxGeometry height="54" width="222" x="700" y="392" as="geometry" />
+        </mxCell>
+        <mxCell id="bucket_errors_bg" parent="1" style="rounded=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#E57373;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="140" width="250" x="686" y="494" as="geometry" />
+        </mxCell>
+        <mxCell id="bucket_errors_h" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontStyle=1;fontColor=#C62828;fontFamily=Arial;" value="🪣  xena-data-lake-errors" vertex="1">
+          <mxGeometry height="20" width="222" x="700" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="bucket_errors_line" parent="1" style="line;strokeColor=#FFCDD2;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="2" width="222" x="700" y="522" as="geometry" />
+        </mxCell>
+        <mxCell id="artifact_errors" parent="1" style="rounded=6;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#E57373;strokeWidth=1;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;" value="⚠ errors.json&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#6B7280;&#39;&gt;Row-level errors · Failure context&lt;br/&gt;GRID exception traces&lt;/span&gt;" vertex="1">
+          <mxGeometry height="54" width="222" x="700" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="artifact_errors_chk" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#9E9E9E;fontFamily=Arial;fontStyle=2;" value="IAM · Bucket Policy · ABAC enforced" vertex="1">
+          <mxGeometry height="16" width="222" x="700" y="592" as="geometry" />
+        </mxCell>
+        <mxCell id="s3_note" parent="1" style="rounded=8;whiteSpace=wrap;html=1;fillColor=#FCE4EC;strokeColor=#C62828;strokeWidth=1.5;fontSize=9;fontFamily=Arial;align=center;verticalAlign=middle;fontColor=#B71C1C;" value="All access is direct · IAM enforced&lt;br/&gt;No XENA intermediate · No API gateway" vertex="1">
+          <mxGeometry height="40" width="222" x="700" y="646" as="geometry" />
+        </mxCell>
+        <mxCell id="s3_signed_note" parent="1" style="rounded=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#E57373;strokeWidth=1.5;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;fontColor=#C62828;" value="🔗 Pre-signed URLs generated client-side&lt;br/&gt;&lt;span style=&#39;font-size:9px;&#39;&gt;Default TTL: 1h · No extra permissions · Serverless&lt;/span&gt;" vertex="1">
+          <mxGeometry height="52" width="250" x="686" y="706" as="geometry" />
+        </mxCell>
+        <mxCell id="s3_path_note" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=8;fontColor=#9E9E9E;fontFamily=Arial;fontStyle=2;" value="Path schema: s3://xena-data-lake-{type}/{env}/{jobId}/{artifact}" vertex="1">
+          <mxGeometry height="18" width="250" x="686" y="770" as="geometry" />
+        </mxCell>
+        <mxCell id="zone_xena" parent="1" style="rounded=16;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#F59E0B;strokeWidth=2;verticalAlign=top;arcSize=3;" value="" vertex="1">
+          <mxGeometry height="500" width="320" x="994" y="88" as="geometry" />
+        </mxCell>
+        <mxCell id="zone_xena_label" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#B45309;fontFamily=Arial;letterSpacing=2;" value="XENA PLATFORM (READ-ONLY CONTEXT)" vertex="1">
+          <mxGeometry height="22" width="320" x="994" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="xena_core" parent="1" style="rounded=10;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#F59E0B;strokeWidth=2;fontSize=11;fontFamily=Arial;align=center;verticalAlign=middle;" value="&lt;b&gt;XENA Orchestrator&lt;/b&gt;&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#6B7280;&#39;&gt;Contract-driven · Event-based&lt;br/&gt;No data APIs · No debug endpoints&lt;/span&gt;" vertex="1">
+          <mxGeometry height="72" width="280" x="1014" y="132" as="geometry" />
+        </mxCell>
+        <mxCell id="xena_ingest" parent="1" style="rounded=8;whiteSpace=wrap;html=1;fillColor=#FFFDE7;strokeColor=#FBC02D;strokeWidth=1.5;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;" value="Artifact Ingestor&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#6B7280;&#39;&gt;Receives Parquet from upstream&lt;/span&gt;" vertex="1">
+          <mxGeometry height="54" width="130" x="1014" y="224" as="geometry" />
+        </mxCell>
+        <mxCell id="xena_router" parent="1" style="rounded=8;whiteSpace=wrap;html=1;fillColor=#FFFDE7;strokeColor=#FBC02D;strokeWidth=1.5;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;" value="Execution Router&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#6B7280;&#39;&gt;Enrichment &amp; routing&lt;/span&gt;" vertex="1">
+          <mxGeometry height="54" width="130" x="1164" y="224" as="geometry" />
+        </mxCell>
+        <mxCell id="xena_persist" parent="1" style="rounded=8;whiteSpace=wrap;html=1;fillColor=#FFFDE7;strokeColor=#FBC02D;strokeWidth=1.5;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;" value="Output Persister&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#6B7280;&#39;&gt;Writes results + manifest to S3&lt;/span&gt;" vertex="1">
+          <mxGeometry height="54" width="130" x="1014" y="298" as="geometry" />
+        </mxCell>
+        <mxCell id="xena_track" parent="1" style="rounded=8;whiteSpace=wrap;html=1;fillColor=#FFFDE7;strokeColor=#FBC02D;strokeWidth=1.5;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;" value="Tracking Artifacts&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#6B7280;&#39;&gt;Job state · Audit log&lt;/span&gt;" vertex="1">
+          <mxGeometry height="54" width="130" x="1164" y="298" as="geometry" />
+        </mxCell>
+        <mxCell id="xena_boundary" parent="1" style="rounded=8;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#F59E0B;strokeWidth=2;strokeDasharray=6 4;fontSize=10;fontFamily=Arial;align=left;verticalAlign=middle;fontColor=#92400E;" value="🚫 XENA does NOT:&lt;br/&gt;• Return or expose data via API&lt;br/&gt;• Interpret library semantics&lt;br/&gt;• Issue credentials&lt;br/&gt;• Intermediate data delivery" vertex="1">
+          <mxGeometry height="90" width="280" x="1014" y="372" as="geometry" />
+        </mxCell>
+        <mxCell id="xena_contract" parent="1" style="rounded=6;whiteSpace=wrap;html=1;fillColor=#1B2A4A;strokeColor=#1B2A4A;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;fontColor=#FFFFFF;" value="📜 XENA Contract defines S3 path schema used by SDK" vertex="1">
+          <mxGeometry height="36" width="280" x="1014" y="476" as="geometry" />
+        </mxCell>
+        <mxCell id="zone_grid" parent="1" style="rounded=16;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;strokeWidth=2;verticalAlign=top;arcSize=3;" value="" vertex="1">
+          <mxGeometry height="290" width="320" x="994" y="612" as="geometry" />
+        </mxCell>
+        <mxCell id="zone_grid_label" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#7B1FA2;fontFamily=Arial;letterSpacing=2;" value="GRID LIBRARIES" vertex="1">
+          <mxGeometry height="22" width="320" x="994" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_lib" parent="1" style="rounded=10;whiteSpace=wrap;html=1;fillColor=#E1BEE7;strokeColor=#7B1FA2;strokeWidth=2;fontSize=11;fontFamily=Arial;align=center;verticalAlign=middle;" value="&lt;b&gt;GRID Library (versioned)&lt;/b&gt;&lt;br/&gt;&lt;span style=&#39;font-size:9px;color:#6B7280;&#39;&gt;Owns computation logic&lt;br/&gt;Owns data schema · Owns debugInfo&lt;/span&gt;" vertex="1">
+          <mxGeometry height="72" width="280" x="1014" y="652" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v1" parent="1" style="rounded=6;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#AB47BC;strokeWidth=1.5;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;" value="v1.2.3" vertex="1">
+          <mxGeometry height="34" width="80" x="1014" y="742" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v2" parent="1" style="rounded=6;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#AB47BC;strokeWidth=1.5;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;" value="v2.0.1" vertex="1">
+          <mxGeometry height="34" width="80" x="1114" y="742" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v3" parent="1" style="rounded=6;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#AB47BC;strokeWidth=1.5;fontSize=10;fontFamily=Arial;align=center;verticalAlign=middle;" value="v3.1.0" vertex="1">
+          <mxGeometry height="34" width="80" x="1214" y="742" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_note" parent="1" style="rounded=8;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;strokeWidth=1.5;fontSize=9;fontFamily=Arial;align=center;verticalAlign=middle;fontColor=#4A148C;" value="Debug data owned by GRID, surfaced via manifest.json&lt;br/&gt;SDK evolution independent of GRID library versions" vertex="1">
+          <mxGeometry height="42" width="280" x="1014" y="792" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_manifest_ext" parent="1" style="rounded=6;whiteSpace=wrap;html=1;fillColor=#7B1FA2;strokeColor=#7B1FA2;fontSize=9;fontFamily=Arial;align=center;verticalAlign=middle;fontColor=#FFFFFF;" value="📌 manifest.debugInfo extensible — no SDK changes needed" vertex="1">
+          <mxGeometry height="30" width="280" x="1014" y="850" as="geometry" />
+        </mxCell>
+        <mxCell id="arr_user_sdk" edge="1" parent="1" source="quant_user" style="endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;strokeColor=#1B2A4A;strokeWidth=2.5;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontFamily=Arial;fontSize=9;" target="mod_session" value="debug request (jobId)">
+          <mxGeometry relative="1" x="-0.5682" y="57" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arr_sdk_sso" edge="1" parent="1" source="mod_session" style="endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;strokeColor=#2E7D32;strokeWidth=2;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.3;entryDx=0;entryDy=0;" target="sso" value="SSO / AssumeRole">
+          <mxGeometry relative="1" x="-0.0135" y="-42" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="288" y="301" />
+              <mxPoint x="287" y="301" />
+              <mxPoint x="287" y="299" />
+              <mxPoint x="333" y="299" />
+              <mxPoint x="333" y="154" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arr_sso_sts" edge="1" parent="1" source="sso" style="endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;strokeColor=#2E7D32;strokeWidth=1.5;" target="sts">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr_sts_iam" edge="1" parent="1" source="sts" style="endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;strokeColor=#2E7D32;strokeWidth=1.5;" target="iam">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr_iam_sdk" edge="1" parent="1" style="endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;strokeColor=#2E7D32;strokeWidth=2;dashed=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="mod_session" value="credentials">
+          <mxGeometry relative="1" x="-0.0078" y="-13" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="331" y="352" />
+              <mxPoint x="331" y="314" />
+              <mxPoint x="293" y="314" />
+              <mxPoint x="293" y="313" />
+            </Array>
+            <mxPoint x="373" y="352" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arr_resolver_input" edge="1" parent="1" source="mod_resolver" style="endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;strokeColor=#C62828;strokeWidth=2.5;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="artifact_input" value="s3:GetObject">
+          <mxGeometry relative="1" x="-0.868" y="17" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="288" y="396" />
+              <mxPoint x="580" y="396" />
+              <mxPoint x="580" y="193" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arr_parquet_output" edge="1" parent="1" source="mod_parquet" style="endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;strokeColor=#C62828;strokeWidth=2.5;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="artifact_output" value="s3:GetObject">
+          <mxGeometry relative="1" x="-0.8571" y="18" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="597" y="461" />
+              <mxPoint x="597" y="355" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arr_manifest_s3" edge="1" parent="1" source="mod_manifest" style="endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;strokeColor=#C62828;strokeWidth=2.5;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="artifact_manifest" value="s3:GetObject">
+          <mxGeometry relative="1" x="-0.8523" y="19" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="611" y="535" />
+              <mxPoint x="611" y="419" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arr_url_errors" edge="1" parent="1" source="mod_url" style="endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;strokeColor=#C62828;strokeWidth=2;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="artifact_errors" value="presign">
+          <mxGeometry relative="1" x="-0.6983" y="16" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arr_xena_s3" edge="1" parent="1" source="xena_persist" style="endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;strokeColor=#F59E0B;strokeWidth=2;dashed=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" value="persists artifacts">
+          <mxGeometry relative="1" x="-0.8171" y="38" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="950" y="325" />
+              <mxPoint x="950" y="419" />
+            </Array>
+            <mxPoint x="916" y="419" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arr_grid_xena" edge="1" parent="1" source="grid_lib" style="endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;strokeColor=#AB47BC;strokeWidth=2;dashed=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="xena_core" value="GRID execution">
+          <mxGeometry relative="1" x="-0.7545" y="-47" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arr_runner_s3" edge="1" parent="1" source="mod_runner" style="endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;strokeColor=#F59E0B;strokeWidth=2;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.9;entryDx=0;entryDy=0;" target="artifact_input" value="upload inputs">
+          <mxGeometry relative="1" x="-0.766" y="20" as="geometry">
+            <mxPoint x="1" as="offset" />
+            <Array as="points">
+              <mxPoint x="619" y="683" />
+              <mxPoint x="619" y="215" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="step1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1B2A4A;strokeColor=none;fontColor=#FFFFFF;fontSize=11;fontStyle=1;fontFamily=Arial;align=center;verticalAlign=middle;" value="①" vertex="1">
+          <mxGeometry height="26" width="26" x="152" y="204" as="geometry" />
+        </mxCell>
+        <mxCell id="step2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#2E7D32;strokeColor=none;fontColor=#FFFFFF;fontSize=11;fontStyle=1;fontFamily=Arial;align=center;verticalAlign=middle;" value="②" vertex="1">
+          <mxGeometry height="26" width="26" x="330" y="148" as="geometry" />
+        </mxCell>
+        <mxCell id="step3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#C62828;strokeColor=none;fontColor=#FFFFFF;fontSize=11;fontStyle=1;fontFamily=Arial;align=center;verticalAlign=middle;" value="③" vertex="1">
+          <mxGeometry height="26" width="26" x="636" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="step4" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#C62828;strokeColor=none;fontColor=#FFFFFF;fontSize=11;fontStyle=1;fontFamily=Arial;align=center;verticalAlign=middle;" value="④" vertex="1">
+          <mxGeometry height="26" width="26" x="636" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="step5" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1B2A4A;strokeColor=none;fontColor=#FFFFFF;fontSize=11;fontStyle=1;fontFamily=Arial;align=center;verticalAlign=middle;" value="⑤" vertex="1">
+          <mxGeometry height="26" width="26" x="152" y="776" as="geometry" />
+        </mxCell>
+        <mxCell id="flow_bg" parent="1" style="rounded=12;whiteSpace=wrap;html=1;fillColor=#1B2A4A;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="58" width="1300" x="27" y="942" as="geometry" />
+        </mxCell>
+        <mxCell id="flow_s1" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#93B8E0;fontFamily=Arial;" value="① Quant invokes SDK with Job ID" vertex="1">
+          <mxGeometry height="42" width="210" x="31" y="950" as="geometry" />
+        </mxCell>
+        <mxCell id="flow_s2" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#93B8E0;fontFamily=Arial;" value="② SDK resolves credentials via SSO / STS" vertex="1">
+          <mxGeometry height="42" width="220" x="241" y="950" as="geometry" />
+        </mxCell>
+        <mxCell id="flow_s3" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#93B8E0;fontFamily=Arial;" value="③ SDK fetches Parquet &amp; manifest from S3" vertex="1">
+          <mxGeometry height="42" width="220" x="461" y="950" as="geometry" />
+        </mxCell>
+        <mxCell id="flow_s4" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#93B8E0;fontFamily=Arial;" value="④ SDK decodes artifacts · inspects manifest" vertex="1">
+          <mxGeometry height="42" width="220" x="681" y="950" as="geometry" />
+        </mxCell>
+        <mxCell id="flow_s5" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#93B8E0;fontFamily=Arial;" value="⑤ Quant analyses / replays GRID locally" vertex="1">
+          <mxGeometry height="42" width="220" x="901" y="950" as="geometry" />
+        </mxCell>
+        <mxCell id="flow_s6" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#F59E0B;fontFamily=Arial;fontStyle=1;" value="⑥ No XENA involvement in steps ③–⑤" vertex="1">
+          <mxGeometry height="42" width="210" x="1115" y="950" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
