@@ -1,0 +1,46 @@
+Hi team,
+
+While validating the EMIR integration flow, we identified a mismatch between the current EMIR ingestion approach and the XENA execution model.
+
+At the moment, EMIR is uploading multiple Parquet files (one per CRIF) under the same XENA contract path. However, XENA currently assumes:
+
+* one logical execution context per contract path
+* deterministic output/error ownership
+* deterministic polling semantics (`crif.json` / `errors.json`)
+* isolated execution lifecycle
+
+Using multiple Parquets under the same path introduces ambiguity regarding:
+
+* output ownership
+* completion signaling
+* polling semantics
+* manifest generation
+
+To preserve the current XENA orchestration model and avoid introducing new aggregation/fan-in behavior one week before deadline, tomorrow I will propose to EMIR a minimal adjustment aligned with the existing FMTM pattern already implemented in XENA.
+
+Proposal:
+
+* keep one Parquet per CRIF
+* add a seventh subfolder level (`crifId`) to the contract path
+* each CRIF becomes an isolated logical execution unit
+
+Example:
+
+```text id="q1crp4"
+s3://xena-data-lake-input-{env}/emir/{country}/{purpose}/{date}/{subPurpose}/{iteration}/{crifId}/input.parquet
+```
+
+This preserves:
+
+* deterministic outputs
+* deterministic polling
+* isolated retries/failures
+* current XENA behavior
+* current GRID behavior
+* existing deadlines
+
+I already validated the approach successfully by uploading multiple Parquets (`crif01`–`crif07`) under isolated subpaths, and XENA generated the corresponding outputs independently without requiring any platform changes.
+
+This approach minimizes risk while remaining fully aligned with the XENA orchestration model.
+
+Thanks.
