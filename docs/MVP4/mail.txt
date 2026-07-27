@@ -1,0 +1,114 @@
+Subject: Production Issue Analysis – Unbalanced Row Group Distribution Causing XDE Timeouts
+
+Hi team,
+
+I've completed the analysis of the production failures related to the XDE processing timeouts.
+
+Summary
+
+The failures are not caused by XDE itself, but by the current Row Group distribution generated during Parquet creation.
+
+Currently, the Data Provisioning process generates fixed-size Row Groups of 50 deals, regardless of the total number of deals in the iteration.
+
+Since XDE processes one Row Group as one independent Job, this produces highly unbalanced workloads.
+
+Examples
+
+Iteration 5
+
+120 deals
+↓
+Row Groups:
+  RG1 = 50 deals
+  RG2 = 50 deals
+  RG3 = 20 deals
+
+↓ XDE
+
+Job 1 = 50 deals
+Job 2 = 50 deals
+Job 3 = 20 deals
+
+Observed result:
+
+Job 1 → Timeout
+Job 2 → Timeout
+Job 3 → Success
+
+Iteration 6
+
+51 deals
+↓
+Row Groups:
+  RG1 = 50 deals
+  RG2 = 1 deal
+
+↓ XDE
+
+Job 1 = 50 deals
+Job 2 = 1 deal
+
+Observed result:
+
+Job with 50 deals → Timeout
+Job with 1 deal → Success
+
+This behavior matches the production logs.
+
+Root Cause
+
+The current Row Group generation algorithm creates fixed-size groups instead of balancing the workload.
+
+Since processing time is approximately proportional to the number of deals in each Job, larger Row Groups require significantly more processing time and exceed the configured XDE timeout, while smaller Row Groups finish successfully.
+
+Proposed Actions
+1. Data Provisioning
+
+Replace the current fixed-size Row Group generation with a homogeneous distribution algorithm.
+
+Instead of generating:
+
+120 deals
+
+50
+50
+20
+
+generate a balanced distribution, for example:
+
+40
+40
+40
+
+or another evenly distributed partitioning strategy.
+
+The objective is for every Job to process approximately the same number of deals, improving parallelism and preventing individual Jobs from becoming bottlenecks.
+
+2. XDE
+
+Replace the current fixed timeout configuration with a dynamic timeout calculated from the expected workload of each Job.
+
+Since execution time is directly related to the number of deals being processed, the timeout should be proportional to the Job size rather than using a single static value for all Jobs.
+
+Conceptually:
+
+Timeout = Base Timeout + f(Number of Deals)
+
+where f(...) is determined from the measured processing times.
+
+Expected Benefits
+Eliminate production timeouts caused by oversized Jobs.
+Improve workload balancing across Layer 2 workers.
+Increase overall cluster utilization.
+Reduce idle workers waiting for long-running Jobs.
+Improve processing predictability for larger iterations.
+Conclusion
+
+The issue is not caused by processing capacity but by workload distribution.
+
+A balanced Row Group generation strategy, combined with dynamic timeout calculation in XDE, will prevent these production failures and provide a scalable solution as iteration sizes continue to grow.
+
+Please let me know if you would like me to prepare a proposal for the Row Group balancing algorithm or the timeout calculation strategy.
+
+Thanks,
+Angel
