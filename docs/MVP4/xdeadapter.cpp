@@ -1,3 +1,8 @@
+#include <arrow/api.h>
+#include <arrow/io/memory.h>
+#include <arrow/ipc/writer.h>   // Required for arrow::ipc::MakeStreamWriter
+#include <arrow/util/base64.h>   // Required for arrow::util::base64_encode
+
 std::string XDEAdapter::serialize_fmtm_payload(
     const std::string& input_file,
     const std::string& results_path,
@@ -10,8 +15,8 @@ std::string XDEAdapter::serialize_fmtm_payload(
     const std::string& progress_book_id,
     const std::string& task_id,
     bool reconciliation,
-    const std::optional<int>& retries,
-    const std::string& embedded_row_group_data) 
+    const std::string& embedded_row_group_data,
+    const std::optional<int>& retries) 
 {
     std::ostringstream os;
     os << "{";
@@ -248,8 +253,7 @@ for (int row_group = 0; row_group < row_group_count; ++row_group) {
             buffer->size());
 
         // 3. Base64 encode the binary slice
-        std::string embedded_slice_data =
-            mac_base64_encode(raw_bytes);
+        std::string embedded_slice_data = arrow::util::base64_encode(raw_bytes);
 
         all_payloads.push_back(serialize_fmtm_payload(
             inputPath,
@@ -264,8 +268,8 @@ for (int row_group = 0; row_group < row_group_count; ++row_group) {
             progress_redis_ready ? bookId : "",
             taskId,
             reconciliation,
-            requestRetries,
-            embedded_slice_data));
+            embedded_slice_data,
+            requestRetries));
 
         job_deal_counts.push_back(deal_count_for_job);
     }
