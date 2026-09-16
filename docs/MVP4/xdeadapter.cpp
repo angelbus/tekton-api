@@ -10,6 +10,7 @@ std::string XDEAdapter::serialize_fmtm_payload(
     const std::string& calibrated_market,
     const std::string& session_id,
     std::size_t row_group,
+    std::size_t row_index,
     std::size_t deal_count,
     const std::string& progress_counter_key,
     const std::string& progress_book_id,
@@ -27,6 +28,7 @@ std::string XDEAdapter::serialize_fmtm_payload(
     os << "\"calibrated_market\":\"" << escape_json(calibrated_market) << "\",";
     os << "\"session_id\":\"" << escape_json(session_id) << "\",";
     os << "\"row_group\":" << row_group << ",";
+    os << "\"row_index\":" << row_index << ",";
     os << "\"row_group_data\":\"" << escape_json(embedded_row_group_data) << "\",";
     os << "\"deal_count\":" << deal_count << ",";
     os << "\"progress_counter_key\":\"" << escape_json(progress_counter_key) << "\",";
