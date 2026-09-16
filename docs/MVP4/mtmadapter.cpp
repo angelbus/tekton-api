@@ -293,7 +293,175 @@ static_data = engine_response.GetStaticData();
 mtoapi::MtoLogger::log(mtoapi::LogLevel::info, "FMTMAdapter: Engine response loaded");
 
 
+-----
 
+
+auto [inputBucket, inputKey] = splitBucketKey(inputPath);
+
+std::string s3FetchErr;
+std::vector<Deal> deals;
+
+// Values produced during the fetch phase and consumed by the deal
+// processing loop below (after the fetch connector is destroyed).
+std::size_t deal_count = 0;
+std::string engine_data;
+std::string static_data;
+
+if (rowGroup.has_value()) {
+    const std::string row_group_log =
+        "FMTMAdapter: Reading embedded slice for row group " +
+        std::to_string(*rowGroup) +
+        ", count " +
+        std::to_string(dealCount.value_or(0)) +
+        " from parquet path='" + inputPath + "'";
+
+    mtoapi::MtoLogger::log(mtoapi::LogLevel::info, row_group_log);
+
+    if (sliceData.empty()) {
+        const std::string msg =
+            "FMTMAdapter: Embedded slice_data is empty";
+
+        mtoapi::MtoLogger::log(mtoapi::LogLevel::error, msg);
+        pushErrorLog(msg);
+
+        return {
+            QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+            make_result_json(
+                "error",
+                QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                msg)
+        };
+    }
+
+    if (!dealCount.has_value() || *dealCount <= 0) {
+        const std::string msg =
+            "FMTMAdapter: Invalid or missing deal_count";
+
+        mtoapi::MtoLogger::log(mtoapi::LogLevel::error, msg);
+        pushErrorLog(msg);
+
+        return {
+            QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+            make_result_json(
+                "error",
+                QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                msg)
+        };
+    }
+
+    // 1. Base64 decode raw_bytes embedded in JSON payload
+    std::string raw_bytes =
+        arrow::util::base64_decode(sliceData);
+
+    // 2. Deserialize Arrow IPC stream directly from memory buffer
+    auto buffer =
+        arrow::Buffer::Wrap(raw_bytes.data(), raw_bytes.size());
+
+    auto buffer_reader =
+        std::make_shared<arrow::io::BufferReader>(buffer);
+
+    auto stream_reader_result =
+        arrow::ipc::RecordBatchStreamReader::Open(buffer_reader);
+
+    if (!stream_reader_result.ok()) {
+        const std::string msg =
+            "FMTMAdapter: Failed to open Arrow RecordBatchStreamReader: " +
+            stream_reader_result.status().ToString();
+
+        mtoapi::MtoLogger::log(mtoapi::LogLevel::error, msg);
+        pushErrorLog(msg);
+
+        return {
+            QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+            make_result_json(
+                "error",
+                QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                msg)
+        };
+    }
+
+    auto stream_reader = *stream_reader_result;
+
+    std::vector<std::shared_ptr<arrow::RecordBatch>> batches;
+    std::shared_ptr<arrow::RecordBatch> batch;
+
+    while (true) {
+        auto read_batch_status =
+            stream_reader->ReadNext(&batch);
+
+        if (!read_batch_status.ok()) {
+            const std::string msg =
+                "FMTMAdapter: Failed to read batch from Arrow IPC stream: " +
+                read_batch_status.ToString();
+
+            mtoapi::MtoLogger::log(mtoapi::LogLevel::error, msg);
+            pushErrorLog(msg);
+
+            return {
+                QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                make_result_json(
+                    "error",
+                    QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                    msg)
+            };
+        }
+
+        if (!batch)
+            break;
+
+        batches.push_back(batch);
+    }
+
+    auto table_result =
+        arrow::Table::FromRecordBatches(
+            stream_reader->schema(),
+            batches);
+
+    if (!table_result.ok()) {
+        const std::string msg =
+            "FMTMAdapter: Failed to build Arrow table from batches: " +
+            table_result.status().ToString();
+
+        mtoapi::MtoLogger::log(mtoapi::LogLevel::error, msg);
+        pushErrorLog(msg);
+
+        return {
+            QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+            make_result_json(
+                "error",
+                QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                msg)
+        };
+    }
+
+    std::shared_ptr<arrow::Table> slice_table = *table_result;
+
+    // 3. Decompose Arrow Table into deals
+    int64_t name_offset = 0;
+
+    deals = deal_decompositor_.DecomposeTable(
+        std::move(slice_table),
+        name_offset);
+
+    if (deals.size() != static_cast<std::size_t>(*dealCount)) {
+        const std::string msg =
+            "FMTMAdapter: Embedded slice deal count mismatch for row group " +
+            std::to_string(*rowGroup) +
+            ": expected=" + std::to_string(*dealCount) +
+            ", actual=" + std::to_string(deals.size());
+
+        mtoapi::MtoLogger::log(mtoapi::LogLevel::error, msg);
+        pushErrorLog(msg);
+
+        return {
+            QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+            make_result_json(
+                "error",
+                QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                msg)
+        };
+    }
+}
 
 
 
