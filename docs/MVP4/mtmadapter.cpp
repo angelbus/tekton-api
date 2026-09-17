@@ -219,24 +219,27 @@ try {
 
 
 
-// 4. Fetch engine parquet using Redis cache (Read-Through pattern)
-std::string cache_key = "cache:calibrated_market:" + calibratedMarket;
+// 4. Fetch engine parquet using Redis cache (Read-Through pattern via Hash)
+const std::string hash_name = "cache:calibrated_market";
+const std::string field_key = calibratedMarket;
 std::string engine_response_bytes;
 bool fetched_from_cache = false;
 
-// Attempt to fetch from Redis if connected
+// Attempt to fetch from Redis Hash if connected
 if (redisConnected) {
     try {
-        std::string cached_val;
-        if (redis.get(cache_key, cached_val) && !cached_val.empty()) {
+        // hget(hash_name, field_key, disable_keyerror = true)
+        std::string cached_val = redis.hget(hash_name, field_key, true);
+        if (!cached_val.empty()) {
             engine_response_bytes = std::move(cached_val);
             fetched_from_cache = true;
             mtoapi::MtoLogger::log(mtoapi::LogLevel::info,
-                "FMTMAdapter: Engine parquet loaded from Redis cache (key='" + cache_key + "')");
+                "FMTMAdapter: Engine parquet loaded from Redis cache (hash='" + hash_name +
+                "', field='" + field_key + "')");
         }
     } catch (...) {
         mtoapi::MtoLogger::log(mtoapi::LogLevel::warn,
-            "FMTMAdapter: Redis lookup failed for engine parquet cache key='" + cache_key + "'");
+            "FMTMAdapter: Redis hget failed for engine parquet cache field='" + field_key + "'");
     }
 }
 
@@ -272,15 +275,22 @@ if (!fetched_from_cache) {
         return {QL_ADAPTER_ERR_S3_FETCH_EMPTY, make_result_json("error", QL_ADAPTER_ERR_S3_FETCH_EMPTY, msg)};
     }
 
-    // Write-back to Redis for subsequent workers (TTL: 24 hours = 86400s)
+    // Write-back to Redis Hash with TTL (10 hours = 36000s)
     if (redisConnected) {
         try {
-            redis.setex(cache_key, 86400, engine_response_bytes);
-            mtoapi::MtoLogger::log(mtoapi::LogLevel::info,
-                "FMTMAdapter: Cached engine parquet in Redis (key='" + cache_key + "')");
+            // hset(hash_name, field_key, value, ttl)
+            const int rc = redis.hset(hash_name, field_key, engine_response_bytes, 36000);
+            if (rc >= 0) {
+                mtoapi::MtoLogger::log(mtoapi::LogLevel::info,
+                    "FMTMAdapter: Cached engine parquet in Redis hash='" + hash_name +
+                    "' field='" + field_key + "' with 10h TTL");
+            } else {
+                mtoapi::MtoLogger::log(mtoapi::LogLevel::warn,
+                    "FMTMAdapter: Redis hset returned error code " + std::to_string(rc));
+            }
         } catch (...) {
             mtoapi::MtoLogger::log(mtoapi::LogLevel::warn,
-                "FMTMAdapter: Failed to set engine parquet in Redis cache");
+                "FMTMAdapter: Failed to hset engine parquet in Redis cache");
         }
     }
 }
