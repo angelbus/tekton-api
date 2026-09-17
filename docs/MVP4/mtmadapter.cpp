@@ -474,6 +474,35 @@ if (rowGroup.has_value()) {
 }
 
 
+-------
+
+private:
+    bool IsDealProcessed(const std::string& hash_name, const std::string& deal_field_key) {
+        if (!redisConnected) {
+            return false;
+        }
+
+        try {
+            // disable_keyerror = true returns empty string if field doesn't exist
+            const std::string deal_status = redis.hget(hash_name, deal_field_key, true);
+            if (deal_status == "true") {
+                mtoapi::MtoLogger::log(mtoapi::LogLevel::info,
+                    "FMTMAdapter: Deal " + deal_field_key + " already processed. Skipping.");
+                return true;
+            }
+        } catch (...) {
+            mtoapi::MtoLogger::log(mtoapi::LogLevel::warn,
+                "FMTMAdapter: Redis hget failed for deal " + deal_field_key + 
+                ". Proceeding with normal execution.");
+        }
+
+        return false;
+    }
+
+    if (IsDealProcessed(hashName, deal_field_key)) {
+        continue;
+    }
+    
 ---------------
 
 for (std::size_t i = 0; i < deal_count; ++i) {
