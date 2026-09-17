@@ -474,6 +474,62 @@ if (rowGroup.has_value()) {
 }
 
 
+---------------
+
+for (std::size_t i = 0; i < deal_count; ++i) {
+    mtoapi::MtoLogger::log(mtoapi::LogLevel::info,
+        "FMTMAdapter: Processing deal " + std::to_string(i + 1) +
+        "/" + std::to_string(deal_count));
+
+    const DealOutputPaths output_paths = output_paths_for(deals[i], i);
+
+    // 1. Check idempotency: Has this specific deal already been processed?
+    const std::string hashName = NettingRedisKey(output_paths.netting_set);
+    const std::string deal_field_key = "deal_processed:" + deals[i].GetId(); // Or deals[i].GetName()
+
+    if (redisConnected) {
+        try {
+            // disable_keyerror = true returns empty string if field doesn't exist
+            std::string deal_status = redis.hget(hashName, deal_field_key, true);
+            if (deal_status == "true") {
+                mtoapi::MtoLogger::log(mtoapi::LogLevel::info,
+                    "FMTMAdapter: Deal " + std::to_string(i + 1) +
+                    " (" + deals[i].GetId() + ") already processed. Skipping.");
+                continue; // Skip processing and jump to the next deal
+            }
+        } catch (...) {
+            mtoapi::MtoLogger::log(mtoapi::LogLevel::warn,
+                "FMTMAdapter: Redis hget failed for deal " + deals[i].GetId() +
+                ". Proceeding with normal execution.");
+        }
+    }
+
+    if (reconciliation) {
+        int64_t existing_size = 0;
+        std::string s3err;
+        // ... reconciliation logic ...
+    }
+
+    // ============================================================
+    // Perform deal processing / output writing here
+    // ============================================================
+
+    // 2. Mark deal as successfully processed in Redis
+    if (redisConnected) {
+        try {
+            // hset(hashName, field, value, ttl)
+            const int set_rc = redis.hset(hashName, deal_field_key, "true", 36000); // 10h TTL
+            if (set_rc < 0) {
+                mtoapi::MtoLogger::log(mtoapi::LogLevel::warn,
+                    "FMTMAdapter: Failed to set idempotency flag in Redis for deal " + deals[i].GetId());
+            }
+        } catch (...) {
+            mtoapi::MtoLogger::log(mtoapi::LogLevel::warn,
+                "FMTMAdapter: Exception while marking deal as processed in Redis: " + deals[i].GetId());
+        }
+    }
+}
+
 
 
 
