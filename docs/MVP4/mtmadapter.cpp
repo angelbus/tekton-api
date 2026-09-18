@@ -578,11 +578,11 @@ for (std::size_t i = 0; i < deal_count; ++i) {
 // 4. Fetch engine parquet using multi-tier cache (POD RAM -> Redis -> S3)
 auto [engineBucket, engineKey] = splitBucketKey(calibratedMarket);
 const std::string hash_name = MarketRedisKey(engineKey);
-const std::string field_key = "calibratedMarket";
+const std::string field_engine = "engine_data";
+const std::string field_static = "static_data";
 
 bool fetched_from_pod_cache = false;
 bool fetched_from_redis = false;
-std::string engine_response_bytes;
 
 // Tier 1: Check Local POD Memory Cache
 {
@@ -598,21 +598,23 @@ std::string engine_response_bytes;
 }
 
 if (!fetched_from_pod_cache) {
-    // Tier 2: Attempt to fetch from Redis Hash if connected
+    // Tier 2: Attempt to fetch deserialized JSONs from Redis Hash if connected
     if (redisConnected) {
         try {
             // hget(hash_name, field_key, disable_keyerror = true)
-            std::string cached_val = redis.hget(hash_name, field_key, true);
-            if (!cached_val.empty()) {
-                engine_response_bytes = std::move(cached_val);
+            std::string cached_engine = redis.hget(hash_name, field_engine, true);
+            std::string cached_static = redis.hget(hash_name, field_static, true);
+
+            if (!cached_engine.empty() && !cached_static.empty()) {
+                engine_data = std::move(cached_engine);
+                static_data = std::move(cached_static);
                 fetched_from_redis = true;
                 mtoapi::MtoLogger::log(mtoapi::LogLevel::info,
-                    "FMTMAdapter: Engine response bytes loaded from Redis cache (hash='" + hash_name +
-                    "', field='" + field_key + "')");
+                    "FMTMAdapter: Engine & Static data JSONs loaded from Redis cache (hash='" + hash_name + "')");
             }
         } catch (...) {
             mtoapi::MtoLogger::log(mtoapi::LogLevel::warn,
-                "FMTMAdapter: Redis hget failed for engine parquet cache field='" + field_key + "'");
+                "FMTMAdapter: Redis hget failed for engine/static data in hash='" + hash_name + "'");
         }
     }
 
@@ -621,6 +623,7 @@ if (!fetched_from_pod_cache) {
         mtoapi::MtoLogger::log(mtoapi::LogLevel::info,
             "FMTMAdapter: Fetching engine parquet from S3 path='" + calibratedMarket + "'");
 
+        std::string engine_response_bytes;
         const bool engine_fetched = RetryTransientOperation(
             "engine parquet fetch",
             max_attempts,
@@ -646,30 +649,31 @@ if (!fetched_from_pod_cache) {
             return {QL_ADAPTER_ERR_S3_FETCH_EMPTY, make_result_json("error", QL_ADAPTER_ERR_S3_FETCH_EMPTY, msg)};
         }
 
-        // Write-back raw bytes to Redis Hash with TTL (10 hours = 36000s)
+        // Deserialize Engine Parquet into JSON structures
+        EngineResponse engine_response = EngineResponse::DeserializeResponse(engine_response_bytes);
+        engine_data = engine_response.GetEngine();
+        static_data = engine_response.GetStaticData();
+
+        // Write-back deserialized JSONs to Redis Hash with TTL
         if (redisConnected) {
             try {
-                // hset(hash_name, field_key, value, ttl)
-                const int rc = redis.hset(hash_name, field_key, engine_response_bytes, this->CACHE_DEFAULT_TTL);
-                if (rc >= 0) {
+                const int rc1 = redis.hset(hash_name, field_engine, engine_data, CACHE_DEFAULT_TTL);
+                const int rc2 = redis.hset(hash_name, field_static, static_data, CACHE_DEFAULT_TTL);
+
+                if (rc1 >= 0 && rc2 >= 0) {
                     mtoapi::MtoLogger::log(mtoapi::LogLevel::info,
-                        "FMTMAdapter: Cached engine response bytes in Redis hash='" + hash_name +
-                        "' field='" + field_key + "' with 10h TTL");
+                        "FMTMAdapter: Cached deserialized engine & static data JSONs in Redis hash='" + hash_name + "' with 10h TTL");
                 } else {
                     mtoapi::MtoLogger::log(mtoapi::LogLevel::warn,
-                        "FMTMAdapter: Redis hset returned error code " + std::to_string(rc));
+                        "FMTMAdapter: Redis hset returned error code (engine_rc=" + std::to_string(rc1) +
+                        ", static_rc=" + std::to_string(rc2) + ")");
                 }
             } catch (...) {
                 mtoapi::MtoLogger::log(mtoapi::LogLevel::warn,
-                    "FMTMAdapter: Failed to hset engine parquet in Redis cache");
+                    "FMTMAdapter: Failed to hset deserialized market data in Redis cache");
             }
         }
     }
-
-    // Deserialize Engine Data (Runs once for Tier 2 or Tier 3 hits)
-    EngineResponse engine_response = EngineResponse::DeserializeResponse(engine_response_bytes);
-    engine_data = engine_response.GetEngine();
-    static_data = engine_response.GetStaticData();
 
     // Populate Tier 1 POD Memory Cache for subsequent tasks on this POD
     {
