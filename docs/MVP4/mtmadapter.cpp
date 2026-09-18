@@ -4,6 +4,19 @@
 #include <arrow/util/base64.h>   // Required for arrow::util::base64_decode
 
 
+#include <mutex>          // Required for std::mutex and std::lock_guard
+#include <unordered_map>  // Required for std::unordered_map
+
+namespace {
+    struct CalibratedMarketData {
+        EngineData engine_data;
+        StaticData static_data;
+    };
+
+    // Thread-safe process-level POD cache
+    static std::mutex g_market_cache_mutex;
+    static std::unordered_map<std::string, CalibratedMarketData> g_market_cache;
+}
 
 try {
     // 0. Extract fields from JSON input
@@ -560,9 +573,111 @@ for (std::size_t i = 0; i < deal_count; ++i) {
 }
 
 
-
-
-
-
 -------
+
+// 4. Fetch engine parquet using multi-tier cache (POD RAM -> Redis -> S3)
+auto [engineBucket, engineKey] = splitBucketKey(calibratedMarket);
+const std::string hash_name = MarketRedisKey(engineKey);
+const std::string field_key = "calibratedMarket";
+
+bool fetched_from_pod_cache = false;
+bool fetched_from_redis = false;
+std::string engine_response_bytes;
+
+// Tier 1: Check Local POD Memory Cache
+{
+    std::lock_guard<std::mutex> lock(g_market_cache_mutex);
+    auto it = g_market_cache.find(calibratedMarket);
+    if (it != g_market_cache.end()) {
+        engine_data = it->second.engine_data;
+        static_data = it->second.static_data;
+        fetched_from_pod_cache = true;
+        mtoapi::MtoLogger::log(mtoapi::LogLevel::info,
+            "FMTMAdapter: Engine response loaded directly from POD local memory cache (key='" + calibratedMarket + "')");
+    }
+}
+
+if (!fetched_from_pod_cache) {
+    // Tier 2: Attempt to fetch from Redis Hash if connected
+    if (redisConnected) {
+        try {
+            // hget(hash_name, field_key, disable_keyerror = true)
+            std::string cached_val = redis.hget(hash_name, field_key, true);
+            if (!cached_val.empty()) {
+                engine_response_bytes = std::move(cached_val);
+                fetched_from_redis = true;
+                mtoapi::MtoLogger::log(mtoapi::LogLevel::info,
+                    "FMTMAdapter: Engine response bytes loaded from Redis cache (hash='" + hash_name +
+                    "', field='" + field_key + "')");
+            }
+        } catch (...) {
+            mtoapi::MtoLogger::log(mtoapi::LogLevel::warn,
+                "FMTMAdapter: Redis hget failed for engine parquet cache field='" + field_key + "'");
+        }
+    }
+
+    // Tier 3: Fallback to S3 if Redis missed or unavailable
+    if (!fetched_from_redis) {
+        mtoapi::MtoLogger::log(mtoapi::LogLevel::info,
+            "FMTMAdapter: Fetching engine parquet from S3 path='" + calibratedMarket + "'");
+
+        const bool engine_fetched = RetryTransientOperation(
+            "engine parquet fetch",
+            max_attempts,
+            [&](std::string& error) {
+                const S3Status status = s3.GetObjectToString(
+                    engineBucket, engineKey, engine_response_bytes, &error);
+                s3FetchErr = error;
+                return ClassifyS3Status(status);
+            },
+            s3FetchErr);
+
+        if (!engine_fetched) {
+            const std::string msg = "FMTMAdapter: Failed to fetch engine parquet from S3 (path='" + calibratedMarket + "'): " + s3FetchErr;
+            mtoapi::MtoLogger::log(mtoapi::LogLevel::error, msg);
+            pushErrorLog(msg);
+            return {QL_ADAPTER_ERR_S3_FETCH_FAILED, make_result_json("error", QL_ADAPTER_ERR_S3_FETCH_FAILED, msg)};
+        }
+
+        if (engine_response_bytes.empty()) {
+            const std::string msg = "FMTMAdapter: Engine parquet from S3 is empty (path='" + calibratedMarket + "')";
+            mtoapi::MtoLogger::log(mtoapi::LogLevel::error, msg);
+            pushErrorLog(msg);
+            return {QL_ADAPTER_ERR_S3_FETCH_EMPTY, make_result_json("error", QL_ADAPTER_ERR_S3_FETCH_EMPTY, msg)};
+        }
+
+        // Write-back raw bytes to Redis Hash with TTL (10 hours = 36000s)
+        if (redisConnected) {
+            try {
+                // hset(hash_name, field_key, value, ttl)
+                const int rc = redis.hset(hash_name, field_key, engine_response_bytes, this->CACHE_DEFAULT_TTL);
+                if (rc >= 0) {
+                    mtoapi::MtoLogger::log(mtoapi::LogLevel::info,
+                        "FMTMAdapter: Cached engine response bytes in Redis hash='" + hash_name +
+                        "' field='" + field_key + "' with 10h TTL");
+                } else {
+                    mtoapi::MtoLogger::log(mtoapi::LogLevel::warn,
+                        "FMTMAdapter: Redis hset returned error code " + std::to_string(rc));
+                }
+            } catch (...) {
+                mtoapi::MtoLogger::log(mtoapi::LogLevel::warn,
+                    "FMTMAdapter: Failed to hset engine parquet in Redis cache");
+            }
+        }
+    }
+
+    // Deserialize Engine Data (Runs once for Tier 2 or Tier 3 hits)
+    EngineResponse engine_response = EngineResponse::DeserializeResponse(engine_response_bytes);
+    engine_data = engine_response.GetEngine();
+    static_data = engine_response.GetStaticData();
+
+    // Populate Tier 1 POD Memory Cache for subsequent tasks on this POD
+    {
+        std::lock_guard<std::mutex> lock(g_market_cache_mutex);
+        g_market_cache[calibratedMarket] = {engine_data, static_data};
+    }
+
+    mtoapi::MtoLogger::log(mtoapi::LogLevel::info, "FMTMAdapter: Engine response loaded");
+}
+
   
