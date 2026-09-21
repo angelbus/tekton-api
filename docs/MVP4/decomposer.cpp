@@ -77,3 +77,23 @@ std::vector<Deal> DealDecompositor::DecomposeRecordBatch(
 
   return deals;
 }
+
+
+------
+
+if (batches.empty()) {
+    const std::string msg = "FMTMAdapter: Arrow IPC stream contains no RecordBatch.";
+    mtoapi::MtoLogger::log(mtoapi::LogLevel::error, msg);
+    pushErrorLog(msg);
+    return {QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED, make_result_json( "error", QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED, msg)};
+}
+
+if (batches.size() != 1) {
+    const std::string msg = "FMTMAdapter: Expected exactly one RecordBatch, got " + std::to_string(batches.size());
+    mtoapi::MtoLogger::log(mtoapi::LogLevel::error, msg);
+    pushErrorLog(msg);
+    return {QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED, make_result_json("error", QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,msg)¡};
+}
+
+// Decompose Arrow RecordBatch directly into deals.
+deals = deal_decompositor_.DecomposeRecordBatch(batches.front());
