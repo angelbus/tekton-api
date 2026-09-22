@@ -684,4 +684,248 @@ if (!fetched_from_pod_cache) {
     mtoapi::MtoLogger::log(mtoapi::LogLevel::info, "FMTMAdapter: Engine response loaded");
 }
 
+
+ANGEL
+--------
+
+#include "fmtm_adapter.h"
+
+#include "deal_json.h"
+
+#include <nlohmann/json.hpp>
+
+#include <string>
+#include <vector>
+
+
+int FMTMAdapter::process_fmtm_job(
+    const std::string& request)
+{
+    try
+    {
+        const nlohmann::json payload =
+            nlohmann::json::parse(request);
+
+        //
+        // Required fields.
+        //
+        const std::string inputFile =
+            payload.at("input_file").get<std::string>();
+
+        const std::string resultsPath =
+            payload.at("results_path").get<std::string>();
+
+        const std::string errorPath =
+            payload.at("error_path").get<std::string>();
+
+        const std::string calibratedMarket =
+            payload.at("calibrated_market").get<std::string>();
+
+        const std::string sessionId =
+            payload.at("session_id").get<std::string>();
+
+        const std::size_t rowGroup =
+            payload.at("row_group").get<std::size_t>();
+
+        const std::size_t expectedDealCount =
+            payload.at("deal_count").get<std::size_t>();
+
+        const std::string progressCounterKey =
+            payload.at("progress_counter_key").get<std::string>();
+
+        const std::string progressBookId =
+            payload.at("progress_book_id").get<std::string>();
+
+        const std::string taskId =
+            payload.at("task_id").get<std::string>();
+
+        const bool reconciliation =
+            payload.at("reconciliation").get<bool>();
+
+        //
+        // Optional retries.
+        //
+        std::optional<int> retries;
+
+        if (payload.contains("retries") &&
+            !payload.at("retries").is_null())
+        {
+            retries =
+                payload.at("retries").get<int>();
+        }
+
+        //
+        // The payload now contains the actual Deal objects.
+        //
+        if (!payload.contains("deals") ||
+            !payload.at("deals").is_array())
+        {
+            const std::string msg =
+                "FMTMAdapter: Missing or invalid 'deals' array "
+                "for row group " +
+                std::to_string(rowGroup);
+
+            mtoapi::MtoLogger::log(
+                mtoapi::LogLevel::error,
+                msg);
+
+            pushErrorLog(msg);
+
+            return QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED;
+        }
+
+        const auto& deals_json =
+            payload.at("deals");
+
+        //
+        // Validate the declared count before deserializing.
+        //
+        if (deals_json.size() != expectedDealCount)
+        {
+            const std::string msg =
+                "FMTMAdapter: Deal count mismatch for row group " +
+                std::to_string(rowGroup) +
+                ": payload declares " +
+                std::to_string(expectedDealCount) +
+                ", actual array contains " +
+                std::to_string(deals_json.size());
+
+            mtoapi::MtoLogger::log(
+                mtoapi::LogLevel::error,
+                msg);
+
+            pushErrorLog(msg);
+
+            return QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED;
+        }
+
+        //
+        // Deserialize JSON directly into business-level Deal objects.
+        //
+        std::vector<Deal> deals =
+            deals_json.get<std::vector<Deal>>();
+
+        //
+        // Defensive validation after deserialization.
+        //
+        if (deals.size() != expectedDealCount)
+        {
+            const std::string msg =
+                "FMTMAdapter: Deserialized deal count mismatch "
+                "for row group " +
+                std::to_string(rowGroup) +
+                ": expected " +
+                std::to_string(expectedDealCount) +
+                ", got " +
+                std::to_string(deals.size());
+
+            mtoapi::MtoLogger::log(
+                mtoapi::LogLevel::error,
+                msg);
+
+            pushErrorLog(msg);
+
+            return QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED;
+        }
+
+        mtoapi::MtoLogger::log(
+            mtoapi::LogLevel::debug,
+            "FMTMAdapter: Received " +
+            std::to_string(deals.size()) +
+            " deals for row group " +
+            std::to_string(rowGroup));
+
+        //
+        // The input Parquet file is NO LONGER opened here.
+        //
+        // The Deals are already decomposed by XDE.
+        //
+        for (const Deal& deal : deals)
+        {
+            //
+            // Existing idempotency logic goes here.
+            //
+            // Example:
+            //
+            // const std::string hash_name =
+            //     "xva:" + progressBookId +
+            //     ":rowGroup:" + std::to_string(rowGroup);
+            //
+            // const std::string processed =
+            //     redis.hget(hash_name, deal.name, true);
+            //
+            // if (!processed.empty())
+            // {
+            //     continue;
+            // }
+            //
+
+            //
+            // Existing FMTM processing logic.
+            //
+            // process_deal(
+            //     deal,
+            //     calibratedMarket,
+            //     sessionId,
+            //     resultsPath,
+            //     errorPath,
+            //     ...);
+            //
+
+            //
+            // After successful processing:
+            //
+            // redis.hset(
+            //     hash_name,
+            //     deal.name,
+            //     "1",
+            //     7200);
+            //
+        }
+
+        return QL_ADAPTER_SUCCESS;
+    }
+    catch (const nlohmann::json::exception& e)
+    {
+        const std::string msg =
+            "FMTMAdapter: Invalid JSON payload: " +
+            std::string(e.what());
+
+        mtoapi::MtoLogger::log(
+            mtoapi::LogLevel::error,
+            msg);
+
+        pushErrorLog(msg);
+
+        return QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED;
+    }
+    catch (const DealDecompositorException& e)
+    {
+        const std::string msg =
+            "FMTMAdapter: Deal deserialization failed: " +
+            std::string(e.what());
+
+        mtoapi::MtoLogger::log(
+            mtoapi::LogLevel::error,
+            msg);
+
+        pushErrorLog(msg);
+
+        return QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED;
+    }
+    catch (const std::exception& e)
+    {
+        const std::string msg =
+            "FMTMAdapter: Unexpected exception: " +
+            std::string(e.what());
+
+        mtoapi::MtoLogger::log(
+            mtoapi::LogLevel::error,
+            msg);
+
+        pushErrorLog(msg);
+
+        return QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED;
+    }
+}
   
