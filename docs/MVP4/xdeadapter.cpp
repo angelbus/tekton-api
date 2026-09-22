@@ -276,3 +276,712 @@ for (int row_group = 0; row_group < row_group_count; ++row_group) {
         job_deal_counts.push_back(deal_count_for_job);
     }
 }
+
+
+
+-----------
+
+
+#pragma once
+
+#include <nlohmann/json.hpp>
+#include <string>
+#include <vector>
+
+// Adjust these member names to the actual Deal class if necessary.
+
+inline void to_json(nlohmann::json& j, const Deal& deal)
+{
+    j = nlohmann::json{
+        {"dealId", deal.name},
+        {"trade", deal.trade},
+        {"collateral", deal.collateral},
+        {"currency", deal.currency},
+        {"nettingSet", deal.nettingSet},
+        {"csa", deal.csa},
+        {"legalStructureContext", deal.legalStructureContext}
+    };
+}
+
+inline void from_json(const nlohmann::json& j, Deal& deal)
+{
+    deal.name =
+        j.at("dealId").get<std::string>();
+
+    deal.trade =
+        j.at("trade").get<std::string>();
+
+    deal.collateral =
+        j.at("collateral").get<std::string>();
+
+    deal.currency =
+        j.at("currency").get<std::string>();
+
+    deal.nettingSet =
+        j.at("nettingSet").get<std::string>();
+
+    deal.csa =
+        j.at("csa").get<std::string>();
+
+    deal.legalStructureContext =
+        j.at("legalStructureContext").get<std::string>();
+}
+
+
+-------
+
+
+#include "xde_adapter.h"
+#include "deal_json.h"
+
+#include <arrow/api.h>
+#include <arrow/table.h>
+#include <parquet/arrow/reader.h>
+
+#include <nlohmann/json.hpp>
+
+#include <algorithm>
+#include <memory>
+#include <optional>
+#include <string>
+#include <vector>
+
+
+namespace
+{
+constexpr std::size_t kMaxSqsMessageSize = 256 * 1024;
+}
+
+
+// -----------------------------------------------------------------------------
+// Serialize FMTM payload
+// -----------------------------------------------------------------------------
+
+std::string XDEAdapter::serialize_fmtm_payload(
+    const std::string& input_file,
+    const std::string& results_path,
+    const std::string& error_path,
+    const std::string& calibrated_market,
+    const std::string& session_id,
+    std::size_t row_group,
+    std::size_t deal_count,
+    const std::string& progress_counter_key,
+    const std::string& progress_book_id,
+    const std::string& task_id,
+    bool reconciliation,
+    const std::vector<Deal>& deals,
+    const std::optional<int>& retries)
+{
+    nlohmann::json payload = {
+        {"job_type", "fmtm_job"},
+        {"input_file", input_file},
+        {"results_path", results_path},
+        {"error_path", error_path},
+        {"calibrated_market", calibrated_market},
+        {"session_id", session_id},
+        {"row_group", row_group},
+        {"deal_count", deal_count},
+        {"progress_counter_key", progress_counter_key},
+        {"progress_book_id", progress_book_id},
+        {"task_id", task_id},
+        {"reconciliation", reconciliation},
+        {"deals", deals}
+    };
+
+    if (retries.has_value())
+    {
+        payload["retries"] = *retries;
+    }
+
+    return payload.dump();
+}
+
+
+// -----------------------------------------------------------------------------
+// Build FMTM payloads from the Parquet reader
+// -----------------------------------------------------------------------------
+
+std::pair<int, std::string> XDEAdapter::build_fmtm_payloads(
+    const std::shared_ptr<parquet::arrow::FileReader>& parquet_reader,
+    int num_row_groups,
+    const std::vector<int64_t>& row_group_deal_counts,
+    int64_t deal_count,
+    const std::string& inputPath,
+    const std::string& fmtm_out_path,
+    const std::string& errorPath,
+    const std::string& calibratedMarket,
+    const std::string& sessionId,
+    const std::string& progressCounterKey,
+    const std::string& bookId,
+    const std::string& taskId,
+    bool reconciliation,
+    const std::optional<int>& requestRetries,
+    std::vector<std::string>& all_payloads,
+    std::vector<int>& job_deal_counts)
+{
+    if (!parquet_reader)
+    {
+        const std::string msg =
+            "XDEAdapter: Parquet reader is null";
+
+        mtoapi::MtoLogger::log(
+            mtoapi::LogLevel::error,
+            msg);
+
+        pushErrorLog(msg);
+
+        return {
+            QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+            make_result_json(
+                "error",
+                QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                msg)
+        };
+    }
+
+    if (num_row_groups < 0)
+    {
+        const std::string msg =
+            "XDEAdapter: Invalid number of row groups: " +
+            std::to_string(num_row_groups);
+
+        mtoapi::MtoLogger::log(
+            mtoapi::LogLevel::error,
+            msg);
+
+        pushErrorLog(msg);
+
+        return {
+            QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+            make_result_json(
+                "error",
+                QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                msg)
+        };
+    }
+
+    if (static_cast<std::size_t>(num_row_groups) !=
+        row_group_deal_counts.size())
+    {
+        const std::string msg =
+            "XDEAdapter: Row group metadata mismatch: "
+            "num_row_groups=" +
+            std::to_string(num_row_groups) +
+            ", row_group_deal_counts=" +
+            std::to_string(row_group_deal_counts.size());
+
+        mtoapi::MtoLogger::log(
+            mtoapi::LogLevel::error,
+            msg);
+
+        pushErrorLog(msg);
+
+        return {
+            QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+            make_result_json(
+                "error",
+                QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                msg)
+        };
+    }
+
+    //
+    // Process each Parquet RowGroup exactly once.
+    //
+    for (int row_group = 0;
+         row_group < num_row_groups;
+         ++row_group)
+    {
+        std::shared_ptr<arrow::Table> full_rg_table;
+
+        //
+        // Read the complete RowGroup once.
+        //
+        const arrow::Status read_status =
+            parquet_reader->ReadRowGroup(
+                row_group,
+                &full_rg_table);
+
+        if (!read_status.ok() || !full_rg_table)
+        {
+            const std::string msg =
+                "XDEAdapter: Failed to read row group " +
+                std::to_string(row_group) +
+                ": " +
+                (read_status.ok()
+                     ? "ReadRowGroup returned a null table"
+                     : read_status.ToString());
+
+            mtoapi::MtoLogger::log(
+                mtoapi::LogLevel::error,
+                msg);
+
+            pushErrorLog(msg);
+
+            return {
+                QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                make_result_json(
+                    "error",
+                    QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                    msg)
+            };
+        }
+
+        const int64_t deals_in_row_group =
+            full_rg_table->num_rows();
+
+        //
+        // Validate the actual RowGroup size against the Parquet
+        // metadata collected before processing.
+        //
+        if (deals_in_row_group !=
+            row_group_deal_counts[row_group])
+        {
+            const std::string msg =
+                "XDEAdapter: Row group " +
+                std::to_string(row_group) +
+                " row count mismatch: metadata=" +
+                std::to_string(
+                    row_group_deal_counts[row_group]) +
+                ", actual=" +
+                std::to_string(deals_in_row_group);
+
+            mtoapi::MtoLogger::log(
+                mtoapi::LogLevel::error,
+                msg);
+
+            pushErrorLog(msg);
+
+            return {
+                QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                make_result_json(
+                    "error",
+                    QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                    msg)
+            };
+        }
+
+        //
+        // Split the RowGroup into logical FMTM jobs.
+        //
+        for (int64_t deal_index = 0;
+             deal_index < deals_in_row_group;
+             deal_index +=
+                 static_cast<int64_t>(kDealsPerJob))
+        {
+            const int64_t deal_count_for_job =
+                std::min<int64_t>(
+                    static_cast<int64_t>(kDealsPerJob),
+                    deals_in_row_group - deal_index);
+
+            //
+            // Zero-copy slice of the RowGroup.
+            //
+            const std::shared_ptr<arrow::Table> sliced_table =
+                full_rg_table->Slice(
+                    deal_index,
+                    deal_count_for_job);
+
+            try
+            {
+                // ---------------------------------------------------------
+                // Convert the sliced Table into RecordBatch(es).
+                //
+                // kDealsPerJob defines the logical FMTM job size, so we
+                // expect exactly one RecordBatch containing the slice.
+                // ---------------------------------------------------------
+
+                arrow::TableBatchReader batch_reader(*sliced_table);
+
+                batch_reader.set_chunksize(
+                    deal_count_for_job);
+
+                std::shared_ptr<arrow::RecordBatch> record_batch;
+
+                arrow::Status status =
+                    batch_reader.ReadNext(&record_batch);
+
+                if (!status.ok())
+                {
+                    const std::string msg =
+                        "XDEAdapter: Failed to create RecordBatch "
+                        "for row group " +
+                        std::to_string(row_group) +
+                        ", deal index " +
+                        std::to_string(deal_index) +
+                        ": " +
+                        status.ToString();
+
+                    mtoapi::MtoLogger::log(
+                        mtoapi::LogLevel::error,
+                        msg);
+
+                    pushErrorLog(msg);
+
+                    return {
+                        QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                        make_result_json(
+                            "error",
+                            QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                            msg)
+                    };
+                }
+
+                if (!record_batch)
+                {
+                    const std::string msg =
+                        "XDEAdapter: Empty RecordBatch for row group " +
+                        std::to_string(row_group) +
+                        ", deal index " +
+                        std::to_string(deal_index);
+
+                    mtoapi::MtoLogger::log(
+                        mtoapi::LogLevel::error,
+                        msg);
+
+                    pushErrorLog(msg);
+
+                    return {
+                        QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                        make_result_json(
+                            "error",
+                            QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                            msg)
+                    };
+                }
+
+                //
+                // The RecordBatch must contain exactly the requested
+                // number of deals.
+                //
+                if (record_batch->num_rows() !=
+                    deal_count_for_job)
+                {
+                    const std::string msg =
+                        "XDEAdapter: RecordBatch row count mismatch "
+                        "for row group " +
+                        std::to_string(row_group) +
+                        ", deal index " +
+                        std::to_string(deal_index) +
+                        ": expected " +
+                        std::to_string(deal_count_for_job) +
+                        ", got " +
+                        std::to_string(record_batch->num_rows());
+
+                    mtoapi::MtoLogger::log(
+                        mtoapi::LogLevel::error,
+                        msg);
+
+                    pushErrorLog(msg);
+
+                    return {
+                        QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                        make_result_json(
+                            "error",
+                            QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                            msg)
+                    };
+                }
+
+                //
+                // Make sure TableBatchReader did not produce another
+                // RecordBatch. One FMTM job must correspond to exactly
+                // one RecordBatch.
+                //
+                std::shared_ptr<arrow::RecordBatch> extra_batch;
+
+                status =
+                    batch_reader.ReadNext(&extra_batch);
+
+                if (!status.ok())
+                {
+                    const std::string msg =
+                        "XDEAdapter: Failed while checking for "
+                        "additional RecordBatches for row group " +
+                        std::to_string(row_group) +
+                        ", deal index " +
+                        std::to_string(deal_index) +
+                        ": " +
+                        status.ToString();
+
+                    mtoapi::MtoLogger::log(
+                        mtoapi::LogLevel::error,
+                        msg);
+
+                    pushErrorLog(msg);
+
+                    return {
+                        QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                        make_result_json(
+                            "error",
+                            QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                            msg)
+                    };
+                }
+
+                if (extra_batch)
+                {
+                    const std::string msg =
+                        "XDEAdapter: Unexpected multiple RecordBatches "
+                        "for row group " +
+                        std::to_string(row_group) +
+                        ", deal index " +
+                        std::to_string(deal_index);
+
+                    mtoapi::MtoLogger::log(
+                        mtoapi::LogLevel::error,
+                        msg);
+
+                    pushErrorLog(msg);
+
+                    return {
+                        QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                        make_result_json(
+                            "error",
+                            QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                            msg)
+                    };
+                }
+
+                // ---------------------------------------------------------
+                // Arrow RecordBatch -> business-level Deal objects.
+                // ---------------------------------------------------------
+
+                std::vector<Deal> chunk_deals =
+                    deal_decompositor_.DecomposeRecordBatch(
+                        record_batch);
+
+                //
+                // Strong invariant:
+                //
+                // Parquet rows
+                //      ==
+                // Arrow slice rows
+                //      ==
+                // RecordBatch rows
+                //      ==
+                // Deal objects
+                //
+                if (static_cast<int64_t>(chunk_deals.size()) !=
+                    deal_count_for_job)
+                {
+                    const std::string msg =
+                        "XDEAdapter: Deal decomposition count mismatch "
+                        "in row group " +
+                        std::to_string(row_group) +
+                        ", deal index " +
+                        std::to_string(deal_index) +
+                        ": expected " +
+                        std::to_string(deal_count_for_job) +
+                        ", got " +
+                        std::to_string(chunk_deals.size());
+
+                    mtoapi::MtoLogger::log(
+                        mtoapi::LogLevel::error,
+                        msg);
+
+                    pushErrorLog(msg);
+
+                    return {
+                        QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                        make_result_json(
+                            "error",
+                            QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                            msg)
+                    };
+                }
+
+                // ---------------------------------------------------------
+                // Serialize the actual Deal objects into the FMTM payload.
+                // ---------------------------------------------------------
+
+                const std::string payload =
+                    serialize_fmtm_payload(
+                        inputPath,
+                        fmtm_out_path,
+                        errorPath,
+                        calibratedMarket,
+                        sessionId,
+                        static_cast<std::size_t>(row_group),
+                        static_cast<std::size_t>(
+                            deal_count_for_job),
+                        progressCounterKey,
+                        bookId,
+                        taskId,
+                        reconciliation,
+                        chunk_deals,
+                        requestRetries);
+
+                //
+                // SQS maximum message size is 256 KiB.
+                //
+                if (payload.size() >
+                    kMaxSqsMessageSize)
+                {
+                    const std::string msg =
+                        "XDEAdapter: FMTM payload exceeds SQS "
+                        "maximum message size. Row group=" +
+                        std::to_string(row_group) +
+                        ", deal index=" +
+                        std::to_string(deal_index) +
+                        ", deal count=" +
+                        std::to_string(deal_count_for_job) +
+                        ", payload size=" +
+                        std::to_string(payload.size()) +
+                        " bytes, maximum=" +
+                        std::to_string(kMaxSqsMessageSize) +
+                        " bytes";
+
+                    mtoapi::MtoLogger::log(
+                        mtoapi::LogLevel::error,
+                        msg);
+
+                    pushErrorLog(msg);
+
+                    return {
+                        QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                        make_result_json(
+                            "error",
+                            QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                            msg)
+                    };
+                }
+
+                mtoapi::MtoLogger::log(
+                    mtoapi::LogLevel::debug,
+                    "XDEAdapter: Created FMTM payload: "
+                    "row_group=" +
+                    std::to_string(row_group) +
+                    ", deal_index=" +
+                    std::to_string(deal_index) +
+                    ", deal_count=" +
+                    std::to_string(deal_count_for_job) +
+                    ", payload_size=" +
+                    std::to_string(payload.size()));
+
+                //
+                // Store payload and expected deal count.
+                //
+                all_payloads.push_back(payload);
+
+                job_deal_counts.push_back(
+                    static_cast<int>(
+                        deal_count_for_job));
+            }
+            catch (const DealDecompositorException& e)
+            {
+                const std::string msg =
+                    "XDEAdapter: Exception during deal decomposition "
+                    "in row group " +
+                    std::to_string(row_group) +
+                    ", deal index " +
+                    std::to_string(deal_index) +
+                    ": " +
+                    e.what();
+
+                mtoapi::MtoLogger::log(
+                    mtoapi::LogLevel::error,
+                    msg);
+
+                pushErrorLog(msg);
+
+                return {
+                    QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                    make_result_json(
+                        "error",
+                        QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                        msg)
+                };
+            }
+            catch (const nlohmann::json::exception& e)
+            {
+                const std::string msg =
+                    "XDEAdapter: Failed to serialize FMTM payload "
+                    "in row group " +
+                    std::to_string(row_group) +
+                    ", deal index " +
+                    std::to_string(deal_index) +
+                    ": " +
+                    e.what();
+
+                mtoapi::MtoLogger::log(
+                    mtoapi::LogLevel::error,
+                    msg);
+
+                pushErrorLog(msg);
+
+                return {
+                    QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                    make_result_json(
+                        "error",
+                        QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                        msg)
+                };
+            }
+            catch (const std::exception& e)
+            {
+                const std::string msg =
+                    "XDEAdapter: Exception while creating FMTM "
+                    "payload in row group " +
+                    std::to_string(row_group) +
+                    ", deal index " +
+                    std::to_string(deal_index) +
+                    ": " +
+                    e.what();
+
+                mtoapi::MtoLogger::log(
+                    mtoapi::LogLevel::error,
+                    msg);
+
+                pushErrorLog(msg);
+
+                return {
+                    QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                    make_result_json(
+                        "error",
+                        QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                        msg)
+                };
+            }
+        }
+    }
+
+    //
+    // Final validation: total generated jobs must account for all deals.
+    //
+    int64_t generated_deal_count = 0;
+
+    for (const int count : job_deal_counts)
+    {
+        generated_deal_count += count;
+    }
+
+    if (generated_deal_count != deal_count)
+    {
+        const std::string msg =
+            "XDEAdapter: Generated job deal count mismatch: "
+            "expected=" +
+            std::to_string(deal_count) +
+            ", generated=" +
+            std::to_string(generated_deal_count);
+
+        mtoapi::MtoLogger::log(
+            mtoapi::LogLevel::error,
+            msg);
+
+        pushErrorLog(msg);
+
+        return {
+            QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+            make_result_json(
+                "error",
+                QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+                msg)
+        };
+    }
+
+    return {
+        QL_ADAPTER_SUCCESS,
+        ""
+    };
+}
