@@ -985,3 +985,107 @@ std::pair<int, std::string> XDEAdapter::build_fmtm_payloads(
         ""
     };
 }
+
+
+
+ANGEL: ConnectorSend()
+-----------
+
+std::optional<ProgressPublisher> progress_publisher;
+std::vector<int> submitted_result_indices;
+int total_expected_jobs = 0; // Set this if known upfront, or update dynamically
+
+// Outer iteration over row groups
+for (int row_group = 0; row_group < num_row_groups; ++row_group) {
+    // ... Read row group table ...
+
+    for (int64_t deal_index = 0; deal_index < deals_in_row_group; deal_index += static_cast<int64_t>(kDealsPerJob)) {
+        
+        const int deal_count_for_job = static_cast<int>(
+            std::min<int64_t>(static_cast<int64_t>(kDealsPerJob), deals_in_row_group - deal_index));
+
+        // --- 1. Slice and Decompose Deals ---
+        auto sliced_table = full_rg_table->Slice(deal_index, deal_count_for_job);
+        // ... (Decomposition logic to generate chunk_deals) ...
+
+        // --- 2. Serialize Payload for Immediate Chunk ---
+        const std::string payload = serialize_fmtm_payload(
+            inputPath, fmtm_out_path, errorPath, calibratedMarket, sessionId,
+            static_cast<std::size_t>(row_group),
+            static_cast<std::size_t>(deal_count_for_job),
+            progressCounterKey, bookId, taskId, reconciliation,
+            chunk_deals, requestRetries);
+
+        // Validation against SQS payload cap
+        if (payload.size() > kMaxSqsMessageSize) {
+            const std::string msg = "XDEAdapter: FMTM payload exceeds SQS maximum message size. Row group=" +
+                std::to_string(row_group) + ", deal index=" + std::to_string(deal_index) +
+                ", payload size=" + std::to_string(payload.size()) + " bytes";
+            pushErrorLog(msg);
+            return {QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED, make_result_json("error", QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED, msg)};
+        }
+
+        // --- 3. STREAMING DISPATCH: Send chunk immediately ---
+        const std::vector<std::string> chunk_payload_vec = { payload };
+        int result_index = xde::ConnectorSend(chunk_payload_vec, sessionId);
+
+        if (result_index < 0) {
+            const std::string msg = "XDEAdapter: Grid send failed for chunk (row group=" +
+                std::to_string(row_group) + ", deal index=" + std::to_string(deal_index) + ")";
+            mtoapi::MtoLogger::log(mtoapi::LogLevel::error, msg);
+            total_send_failures += 1;
+            aggregator.record_batch_result(0, deal_count_for_job, "xde-adapter");
+            continue;
+        }
+
+        // Store result index for later collection
+        submitted_result_indices.push_back(result_index);
+        job_deal_counts.push_back(deal_count_for_job);
+
+        // --- 4. INITIALIZE PROGRESS PUBLISHER (ON FIRST SUCCESSFUL SEND ONLY) ---
+        if (!progress_publisher.has_value()) {
+            std::string progress_s3_error;
+            auto progress_s3 = make_progress_s3_client(progress_s3_error);
+            if (!progress_s3) {
+                mtoapi::MtoLogger::log(mtoapi::LogLevel::error, 
+                    "XDEAdapter: Progress raw S3 client initialization failed: " + progress_s3_error);
+            } else {
+                progress_publisher.emplace(
+                    aggregator, resultBucket, progressKey,
+                    sessionId, taskId,
+                    progress_redis_ready ? progressCounterKey : "",
+                    static_cast<int>(total_expected_jobs), // Pass total expected count
+                    agg_cfg_progress_interval_sec,
+                    std::move(progress_s3));
+                
+                progress_publisher->start();
+                mtoapi::MtoLogger::log(mtoapi::LogLevel::info, "XDEAdapter: Progress publisher started successfully.");
+            }
+        }
+    }
+}
+
+// --- PHASE 3: Stream/Collect Results ---
+mtoapi::MtoLogger::log(mtoapi::LogLevel::info,
+    "XDEAdapter: Waiting for " + std::to_string(submitted_result_indices.size()) +
+    " grid chunk result batch(es)");
+
+std::vector<ConnectorResult> all_results;
+
+for (size_t i = 0; i < submitted_result_indices.size(); ++i) {
+    int res_idx = submitted_result_indices[i];
+    
+    // Retrieve result per submitted chunk index
+    auto chunk_results = xde::ConnectorGetResults("XVA", res_idx, timeout_sec);
+
+    if (chunk_results.empty()) {
+        mtoapi::MtoLogger::log(mtoapi::LogLevel::error, 
+            "XDEAdapter: No results returned for chunk result_index=" + std::to_string(res_idx));
+        // Handle timeout / grid chunk failure...
+    } else {
+        all_results.insert(
+            all_results.end(),
+            std::make_move_iterator(chunk_results.begin()),
+            std::make_move_iterator(chunk_results.end()));
+    }
+}
