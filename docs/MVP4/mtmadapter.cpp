@@ -9,6 +9,30 @@ nlohmann::json j_deals = nlohmann::json::parse(deals_json);
 std::vector<Deal> chunk_deals = j_deals.get<std::vector<Deal>>();
 
 
+----
+const std::string deals_redis_key = payload.at("deals_redis_key").get<std::string>();
+
+// Retrieve raw serialized JSON string from Redis
+std::string deals_raw_str;
+bool redis_get_ok = redis.hget(deals_redis_key, "deals", deals_raw_str);
+
+if (!redis_get_ok || deals_raw_str.empty()) {
+    const std::string msg = "FMTMAdapter: Failed to retrieve deals array from Redis at key: " + deals_redis_key;
+    pushErrorLog(msg);
+    return {QL_ADAPTER_ERR_REDIS_FAILURE, make_result_json("error", QL_ADAPTER_ERR_REDIS_FAILURE, msg)};
+}
+
+// Parse string into nlohmann::json representation
+const auto deals_json = nlohmann::json::parse(deals_raw_str);
+
+// Validate the declared count before deserializing.
+if (deals_json.size() != dealCount) {
+    const std::string msg = "FMTMAdapter: Deal count mismatch for row group " + std::to_string(rowGroup) +
+        ": payload declares " + std::to_string(dealCount) + ", actual array contains " + std::to_string(deals_json.size());
+    pushErrorLog(msg);
+    return {QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED, make_result_json("error", QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED, msg)};
+}
+
 
 #include <mutex>          // Required for std::mutex and std::lock_guard
 #include <unordered_map>  // Required for std::unordered_map
