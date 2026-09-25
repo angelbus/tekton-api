@@ -16,7 +16,7 @@ std::string XDEAdapter::serialize_fmtm_payload(
     const std::string& progress_book_id,
     const std::string& task_id,
     bool reconciliation,
-    const std::string& embedded_row_group_data,
+    const std::string& deals_redis_key,
     const std::optional<int>& retries) 
 {
     std::ostringstream os;
@@ -41,6 +41,147 @@ std::string XDEAdapter::serialize_fmtm_payload(
     os << "}";
     return os.str();
 }
+
+
+
+
+/ --------------------------------------------------
+// Store the actual Deal objects in Redis.
+// --------------------------------------------------
+//
+// The Redis field is the logical identity of this FMTM
+// work unit. A retry of the same row-group/deal-index
+// therefore refers to the same payload.
+//
+const std::string redis_payload_hash = "xena:fmtm:payloads";
+
+const std::string redis_payload_key =
+    bookId + ":" +
+    std::to_string(row_group) + ":" +
+    std::to_string(deal_index);
+
+// Serialize Deal objects into the Redis value.
+nlohmann::json deals_json = nlohmann::json::array();
+
+for (const auto& deal : chunk_deals) {
+    deals_json.push_back({
+        {"name", deal.name},
+        {"trade", deal.trade},
+        {"collateral", deal.collateral},
+        {"currency", deal.currency},
+        {"netting_set", deal.netting_set},
+        {"csa", deal.csa},
+        {"legal_structure_context", deal.legal_structure_context}
+    });
+}
+
+const std::string redis_payload = deals_json.dump();
+
+// --------------------------------------------------
+// Store the payload in Redis.
+// --------------------------------------------------
+const int redis_rc = redis.hset(
+    redis_payload_hash,
+    redis_payload_key,
+    redis_payload,
+    7200); // 2-hour TTL
+
+if (redis_rc != 0) {
+    const std::string msg =
+        "XDEAdapter: Failed to store FMTM Deal payload in Redis. " +
+        std::string("key=") + redis_payload_key +
+        ", redis_rc=" + std::to_string(redis_rc);
+
+    pushErrorLog(msg);
+
+    return {
+        QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+        make_result_json(
+            "error",
+            QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+            msg)
+    };
+}
+
+// --------------------------------------------------
+// Serialize the small SQS payload.
+// The Deal[] itself is NOT sent through SQS.
+// --------------------------------------------------
+const std::string payload = serialize_fmtm_payload(
+    inputPath,
+    fmtm_out_path,
+    errorPath,
+    calibratedMarket,
+    sessionId,
+    static_cast<std::size_t>(row_group),
+    static_cast<std::size_t>(deal_count_for_job),
+    progressCounterKey,
+    bookId,
+    taskId,
+    reconciliation,
+    redis_payload_key,
+    requestRetries);
+
+// SQS maximum message size is 256 KiB.
+if (payload.size() > kMaxSqsMessageSize) {
+    const std::string msg =
+        "XDEAdapter: FMTM SQS payload exceeds maximum message size. " +
+        std::string("row group=") + std::to_string(row_group) +
+        ", deal index=" + std::to_string(deal_index) +
+        ", deal count=" + std::to_string(deal_count_for_job) +
+        ", payload size=" + std::to_string(payload.size()) +
+        " bytes, maximum=" + std::to_string(kMaxSqsMessageSize);
+
+    pushErrorLog(msg);
+
+    // IMPORTANT:
+    // The Redis payload was already created.
+    // Do not leave it orphaned if the SQS payload itself is invalid.
+    //
+    // Use your Redis delete operation here.
+    redis.hdel(redis_payload_hash, redis_payload_key);
+
+    return {
+        QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+        make_result_json(
+            "error",
+            QL_ADAPTER_ERR_DEAL_DECOMPOSITION_FAILED,
+            msg)
+    };
+}
+
+mtoapi::MtoLogger::log(
+    mtoapi::LogLevel::debug,
+    "XDEAdapter: Created FMTM payload: row_group=" +
+        std::to_string(row_group) +
+        ", deal_index=" +
+        std::to_string(deal_index) +
+        ", deal_count=" +
+        std::to_string(deal_count_for_job) +
+        ", redis_payload_key=" +
+        redis_payload_key +
+        ", redis_payload_size=" +
+        std::to_string(redis_payload.size()) +
+        ", sqs_payload_size=" +
+        std::to_string(payload.size()));
+
+all_payloads.push_back(payload);
+job_deal_counts.push_back(
+    static_cast<int>(deal_count_for_job));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // --- Phase 1: Collect one FMTM payload per deal slice ---
