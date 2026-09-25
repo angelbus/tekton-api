@@ -61,21 +61,7 @@ const std::string redis_payload_key =
     std::to_string(deal_index);
 
 // Serialize Deal objects into the Redis value.
-nlohmann::json deals_json = nlohmann::json::array();
-
-for (const auto& deal : chunk_deals) {
-    deals_json.push_back({
-        {"name", deal.name},
-        {"trade", deal.trade},
-        {"collateral", deal.collateral},
-        {"currency", deal.currency},
-        {"netting_set", deal.netting_set},
-        {"csa", deal.csa},
-        {"legal_structure_context", deal.legal_structure_context}
-    });
-}
-
-const std::string redis_payload = deals_json.dump();
+const std::string redis_payload = nlohmann::json(chunk_deals).dump();
 
 // --------------------------------------------------
 // Store the payload in Redis.
