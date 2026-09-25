@@ -369,116 +369,84 @@ S3Connector::S3Connector(const std::string& region)
 
 
     // =========================================================================
-    // ASSUME-ROLE CREDENTIAL PROVIDER
-    // =========================================================================
-    //
-    // The provider:
-    //
-    //   1. Calls STS AssumeRole when credentials are required.
-    //   2. Caches the temporary credentials.
-    //   3. Refreshes them when required.
-    //
-    // This replaces the previous:
-    //
-    //   S3Connector construction
-    //       -> STSClient
-    //       -> AssumeRole()
-    //       -> temporary credentials
-    //       -> S3Client
-    //
-    // on every connector creation.
-    // =========================================================================
-
-    auto roleCredentialsProvider =
-        Aws::MakeShared<
-            Aws::Auth::STSAssumeRoleCredentialsProvider>(
-                "S3Connector",
-                Aws::String(roleArn.c_str()),
-                Aws::String("xena-s3-session"),
-                Aws::String(),
-                Aws::Auth::STSAssumeRoleCredentialsProvider::
-                    DEFAULT_CREDS_LOAD_FREQ_SECONDS,
-                stsClient);
-
-
-    // =========================================================================
-    // INITIAL CREDENTIAL VALIDATION
-    // =========================================================================
-    //
-    // We intentionally perform one GetAWSCredentials() here.
-    //
-    // This preserves the existing S3Connector behavior where an invalid role
-    // is detected during construction instead of on the first S3 operation.
-    //
-    // IMPORTANT:
-    //
-    // This is the INITIAL AssumeRole only.
-    //
-    // Subsequent requests use the cached credentials and the provider handles
-    // credential refresh.
-    // =========================================================================
-
-    mtoapi::MtoLogger::log(
-        mtoapi::LogLevel::info,
-        "S3Connector: Validating assumed-role credentials for: " +
-            roleArn);
-
-    const auto assumedCreds =
-        roleCredentialsProvider->GetAWSCredentials();
-
-    if (assumedCreds.IsEmpty())
-    {
-        const std::string msg =
-            "STS AssumeRole failed for role: " +
-            roleArn;
-
+        // ASSUME ROLE
+        // =========================================================================
+        
+        Aws::STS::Model::AssumeRoleRequest assumeRoleRequest;
+        
+        assumeRoleRequest.SetRoleArn(
+            Aws::String(roleArn.c_str()));
+        
+        assumeRoleRequest.SetRoleSessionName(
+            "xena-s3-session");
+        
         mtoapi::MtoLogger::log(
-            mtoapi::LogLevel::error,
-            "S3Connector: " + msg);
-
-        status_ = S3_ERR_ASSUME_ROLE_FAILED;
-        status_message_ = msg;
-
-        return;
-    }
-
-    mtoapi::MtoLogger::log(
-        mtoapi::LogLevel::info,
-        "S3Connector: Successfully assumed role: " +
-            roleArn);
-
-
-    // =========================================================================
-    // S3 CLIENT
-    // =========================================================================
-
-    Aws::S3::S3ClientConfiguration s3Config;
-
-    ApplyCommonConfig(
-        s3Config,
-        region_);
-
-
-    /*
-     * IMPORTANT:
-     *
-     * Pass the credentials provider itself to S3Client.
-     *
-     * Do NOT pass assumedCreds here.
-     *
-     * This means the S3Client continues using the provider's refreshed
-     * credentials throughout its lifetime.
-     */
-    client_.emplace(
-        roleCredentialsProvider,
-        nullptr,
-        s3Config);
-
-
-    mtoapi::MtoLogger::log(
-        mtoapi::LogLevel::info,
-        "S3Connector: S3 client created OK for region: " +
+            mtoapi::LogLevel::info,
+            "S3Connector: Assuming role: " + roleArn);
+        
+        const auto assumeRoleOutcome =
+            stsClient->AssumeRole(assumeRoleRequest);
+        
+        if (!assumeRoleOutcome.IsSuccess())
+        {
+            const auto& err =
+                assumeRoleOutcome.GetError();
+        
+            const std::string msg =
+                "STS AssumeRole failed [" +
+                std::string(err.GetExceptionName().c_str()) +
+                "]: " +
+                std::string(err.GetMessage().c_str());
+        
+            mtoapi::MtoLogger::log(
+                mtoapi::LogLevel::error,
+                "S3Connector: " + msg);
+        
+            status_ = S3_ERR_ASSUME_ROLE_FAILED;
+            status_message_ = msg;
+        
+            return;
+        }
+        
+        const auto& credentials =
+            assumeRoleOutcome.GetResult().GetCredentials();
+        
+        const Aws::Auth::AWSCredentials assumedCredentials(
+            credentials.GetAccessKeyId(),
+            credentials.GetSecretAccessKey(),
+            credentials.GetSessionToken());
+        
+        
+        // =========================================================================
+        // S3 CREDENTIAL PROVIDER
+        // =========================================================================
+        
+        auto s3CredentialsProvider =
+            Aws::MakeShared<
+                Aws::Auth::SimpleAWSCredentialsProvider>(
+                    "S3Connector",
+                    assumedCredentials);
+        
+        
+        // =========================================================================
+        // S3 CLIENT
+        // =========================================================================
+        
+        Aws::S3::S3ClientConfiguration s3Config;
+        
+        ApplyCommonConfig(
+            s3Config,
             region_);
+        
+        client_.emplace(
+            s3CredentialsProvider,
+            nullptr,
+            s3Config);
+        
+        mtoapi::MtoLogger::log(
+            mtoapi::LogLevel::info,
+            "S3Connector: Successfully assumed role and "
+            "created S3 client for region: " + region_);
 }
 
 
