@@ -4,6 +4,12 @@
 #include <arrow/util/base64.h>   // Required for arrow::util::base64_decode
 
 
+// Convert std::string -> nlohmann::json -> std::vector<Deal>
+nlohmann::json j_deals = nlohmann::json::parse(deals_json);
+std::vector<Deal> chunk_deals = j_deals.get<std::vector<Deal>>();
+
+
+
 #include <mutex>          // Required for std::mutex and std::lock_guard
 #include <unordered_map>  // Required for std::unordered_map
 
