@@ -3,7 +3,8 @@
 #include <arrow/ipc/reader.h>   // Required for arrow::ipc::RecordBatchStreamReader
 #include <arrow/util/base64.h>   // Required for arrow::util::base64_decode
 
-
+git submodule sync --recursive
+git submodule update --init --recursive --force
 // Convert std::string -> nlohmann::json -> std::vector<Deal>
 nlohmann::json j_deals = nlohmann::json::parse(deals_json);
 std::vector<Deal> chunk_deals = j_deals.get<std::vector<Deal>>();
